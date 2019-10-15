@@ -2,5 +2,14 @@
     "name": "prinsfrank/symfony-request-validation",
     "description": "Automatic request validation for symfony",
     "license": "MIT",
-    "require": {}
+    "type": "symfony-bundle",
+    "autoload": {
+        "psr-4": {
+            "PrinsFrank\\SymfonyRequestValidation\\": "src/"
+        }
+    },
+    "require": {
+        "symfony/validator": "^4.3",
+        "symfony/http-foundation": "^4.3"
+    }
 }
