@@ -1,0 +1,6 @@
+{
+    "name": "prinsfrank/symfony-request-validation",
+    "description": "Automatic request validation for symfony",
+    "license": "MIT",
+    "require": {}
+}
