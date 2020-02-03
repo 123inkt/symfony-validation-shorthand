@@ -2,20 +2,21 @@
 
 namespace PrinsFrank\SymfonyRequestValidation\Request;
 
-use PrinsFrank\SymfonyRequestValidation\Exception\RequestValidationException;
+use PrinsFrank\SymfonyRequestValidation\Response\InvalidRequestResponse;
+use PrinsFrank\SymfonyRequestValidation\Response\UnauthorizedRequestResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class AbstractValidatedRequest
 {
     /** @var Request */
-    private $request;
+    protected $request;
 
     /** @var ValidatorInterface  */
-    private $validator;
+    protected $validator;
 
     abstract protected function rules(): Collection;
 
