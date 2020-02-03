@@ -18,7 +18,15 @@ abstract class AbstractValidatedRequest
     /** @var ValidatorInterface  */
     protected $validator;
 
-    abstract protected function rules(): Collection;
+    /**
+     * Get all the constraints for the current request
+     */
+    abstract protected function rules(): array;
+
+    /**
+     * Determine if the user is authorized to make this request
+     */
+    abstract protected function authorize(): bool;
 
     /**
      * @param RequestStack $requestStack
@@ -32,20 +40,24 @@ abstract class AbstractValidatedRequest
     }
 
     /**
-     * @return bool
-     * @throws RequestValidationException
+     * @return InvalidRequestResponse|void
      */
-    protected function validate(): bool
+    protected function validate()
     {
-        $violationList = $this->validator->validate(
-            $this->request->request,
-            $this->rules()
-        );
-
-        if ($violationList->count() > 0) {
-            throw new RequestValidationException("Invalid Request");
+        if(!$this->authorize()){
+            new UnauthorizedRequestResponse();
         }
 
-        return true;
+        $violationList = new ConstraintViolationList();
+        foreach($this->rules() as $property => $rules) {
+            $violationList->addAll($this->validator->validate(
+                $this->request->get($property),
+                $rules
+            ));
+        }
+
+        if ($violationList->count() > 0) {
+            new InvalidRequestResponse($violationList);
+        }
     }
 }
