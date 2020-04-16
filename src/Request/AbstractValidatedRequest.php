@@ -3,7 +3,6 @@
 namespace PrinsFrank\SymfonyRequestValidation\Request;
 
 use PrinsFrank\SymfonyRequestValidation\Response\InvalidRequestResponse;
-use PrinsFrank\SymfonyRequestValidation\Response\UnauthorizedRequestResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\ConstraintViolationList;
