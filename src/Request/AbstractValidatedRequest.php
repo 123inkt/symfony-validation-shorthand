@@ -18,9 +18,14 @@ abstract class AbstractValidatedRequest
     protected $validator;
 
     /**
-     * Get all the constraints for the current request
+     * Get all the constraints for the current query params
      */
-    abstract protected function rules(): array;
+    abstract protected function queryRules(): array;
+
+    /**
+     * Get all the constraints for the current request params
+     */
+    abstract protected function requestRules(): array;
 
     /**
      * @param RequestStack $requestStack
@@ -39,11 +44,13 @@ abstract class AbstractValidatedRequest
     protected function validate()
     {
         $violationList = new ConstraintViolationList();
-        foreach($this->rules() as $property => $rules) {
-            $violationList->addAll($this->validator->validate(
-                $this->request->get($property),
-                $rules
-            ));
+
+        foreach($this->queryRules() as $property => $requestRule) {
+            $violationList->addAll($this->validator->validate($this->request->query->get($property), $requestRule));
+        }
+
+        foreach($this->requestRules() as $property => $requestRule) {
+            $violationList->addAll($this->validator->validate($this->request->request->get($property), $requestRule));
         }
 
         if ($violationList->count() > 0) {
