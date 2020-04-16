@@ -24,11 +24,6 @@ abstract class AbstractValidatedRequest
     abstract protected function rules(): array;
 
     /**
-     * Determine if the user is authorized to make this request
-     */
-    abstract protected function authorize(): bool;
-
-    /**
      * @param RequestStack $requestStack
      */
     public function __construct(RequestStack $requestStack)
@@ -44,10 +39,6 @@ abstract class AbstractValidatedRequest
      */
     protected function validate()
     {
-        if(!$this->authorize()){
-            new UnauthorizedRequestResponse();
-        }
-
         $violationList = new ConstraintViolationList();
         foreach($this->rules() as $property => $rules) {
             $violationList->addAll($this->validator->validate(
