@@ -1,19 +1,25 @@
 {
-    "name": "prinsfrank/symfony-request-validation",
+    "name": "digitalrevolution/symfony-request-validation",
     "description": "Automatic request validation for symfony",
     "license": "MIT",
     "type": "symfony-bundle",
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "PrinsFrank\\SymfonyRequestValidation\\": "src/"
         }
     },
     "require": {
+        "php": "7.0.* || 7.1.* || 7.2.* || 7.3.*",
         "symfony/validator": "^4.3",
         "symfony/http-foundation": "^4.3",
         "symfony/http-kernel": "^4.3"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-master"
+        "roave/security-advisories": "dev-master",
+        "phpunit/phpunit": "6.5.*"
+    },
+    "scripts": {
+        "test": "phpunit"
     }
 }
