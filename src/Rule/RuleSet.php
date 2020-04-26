@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PrinsFrank\SymfonyRequestValidation\Rule;
 
 use Symfony\Component\Validator\Constraint;
@@ -38,7 +40,7 @@ class RuleSet
             $this->queryRules[$field] = [];
         }
 
-        $this->queryRules[$field] = $rule;
+        $this->queryRules[$field][] = $rule;
         return $this;
     }
 
@@ -68,7 +70,7 @@ class RuleSet
             $this->requestRules[$field] = [];
         }
 
-        $this->requestRules[$field] = $rule;
+        $this->requestRules[$field][] = $rule;
         return $this;
     }
 }

@@ -35,18 +35,4 @@ class ConstraintSetTest extends TestCase
         static::assertSame($collectionA, $set->setQueryConstraints($collectionA)->getQueryConstraints());
         static::assertSame($collectionB, $set->setRequestConstraints($collectionB)->getRequestConstraints());
     }
-
-    public function testRandom(): void
-    {
-        $validator = Validation::createValidator();
-        $data = ['name2' => 'test'];
-        $constraints = new Collection(
-            ['fields' => ['name' => new Required([new NotBlank(), new Email()])]]
-        );
-
-        $result = $validator->validate($data, $constraints);
-
-
-        static::assertCount(0, $result);
-    }
 }
