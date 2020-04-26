@@ -7,7 +7,7 @@ namespace PrinsFrank\SymfonyRequestValidation\Rule\Parser;
 class RuleSet
 {
     /** @var Rule[] */
-    private $rules;
+    private $rules = [];
 
     /** @var bool */
     private $required = false;

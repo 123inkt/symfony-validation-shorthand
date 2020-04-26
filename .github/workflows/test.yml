@@ -8,7 +8,7 @@ on:
 
 jobs:
   code-sniffer:
-    name: PHP Code sniffer
+    name: PHP code sniffer
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
