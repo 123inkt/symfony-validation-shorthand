@@ -24,14 +24,17 @@ class RuleParser
     }
 
     /**
-     * @return RuleInfo[]
      * @throws ValidationRuleParseException
      */
-    public function parseRules(): array
+    public function parseRules(): RuleSet
     {
-        $rules = [];
+        $rules = new RuleSet();
         while ($this->reader->eol() === false) {
-            $rules[] = $this->parseRule();
+            $rule = $this->parseRule();
+            $rules->addRule($rule);
+            if ($rule->getName() === 'required') {
+                $rules->setRequired(true);
+            }
 
             if ($this->reader->isStringNext(",")) {
                 $this->reader->readString(",");
@@ -44,9 +47,9 @@ class RuleParser
     /**
      * @throws ValidationRuleParseException
      */
-    private function parseRule(): RuleInfo
+    private function parseRule(): Rule
     {
-        $name = $this->parseAlphaNum();
+        $name = strtolower($this->parseAlphaNum());
         $arguments = [];
 
         if ($this->reader->isStringNext(":")) {
@@ -54,7 +57,7 @@ class RuleParser
             $arguments[] = $this->parseArgument();
         }
 
-        return new RuleInfo($name, $arguments);
+        return new Rule($name, $arguments);
     }
 
     /**

@@ -7,6 +7,11 @@ namespace PrinsFrank\SymfonyRequestValidation\Tests\Unit\Constraint;
 use PrinsFrank\SymfonyRequestValidation\Constraint\ConstraintSet;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Optional;
+use Symfony\Component\Validator\Constraints\Required;
+use Symfony\Component\Validator\Validation;
 
 /**
  * @coversDefaultClass \PrinsFrank\SymfonyRequestValidation\Constraint\ConstraintSet
@@ -29,5 +34,19 @@ class ConstraintSetTest extends TestCase
         $collectionB = $this->createMock(Collection::class);
         static::assertSame($collectionA, $set->setQueryConstraints($collectionA)->getQueryConstraints());
         static::assertSame($collectionB, $set->setRequestConstraints($collectionB)->getRequestConstraints());
+    }
+
+    public function testRandom(): void
+    {
+        $validator = Validation::createValidator();
+        $data = ['name2' => 'test'];
+        $constraints = new Collection(
+            ['fields' => ['name' => new Required([new NotBlank(), new Email()])]]
+        );
+
+        $result = $validator->validate($data, $constraints);
+
+
+        static::assertCount(0, $result);
     }
 }

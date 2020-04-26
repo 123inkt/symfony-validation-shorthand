@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace PrinsFrank\SymfonyRequestValidation\Rule\Parser;
 
-class RuleInfo
+use InvalidArgumentException;
+
+class Rule
 {
     /** @var string */
     private $name;
@@ -21,6 +23,20 @@ class RuleInfo
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getIntArgument(int $index): int
+    {
+        if (isset($this->arguments[$index]) === null) {
+            throw new InvalidArgumentException('Missing `int` argument');
+        }
+
+        $argument = (int)$this->arguments[$index];
+        if ((string)$argument !== $this->arguments[$index]) {
+            throw new InvalidArgumentException('Argument is not an int: ' . $this->arguments[$index]);
+        }
+
+        return $argument;
     }
 
     /**

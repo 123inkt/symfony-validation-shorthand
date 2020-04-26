@@ -4,35 +4,35 @@ declare(strict_types=1);
 
 namespace PrinsFrank\SymfonyRequestValidation\Constraint;
 
-use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\Constraint;
 
 class ConstraintSet
 {
-    /** @var Collection|null */
+    /** @var Constraint|null */
     private $queryConstraints;
 
-    /** @var Collection|null */
+    /** @var Constraint|null */
     private $requestConstraints;
 
-    public function getQueryConstraints(): ?Collection
+    public function getQueryConstraints(): ?Constraint
     {
         return $this->queryConstraints;
     }
 
-    public function setQueryConstraints(Collection $queryConstraints): ConstraintSet
+    public function setQueryConstraints(?Constraint $constraints): self
     {
-        $this->queryConstraints = $queryConstraints;
+        $this->queryConstraints = $constraints;
         return $this;
     }
 
-    public function getRequestConstraints(): ?Collection
+    public function getRequestConstraints(): ?Constraint
     {
         return $this->requestConstraints;
     }
 
-    public function setRequestConstraints(Collection $requestConstraints): ConstraintSet
+    public function setRequestConstraints(?Constraint $constraints): self
     {
-        $this->requestConstraints = $requestConstraints;
+        $this->requestConstraints = $constraints;
         return $this;
     }
 }
