@@ -1,20 +1,19 @@
 <?php
 
-namespace PrinsFrank\SymfonyRequestValidation\Rule;
-
+namespace PrinsFrank\SymfonyRequestValidation\Constraint;
 
 use Symfony\Component\Validator\Constraint;
 
 class ConstraintSet
 {
-    /** @var Constraint[] */
+    /** @var array<string, Constraint[]> */
     private $queryConstraints = [];
 
-    /** @var Constraint[] */
+    /** @var array<string, Constraint[]> */
     private $requestConstraints = [];
 
     /**
-     * @return Constraint[]
+     * @return array<string, Constraint[]>
      */
     public function getQueryConstraints(): array
     {
@@ -22,7 +21,7 @@ class ConstraintSet
     }
 
     /**
-     * @param Constraint[] $queryConstraints
+     * @param array<string, Constraint[]> $queryConstraints
      */
     public function setQueryConstraints(array $queryConstraints): self
     {
@@ -30,14 +29,8 @@ class ConstraintSet
         return $this;
     }
 
-    public function addQueryConstraints(Constraint $constraint): self
-    {
-        $this->queryConstraints[] = $constraint;
-        return $this;
-    }
-
     /**
-     * @return Constraint[]
+     * @return array<string, Constraint[]>
      */
     public function getRequestConstraints(): array
     {
@@ -45,17 +38,11 @@ class ConstraintSet
     }
 
     /**
-     * @param Constraint[] $requestConstraints
+     * @param array<string, Constraint[]> $requestConstraints
      */
     public function setRequestConstraints(array $requestConstraints): self
     {
         $this->requestConstraints = $requestConstraints;
-        return $this;
-    }
-
-    public function addRequestConstraints(Constraint $constraint): self
-    {
-        $this->requestConstraints[] = $constraint;
         return $this;
     }
 }

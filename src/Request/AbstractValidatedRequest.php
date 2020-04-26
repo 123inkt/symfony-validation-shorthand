@@ -3,8 +3,7 @@
 namespace PrinsFrank\SymfonyRequestValidation\Request;
 
 use PrinsFrank\SymfonyRequestValidation\Exception\RequestValidationException;
-use PrinsFrank\SymfonyRequestValidation\Response\InvalidRequestResponse;
-use PrinsFrank\SymfonyRequestValidation\Rule\ConstraintSet;
+use PrinsFrank\SymfonyRequestValidation\Rule\RuleSet;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\ConstraintViolationList;
@@ -31,21 +30,21 @@ abstract class AbstractValidatedRequest
     /**
      * Get all the constraints for the current query params
      */
-    abstract protected function getConstraints(): ConstraintSet;
+    abstract protected function getRuleSet(): RuleSet;
 
     /**
      * @throws RequestValidationException
      */
     protected function validate(Request $request)
     {
+        $ruleset = $this->getRuleSet();
         $violationList = new ConstraintViolationList();
-        $constraints = $this->getConstraints();
 
-        foreach ($constraints->getQueryConstraints() as $property => $constraints) {
+        foreach ($constraints->getQueryRules() as $property => $constraints) {
             $violationList->addAll($this->validator->validate($request->query->get($property), $constraints));
         }
 
-        foreach ($constraints->getRequestConstraints() as $property => $constraints) {
+        foreach ($constraints->getRequestRules() as $property => $constraints) {
             $violationList->addAll($this->validator->validate($request->request->get($property), $constraints));
         }
 
