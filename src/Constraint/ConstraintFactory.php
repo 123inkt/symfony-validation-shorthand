@@ -1,8 +1,7 @@
 <?php
-
+declare(strict_types=1);
 
 namespace PrinsFrank\SymfonyRequestValidation\Constraint;
-
 
 use PrinsFrank\SymfonyRequestValidation\Rule\Parser\RuleInfo;
 use Symfony\Component\Validator\Constraint;
