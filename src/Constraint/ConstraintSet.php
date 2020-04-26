@@ -3,17 +3,18 @@
 namespace PrinsFrank\SymfonyRequestValidation\Constraint;
 
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Collection;
 
 class ConstraintSet
 {
-    /** @var array<string, Constraint[]> */
+    /** @var array<string, Collection[]> */
     private $queryConstraints = [];
 
-    /** @var array<string, Constraint[]> */
+    /** @var array<string, Collection[]> */
     private $requestConstraints = [];
 
     /**
-     * @return array<string, Constraint[]>
+     * @return array<string, Collection[]>
      */
     public function getQueryConstraints(): array
     {
@@ -21,7 +22,7 @@ class ConstraintSet
     }
 
     /**
-     * @param array<string, Constraint[]> $queryConstraints
+     * @param array<string, Collection[]> $queryConstraints
      */
     public function setQueryConstraints(array $queryConstraints): self
     {
@@ -30,7 +31,7 @@ class ConstraintSet
     }
 
     /**
-     * @return array<string, Constraint[]>
+     * @return array<string, Collection[]>
      */
     public function getRequestConstraints(): array
     {
@@ -38,7 +39,7 @@ class ConstraintSet
     }
 
     /**
-     * @param array<string, Constraint[]> $requestConstraints
+     * @param array<string, Collection[]> $requestConstraints
      */
     public function setRequestConstraints(array $requestConstraints): self
     {
