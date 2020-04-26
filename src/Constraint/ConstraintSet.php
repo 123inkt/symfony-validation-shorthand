@@ -2,46 +2,33 @@
 
 namespace PrinsFrank\SymfonyRequestValidation\Constraint;
 
-use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Collection;
 
 class ConstraintSet
 {
-    /** @var array<string, Collection[]> */
-    private $queryConstraints = [];
+    /** @var Collection|null */
+    private $queryConstraints;
 
-    /** @var array<string, Collection[]> */
-    private $requestConstraints = [];
+    /** @var Collection|null */
+    private $requestConstraints;
 
-    /**
-     * @return array<string, Collection[]>
-     */
-    public function getQueryConstraints(): array
+    public function getQueryConstraints(): ?Collection
     {
         return $this->queryConstraints;
     }
 
-    /**
-     * @param array<string, Collection[]> $queryConstraints
-     */
-    public function setQueryConstraints(array $queryConstraints): self
+    public function setQueryConstraints(Collection $queryConstraints): ConstraintSet
     {
         $this->queryConstraints = $queryConstraints;
         return $this;
     }
 
-    /**
-     * @return array<string, Collection[]>
-     */
-    public function getRequestConstraints(): array
+    public function getRequestConstraints(): ?Collection
     {
         return $this->requestConstraints;
     }
 
-    /**
-     * @param array<string, Collection[]> $requestConstraints
-     */
-    public function setRequestConstraints(array $requestConstraints): self
+    public function setRequestConstraints(Collection $requestConstraints): ConstraintSet
     {
         $this->requestConstraints = $requestConstraints;
         return $this;
