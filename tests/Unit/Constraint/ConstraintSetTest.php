@@ -4,14 +4,9 @@ declare(strict_types=1);
 
 namespace PrinsFrank\SymfonyRequestValidation\Tests\Unit\Constraint;
 
-use PrinsFrank\SymfonyRequestValidation\Constraint\ConstraintSet;
 use PHPUnit\Framework\TestCase;
+use PrinsFrank\SymfonyRequestValidation\Constraint\ConstraintSet;
 use Symfony\Component\Validator\Constraints\Collection;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Optional;
-use Symfony\Component\Validator\Constraints\Required;
-use Symfony\Component\Validator\Validation;
 
 /**
  * @coversDefaultClass \PrinsFrank\SymfonyRequestValidation\Constraint\ConstraintSet
