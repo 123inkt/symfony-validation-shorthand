@@ -12,9 +12,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class AbstractValidatedRequest
 {
-    /** @var Request */
-    protected $request;
-
     /** @var ValidatorInterface */
     protected $validator;
 
@@ -23,11 +20,12 @@ abstract class AbstractValidatedRequest
      */
     public function __construct(RequestStack $requestStack, ValidatorInterface $validator)
     {
-        $this->request = $requestStack->getCurrentRequest();
+        $request = $requestStack->getCurrentRequest();
         $this->validator = $validator;
 
-        // TODO: don't invoke validate in constructor
-        $this->validate();
+        if ($request !== null) {
+            $this->validate($request);
+        }
     }
 
     /**
@@ -36,20 +34,19 @@ abstract class AbstractValidatedRequest
     abstract protected function getConstraints(): ConstraintSet;
 
     /**
-     * @return InvalidRequestResponse|void
      * @throws RequestValidationException
      */
-    protected function validate()
+    protected function validate(Request $request)
     {
         $violationList = new ConstraintViolationList();
         $constraints = $this->getConstraints();
 
         foreach ($constraints->getQueryConstraints() as $property => $constraints) {
-            $violationList->addAll($this->validator->validate($this->request->query->get($property), $constraints));
+            $violationList->addAll($this->validator->validate($request->query->get($property), $constraints));
         }
 
         foreach ($constraints->getRequestConstraints() as $property => $constraints) {
-            $violationList->addAll($this->validator->validate($this->request->request->get($property), $constraints));
+            $violationList->addAll($this->validator->validate($request->request->get($property), $constraints));
         }
 
         if ($violationList->count() > 0) {
