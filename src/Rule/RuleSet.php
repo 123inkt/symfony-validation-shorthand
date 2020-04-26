@@ -2,7 +2,6 @@
 
 namespace PrinsFrank\SymfonyRequestValidation\Rule;
 
-
 use Symfony\Component\Validator\Constraint;
 
 class RuleSet

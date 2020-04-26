@@ -32,7 +32,8 @@
         "phpunit/phpunit": "7.5.*"
     },
     "scripts": {
-        "phpcs": "phpcs ./src ./tests",
+        "phpcs": "phpcs src tests",
+        "phpcbf": "phpcbf src tests",
         "test": "phpunit --testsuite unit"
     }
 }

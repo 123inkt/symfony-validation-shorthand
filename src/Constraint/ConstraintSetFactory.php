@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrinsFrank\SymfonyRequestValidation\Constraint;
@@ -13,8 +14,6 @@ class ConstraintSetFactory
 {
     public static function createFromRuleset(RuleSet $ruleSet): ConstraintSet
     {
-
-
     }
 
     /**
