@@ -11,6 +11,12 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class AbstractValidatedRequest
 {
+    /** @var Request */
+    protected $request;
+
+    /** @var bool */
+    protected $isValid = false;
+
     /**
      * @throws RequestValidationException
      */
@@ -18,16 +24,27 @@ abstract class AbstractValidatedRequest
     {
         $request = $requestStack->getCurrentRequest();
         if ($request === null) {
-            return;
+            throw new RequestValidationException('Request is missing, unable to validate');
         }
 
+        $this->request = $request;
         $this->validate($request, new RequestValidator($validator));
+    }
+
+    public function getRequest(): Request
+    {
+        return $this->request;
+    }
+
+    public function isValid(): bool
+    {
+        return $this->isValid;
     }
 
     /**
      * Get all the constraints for the current query params
      */
-    abstract protected function getValidationRules(): ValidationRules;
+    abstract protected function getValidationRules(Request $request): ValidationRules;
 
     /**
      * Called when there are one or more violations. Defaults to throwing RequestValidationException. Overwrite
@@ -45,9 +62,11 @@ abstract class AbstractValidatedRequest
      */
     protected function validate(Request $request, RequestValidator $validator): void
     {
-        $violationList = $validator->validate($request, $this->getValidationRules());
+        $violationList = $validator->validate($request, $this->getValidationRules($request));
         if (count($violationList) > 0) {
             $this->handleViolations($violationList);
+        } else {
+            $this->isValid = true;
         }
     }
 }

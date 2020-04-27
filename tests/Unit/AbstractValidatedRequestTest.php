@@ -31,13 +31,16 @@ class AbstractValidatedRequestTest extends TestCase
     {
         $stack = new RequestStack();
 
-        $validatedRequest = new MockValidatedRequest($stack, Validation::createValidator());
-        static::assertFalse($validatedRequest->isValidated());
+        $this->expectException(RequestValidationException::class);
+        $this->expectExceptionMessage('Request is missing, unable to validate');
+        new MockValidatedRequest($stack, Validation::createValidator());
     }
 
     /**
      * @covers ::__construct
      * @covers ::validate
+     * @covers ::isValid
+     * @covers ::getRequest
      * @throws RequestValidationException
      */
     public function testConstructorWithoutViolations(): void
@@ -49,7 +52,8 @@ class AbstractValidatedRequestTest extends TestCase
         $rules = new ValidationRules();
 
         $validatedRequest = new MockValidatedRequest($stack, Validation::createValidator(), $rules);
-        static::assertTrue($validatedRequest->isValidated());
+        static::assertTrue($validatedRequest->isValid());
+        static::assertSame($request, $validatedRequest->getRequest());
     }
 
     /**
