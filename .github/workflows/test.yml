@@ -54,11 +54,4 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-suggest --no-interaction --no-ansi
     - name: Run test suite
-      run: composer test -- --coverage-clover=coverage.xml
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        file: ./coverage.xml
-        flags: unittests
-        name: codecov-request-validation
-        fail_ci_if_error: true
+      run: composer test
