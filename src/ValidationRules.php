@@ -1,12 +1,11 @@
 <?php
-
 declare(strict_types=1);
 
-namespace PrinsFrank\SymfonyRequestValidation\Rule;
+namespace PrinsFrank\SymfonyRequestValidation;
 
 use Symfony\Component\Validator\Constraint;
 
-class RuleSet
+class ValidationRules
 {
     /** @var array<string, array<string|Constraint>> */
     private $queryRules = [];
@@ -32,19 +31,6 @@ class RuleSet
     }
 
     /**
-     * @param string|Constraint $rule
-     */
-    public function addQueryConstraints(string $field, $rule): self
-    {
-        if (isset($this->queryRules[$field]) === false) {
-            $this->queryRules[$field] = [];
-        }
-
-        $this->queryRules[$field][] = $rule;
-        return $this;
-    }
-
-    /**
      * @return array<string, array<string|Constraint>>
      */
     public function getRequestRules(): array
@@ -58,19 +44,6 @@ class RuleSet
     public function setRequestRules(array $requestRules): self
     {
         $this->requestRules = $requestRules;
-        return $this;
-    }
-
-    /**
-     * @param string|Constraint $rule
-     */
-    public function addRequestRule(string $field, $rule): self
-    {
-        if (isset($this->requestRules[$field]) === false) {
-            $this->requestRules[$field] = [];
-        }
-
-        $this->requestRules[$field][] = $rule;
         return $this;
     }
 }

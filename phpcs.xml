@@ -5,8 +5,11 @@
     <arg value="sp"/>
 
     <rule ref="PSR2"/>
-    <rule ref="PSR12"/>
+    <rule ref="PSR12">
+        <exclude name="PSR12.Files.FileHeader" />
+    </rule>
 
+    <rule ref="Generic.PHP.RequireStrictTypes"/>
     <rule ref="Generic.Files.LineLength">
         <properties>
             <property name="lineLimit" value="150"/>

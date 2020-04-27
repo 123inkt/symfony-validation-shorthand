@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace PrinsFrank\SymfonyRequestValidation\Constraint;
@@ -7,7 +6,7 @@ namespace PrinsFrank\SymfonyRequestValidation\Constraint;
 use PrinsFrank\SymfonyRequestValidation\Rule\Parser\RuleParser;
 use PrinsFrank\SymfonyRequestValidation\Rule\Parser\StringReader;
 use PrinsFrank\SymfonyRequestValidation\Rule\Parser\ValidationRuleParseException;
-use PrinsFrank\SymfonyRequestValidation\Rule\RuleSet;
+use PrinsFrank\SymfonyRequestValidation\ValidationRules;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\Optional;
@@ -18,7 +17,7 @@ class ConstraintSetFactory
     /**
      * @throws ValidationRuleParseException
      */
-    public static function createFromRuleset(RuleSet $ruleSet): ConstraintSet
+    public static function createFromRuleset(ValidationRules $ruleSet): ConstraintSet
     {
         $constraintSet = new ConstraintSet();
         $constraintSet->setQueryConstraints(self::getConstraintForRule($ruleSet->getQueryRules()));

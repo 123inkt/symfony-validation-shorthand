@@ -1,14 +1,11 @@
 <?php
-
 declare(strict_types=1);
 
 namespace PrinsFrank\SymfonyRequestValidation;
 
-use PrinsFrank\SymfonyRequestValidation\Constraint\ConstraintSet;
 use PrinsFrank\SymfonyRequestValidation\Constraint\ConstraintSetFactory;
 use PrinsFrank\SymfonyRequestValidation\Exception\RequestValidationException;
 use PrinsFrank\SymfonyRequestValidation\Rule\Parser\ValidationRuleParseException;
-use PrinsFrank\SymfonyRequestValidation\Rule\RuleSet;
 use PrinsFrank\SymfonyRequestValidation\Validator\RequestValidator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -36,7 +33,7 @@ abstract class AbstractValidatedRequest
     /**
      * Get all the constraints for the current query params
      */
-    abstract protected function getRuleSet(): RuleSet;
+    abstract protected function getRuleSet(): ValidationRules;
 
     /**
      * @throws RequestValidationException|ValidationRuleParseException

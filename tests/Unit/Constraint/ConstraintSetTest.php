@@ -1,7 +1,6 @@
 <?php
 
 declare(strict_types=1);
-
 namespace PrinsFrank\SymfonyRequestValidation\Tests\Unit\Constraint;
 
 use PHPUnit\Framework\TestCase;
