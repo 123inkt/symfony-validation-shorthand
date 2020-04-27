@@ -15,7 +15,7 @@ abstract class AbstractValidatedRequest
     protected $request;
 
     /** @var bool */
-    protected $isValid = false;
+    protected $isValid;
 
     /**
      * @throws RequestValidationException
@@ -28,7 +28,7 @@ abstract class AbstractValidatedRequest
         }
 
         $this->request = $request;
-        $this->validate($request, new RequestValidator($validator));
+        $this->isValid = $this->validate($request, new RequestValidator($validator));
     }
 
     public function getRequest(): Request
@@ -60,13 +60,14 @@ abstract class AbstractValidatedRequest
     /**
      * @throws RequestValidationException
      */
-    protected function validate(Request $request, RequestValidator $validator): void
+    protected function validate(Request $request, RequestValidator $validator): bool
     {
         $violationList = $validator->validate($request, $this->getValidationRules($request));
         if (count($violationList) > 0) {
             $this->handleViolations($violationList);
-        } else {
-            $this->isValid = true;
+            return false;
         }
+
+        return true;
     }
 }

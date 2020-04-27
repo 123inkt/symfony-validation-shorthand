@@ -21,20 +21,21 @@
     },
     "require": {
         "php": "7.1.* || 7.2.* || 7.3.*",
-        "symfony/validator": "^4.4",
-        "symfony/http-foundation": "^4.4",
-        "symfony/http-kernel": "^4.4"
+        "symfony/validator": "4.*",
+        "symfony/http-foundation": "4.*"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
         "squizlabs/php_codesniffer": "3.*",
         "phpmd/phpmd": "@stable",
-        "phpunit/phpunit": "7.5.*"
+        "phpunit/phpunit": "7.5.*",
+        "phpstan/phpstan": "^0.12.19"
     },
     "scripts": {
         "phpcs": "phpcs src tests",
         "phpcbf": "phpcbf src tests",
         "phpmd": "phpmd src,tests text phpmd.xml --suffixes=php",
+        "phpstan": "phpstan analyse",
         "test": "phpunit --testsuite unit"
     }
 }
