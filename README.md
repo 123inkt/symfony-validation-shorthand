@@ -3,6 +3,8 @@
 A request validation component for Symfony, similar to the Laravel library.
 
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.1-8892BF)](https://php.net/)
+[![Minimum Symfony Version](https://img.shields.io/badge/symfony-%3E%3D%204.4-brightgreen)](https://symfony.com/doc/current/validation.html)
+
 
 ## Installation
 
