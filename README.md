@@ -29,8 +29,8 @@ Create a ValidatedRequest class which extends the `AbstractValidatedRequest`
             return $rules;
         }
     }
-    
-Register all `ValidatedRequest` classes as services in Symfony's `services.yaml`
+        
+Register all `ValidatedRequest` classes as service in Symfony's `services.yaml`
 
     Your\Namespace\ValidatedRequest\:
         'resources': 'src/ValidatedRequest/*'
