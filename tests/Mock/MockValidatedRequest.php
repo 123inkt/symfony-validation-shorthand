@@ -5,7 +5,6 @@ namespace DigitalRevolution\SymfonyRequestValidation\Tests\Mock;
 
 use DigitalRevolution\SymfonyRequestValidation\AbstractValidatedRequest;
 use DigitalRevolution\SymfonyRequestValidation\ValidationRules;
-use DigitalRevolution\SymfonyRequestValidation\Validator\RequestValidator;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;

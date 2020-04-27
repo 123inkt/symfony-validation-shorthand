@@ -3,12 +3,10 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit;
 
-use DigitalRevolution\SymfonyRequestValidation\AbstractValidatedRequest;
-use PHPUnit\Framework\TestCase;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use DigitalRevolution\SymfonyRequestValidation\Tests\Mock\MockValidatedRequest;
 use DigitalRevolution\SymfonyRequestValidation\ValidationRules;
-use DigitalRevolution\SymfonyRequestValidation\Validator\RequestValidator;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraints\Collection;
