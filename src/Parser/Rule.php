@@ -27,7 +27,7 @@ class Rule
     public function getParameter(int $offset): string
     {
         if (isset($this->parameters[$offset]) === false) {
-            throw new InvalidArgumentException('Missing int argument for rule: ' . $this->getName());
+            throw new InvalidArgumentException('Unknown offset for rule: ' . $this->getName() . ', offset:' . $offset);
         }
 
         return $this->parameters[$offset];

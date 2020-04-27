@@ -67,7 +67,9 @@ abstract class AbstractValidatedRequest
         $violationList = $validator->validate($request, $this->getValidationRules($request));
         if (count($violationList) > 0) {
             $this->handleViolations($violationList);
+            // @codeCoverageIgnoreStart
             return false;
+            // @codeCoverageIgnoreEnd
         }
 
         return true;

@@ -42,9 +42,9 @@ class RuleSet implements Countable
     /**
      * @var array<Rule|Constraint> $rules
      */
-    public function addAll(array $rule): self
+    public function addAll(array $rules): self
     {
-        $this->rules = array_merge($this->rules, $rule);
+        $this->rules = array_merge($this->rules, $rules);
         return $this;
     }
 
