@@ -16,8 +16,7 @@ Include the library as dependency in your own project via:
 
 Create a ValidatedRequest class which extends the `AbstractValidatedRequest`. See [Symfony Collection Constraint](https://symfony.com/doc/current/reference/constraints/Collection.html)
 
-    class AddRemarkValidatedRequest extends AbstractValidatedRequest {
-        
+    class AddRemarkValidatedRequest extends AbstractValidatedRequest {        
         /**
          * @inheritDoc
          */
@@ -49,6 +48,21 @@ Add the `ValidatedRequest` to your `Controller`
         }        
     }   
     
+### Custom violation handling
+
+By default, the `AbstractValidatedRequest` will throw a `RequestValidationException`. This behaviour can be changed
+by overwriting the `handleViolations` method.
+
+    class AddRemarkValidatedRequest extends AbstractValidatedRequest {    
+        ...
+                            
+        /**
+         * @inheritDoc
+         */
+        public function handleViolations(ConstraintViolationList $violationList): void {
+            // your own violation handling
+        }
+    }
                      
 
 ## About us
