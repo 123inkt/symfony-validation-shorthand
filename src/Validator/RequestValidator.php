@@ -5,6 +5,7 @@ namespace PrinsFrank\SymfonyRequestValidation\Validator;
 
 use PrinsFrank\SymfonyRequestValidation\ValidationRules;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -18,6 +19,9 @@ class RequestValidator
         $this->validator = $validator;
     }
 
+    /**
+     * @return ConstraintViolationList<ConstraintViolationInterface>
+     */
     public function validate(Request $request, ValidationRules $rules): ConstraintViolationList
     {
         $violations = new ConstraintViolationList();

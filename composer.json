@@ -29,7 +29,11 @@
         "squizlabs/php_codesniffer": "3.*",
         "phpmd/phpmd": "@stable",
         "phpunit/phpunit": "7.5.*",
-        "phpstan/phpstan": "^0.12.19"
+        "phpstan/phpstan": "0.12.*",
+        "phpstan/phpstan-phpunit": "0.12.*",
+        "phpstan/phpstan-symfony": "0.12.*",
+        "phpstan/phpstan-strict-rules": "0.12.*",
+        "phpstan/extension-installer": "1.0.*"
     },
     "scripts": {
         "phpcs": "phpcs src tests",

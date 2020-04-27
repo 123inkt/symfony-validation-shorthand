@@ -6,6 +6,7 @@ namespace PrinsFrank\SymfonyRequestValidation;
 use PrinsFrank\SymfonyRequestValidation\Validator\RequestValidator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -50,6 +51,7 @@ abstract class AbstractValidatedRequest
      * Called when there are one or more violations. Defaults to throwing RequestValidationException. Overwrite
      * to add your own handling
      *
+     * @param ConstraintViolationList<ConstraintViolationInterface> $violationList
      * @throws RequestValidationException
      */
     protected function handleViolations(ConstraintViolationList $violationList): void
