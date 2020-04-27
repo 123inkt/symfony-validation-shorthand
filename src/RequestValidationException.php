@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace PrinsFrank\SymfonyRequestValidation;
+namespace DigitalRevolution\SymfonyRequestValidation;
 
 use Exception;
 

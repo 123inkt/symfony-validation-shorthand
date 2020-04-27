@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace PrinsFrank\SymfonyRequestValidation\Tests\Unit;
+namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit;
 
-use PrinsFrank\SymfonyRequestValidation\ValidationRules;
+use DigitalRevolution\SymfonyRequestValidation\ValidationRules;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\Collection;
 
 /**
- * @coversDefaultClass \PrinsFrank\SymfonyRequestValidation\ValidationRules
+ * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\ValidationRules
  */
 class ValidationRulesTest extends TestCase
 {

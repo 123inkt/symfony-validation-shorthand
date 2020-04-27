@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace PrinsFrank\SymfonyRequestValidation\Tests\Unit;
+namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit;
 
-use PrinsFrank\SymfonyRequestValidation\AbstractValidatedRequest;
+use DigitalRevolution\SymfonyRequestValidation\AbstractValidatedRequest;
 use PHPUnit\Framework\TestCase;
-use PrinsFrank\SymfonyRequestValidation\RequestValidationException;
-use PrinsFrank\SymfonyRequestValidation\Tests\Mock\MockValidatedRequest;
-use PrinsFrank\SymfonyRequestValidation\ValidationRules;
-use PrinsFrank\SymfonyRequestValidation\Validator\RequestValidator;
+use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
+use DigitalRevolution\SymfonyRequestValidation\Tests\Mock\MockValidatedRequest;
+use DigitalRevolution\SymfonyRequestValidation\ValidationRules;
+use DigitalRevolution\SymfonyRequestValidation\Validator\RequestValidator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraints\Collection;
@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * @coversDefaultClass \PrinsFrank\SymfonyRequestValidation\AbstractValidatedRequest
+ * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\AbstractValidatedRequest
  */
 class AbstractValidatedRequestTest extends TestCase
 {

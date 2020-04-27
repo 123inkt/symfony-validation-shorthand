@@ -11,12 +11,12 @@
     },
     "autoload": {
         "psr-4": {
-            "PrinsFrank\\SymfonyRequestValidation\\": "src/"
+            "DigitalRevolution\\SymfonyRequestValidation\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "PrinsFrank\\SymfonyRequestValidation\\Tests\\": "tests"
+            "DigitalRevolution\\SymfonyRequestValidation\\Tests\\": "tests"
         }
     },
     "require": {

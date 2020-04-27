@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace PrinsFrank\SymfonyRequestValidation\Tests\Mock;
+namespace DigitalRevolution\SymfonyRequestValidation\Tests\Mock;
 
-use PrinsFrank\SymfonyRequestValidation\AbstractValidatedRequest;
-use PrinsFrank\SymfonyRequestValidation\ValidationRules;
-use PrinsFrank\SymfonyRequestValidation\Validator\RequestValidator;
+use DigitalRevolution\SymfonyRequestValidation\AbstractValidatedRequest;
+use DigitalRevolution\SymfonyRequestValidation\ValidationRules;
+use DigitalRevolution\SymfonyRequestValidation\Validator\RequestValidator;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;

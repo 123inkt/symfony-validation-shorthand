@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace PrinsFrank\SymfonyRequestValidation;
+namespace DigitalRevolution\SymfonyRequestValidation;
 
-use PrinsFrank\SymfonyRequestValidation\Validator\RequestValidator;
+use DigitalRevolution\SymfonyRequestValidation\Validator\RequestValidator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\ConstraintViolationInterface;

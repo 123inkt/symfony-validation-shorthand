@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace PrinsFrank\SymfonyRequestValidation\Tests\Unit\Validator;
+namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Validator;
 
-use PrinsFrank\SymfonyRequestValidation\ValidationRules;
-use PrinsFrank\SymfonyRequestValidation\Validator\RequestValidator;
+use DigitalRevolution\SymfonyRequestValidation\ValidationRules;
+use DigitalRevolution\SymfonyRequestValidation\Validator\RequestValidator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\Collection;
@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * @coversDefaultClass \PrinsFrank\SymfonyRequestValidation\Validator\RequestValidator
+ * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Validator\RequestValidator
  * @covers ::__construct
  */
 class RequestValidatorTest extends TestCase
