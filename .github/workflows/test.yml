@@ -34,7 +34,7 @@ jobs:
           coverage: none
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest --no-interaction --no-ansi
-      - name: Code sniffer
+      - name: mess detector
         run: composer phpmd
 
   php-stan:

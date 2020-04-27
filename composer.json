@@ -38,7 +38,7 @@
     "scripts": {
         "phpcs": "phpcs src tests",
         "phpcbf": "phpcbf src tests",
-        "phpmd": "phpmd src,tests text phpmd.xml --suffixes=php",
+        "phpmd": "phpmd src,tests text phpmd.xml.dist --suffixes=php",
         "phpstan": "phpstan analyse",
         "test": "phpunit --testsuite unit"
     }

@@ -10,7 +10,7 @@ A request validation component for Symfony, similar to the Laravel library.
 
 Include the library as dependency in your own project via: 
 
-    composer require "DigitalRevoluation/SymfonyRequestValidation"
+    composer require "DigitalRevolution/SymfonyRequestValidation"
 
 ## How to use
 
