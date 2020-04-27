@@ -3,21 +3,16 @@ declare(strict_types=1);
 
 namespace PrinsFrank\SymfonyRequestValidation;
 
-use PrinsFrank\SymfonyRequestValidation\Constraint\ConstraintSetFactory;
-use PrinsFrank\SymfonyRequestValidation\Exception\RequestValidationException;
-use PrinsFrank\SymfonyRequestValidation\Rule\Parser\ValidationRuleParseException;
 use PrinsFrank\SymfonyRequestValidation\Validator\RequestValidator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class AbstractValidatedRequest
 {
-    /** @var RequestValidator */
-    protected $validator;
-
     /**
-     * @throws RequestValidationException|ValidationRuleParseException
+     * @throws RequestValidationException
      */
     public function __construct(RequestStack $requestStack, ValidatorInterface $validator)
     {
@@ -26,24 +21,33 @@ abstract class AbstractValidatedRequest
             return;
         }
 
-        $this->validator = new RequestValidator($validator);
-        $this->validate($request);
+        $this->validate($request, new RequestValidator($validator));
     }
 
     /**
      * Get all the constraints for the current query params
      */
-    abstract protected function getRuleSet(): ValidationRules;
+    abstract protected function getValidationRules(): ValidationRules;
 
     /**
-     * @throws RequestValidationException|ValidationRuleParseException
+     * Called when there are one or more violations. Defaults to throwing RequestValidationException. Overwrite
+     * to add your own handling
+     *
+     * @throws RequestValidationException
      */
-    protected function validate(Request $request): void
+    protected function handleViolations(ConstraintViolationList $violationList): void
     {
-        $constraintSet = ConstraintSetFactory::createFromRuleset($this->getRuleSet());
-        $violationList = $this->validator->validate($request, $constraintSet);
-        if ($violationList->count() > 0) {
-            throw new RequestValidationException((string)$violationList);
+        throw new RequestValidationException((string)$violationList);
+    }
+
+    /**
+     * @throws RequestValidationException
+     */
+    protected function validate(Request $request, RequestValidator $validator): void
+    {
+        $violationList = $validator->validate($request, $this->getValidationRules());
+        if (count($violationList) > 0) {
+            $this->handleViolations($violationList);
         }
     }
 }

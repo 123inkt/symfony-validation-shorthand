@@ -3,45 +3,33 @@ declare(strict_types=1);
 
 namespace PrinsFrank\SymfonyRequestValidation;
 
-use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Collection;
 
 class ValidationRules
 {
-    /** @var array<string, array<string|Constraint>> */
-    private $queryRules = [];
+    /** @var Collection */
+    private $queryRules;
 
-    /** @var array<string, array<string|Constraint>> */
-    private $requestRules = [];
+    /** @var Collection */
+    private $requestRules;
 
-    /**
-     * @return array<string, array<string|Constraint>>
-     */
-    public function getQueryRules(): array
+    public function getQueryRules(): ?Collection
     {
         return $this->queryRules;
     }
 
-    /**
-     * @param array<string, array<string|Constraint>> $queryRules
-     */
-    public function setQueryRules(array $queryRules): self
+    public function setQueryRules(Collection $queryRules): self
     {
         $this->queryRules = $queryRules;
         return $this;
     }
 
-    /**
-     * @return array<string, array<string|Constraint>>
-     */
-    public function getRequestRules(): array
+    public function getRequestRules(): ?Collection
     {
         return $this->requestRules;
     }
 
-    /**
-     * @param array<string, array<string|Constraint>> $requestRules
-     */
-    public function setRequestRules(array $requestRules): self
+    public function setRequestRules(Collection $requestRules): self
     {
         $this->requestRules = $requestRules;
         return $this;
