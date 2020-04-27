@@ -12,7 +12,7 @@ Include the library as dependency in your own project via:
 
 ## How to use
 
-Create a ValidatedRequest class which extends the `AbstractValidatedRequest`
+Create a ValidatedRequest class which extends the `AbstractValidatedRequest`. See [Symfony Collection Constraint](https://symfony.com/doc/current/reference/constraints/Collection.html)
 
     class AddRemarkValidatedRequest extends AbstractValidatedRequest {
         
