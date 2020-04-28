@@ -53,17 +53,6 @@ class RuleSetTest extends TestCase
     }
 
     /**
-     * @covers ::setRules
-     * @covers ::getRules
-     */
-    public function testSetRules(): void
-    {
-        $rule    = new Rule('a');
-        $ruleSet = new RuleSet();
-        static::assertSame([$rule], $ruleSet->setRules([$rule])->getRules());
-    }
-
-    /**
      * @covers ::addRule
      * @covers ::setRules
      */
@@ -80,11 +69,7 @@ class RuleSetTest extends TestCase
         $ruleSet->addRule($ruleA);
         static::assertSame([$ruleA], $ruleSet->getRules());
 
-        // set rules, should overwrite
-        $ruleSet->setRules([$ruleC, $ruleB]);
-        static::assertSame([$ruleC, $ruleB], $ruleSet->getRules());
-
-        $ruleSet->addRule($ruleA);
-        static::assertSame([$ruleC, $ruleB, $ruleA], $ruleSet->getRules());
+        $ruleSet->addRule($ruleB);
+        static::assertSame([$ruleA, $ruleB], $ruleSet->getRules());
     }
 }

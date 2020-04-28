@@ -11,15 +11,12 @@ class RuleSet implements Countable
     /** @var array<Rule|Constraint> */
     private $rules = [];
 
+    /** @var array<string, true> */
+    private $ruleTypes = [];
+
     public function hasRule(string $name): bool
     {
-        foreach ($this->rules as $rule) {
-            if ($rule instanceof Rule && $rule->getName() === $name) {
-                return true;
-            }
-        }
-
-        return false;
+        return isset($this->ruleTypes[$name]);
     }
 
     /**
@@ -36,6 +33,10 @@ class RuleSet implements Countable
     public function addRule($rule): self
     {
         $this->rules[] = $rule;
+        if ($rule instanceof Rule) {
+            $this->ruleTypes[$rule->getName()] = true;
+        }
+
         return $this;
     }
 
@@ -44,16 +45,10 @@ class RuleSet implements Countable
      */
     public function addAll(array $rules): self
     {
-        $this->rules = array_merge($this->rules, $rules);
-        return $this;
-    }
+        foreach ($rules as $rule) {
+            $this->addRule($rule);
+        }
 
-    /**
-     * @var array<Rule|Constraint> $rules
-     */
-    public function setRules(array $rules): self
-    {
-        $this->rules = $rules;
         return $this;
     }
 

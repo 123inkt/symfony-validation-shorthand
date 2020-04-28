@@ -3,29 +3,41 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation\Parser;
 
+use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
 use InvalidArgumentException;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Collection;
 
 class ValidationRuleParser
 {
-    /**
-     * @param array<string, array<string|Constraint> $fieldRules
-     * @return array<string, RuleSet>
-     */
-    public function parse(array $fieldRules): array
-    {
-        $data = [];
-        foreach ($fieldRules as $field => $rules) {
-            if (is_string($field) === false) {
-                throw new InvalidArgumentException('Invalid field names should be string. Field type is: ' . gettype($field));
-            }
-            $data[$field] = $this->parseRules(is_array($rules) ? $rules : [$rules]);
-        }
+    /** @var ConstraintResolver */
+    private $resolver;
 
-        return $data;
+    public function __construct(ConstraintResolver $resolver)
+    {
+        $this->resolver = $resolver;
     }
 
-    protected function parseRules(array $rules): RuleSet
+    /**
+     * @param array<string, array<string|Constraint> $fieldRules
+     */
+    public function parse(array $fieldRules): Constraint
+    {
+        $result = [];
+        foreach ($fieldRules as $field => $rules) {
+            if (is_string($field) === false) {
+                throw new InvalidArgumentException('Field names should be string. Field type is: ' . gettype($field));
+            }
+            $result[$field] = $this->parseRules(is_array($rules) ? $rules : [$rules]);
+        }
+
+        return new Collection(['fields' => $result]);
+    }
+
+    /**
+     * Parse a set of string rules and constraints
+     */
+    protected function parseRules(array $rules): Constraint
     {
         $ruleSet = new RuleSet();
         foreach ($rules as $rule) {
@@ -36,7 +48,7 @@ class ValidationRuleParser
             }
         }
 
-        return $ruleSet;
+        return $this->resolver->resolveRuleSet($ruleSet);
     }
 
     /**
@@ -59,16 +71,12 @@ class ValidationRuleParser
     protected function parseStringRule(string $rule): Rule
     {
         $parameters = [];
-
-        // The format for specifying validation rules and parameters follows an
-        // easy {rule}:{parameters} formatting convention. For instance the
-        // rule "Max:3" states that the value may only be three letters.
         if (strpos($rule, ':') !== false) {
             [$rule, $parameter] = explode(':', $rule, 2);
 
             $parameters = static::parseParameters($rule, $parameter);
         }
-
+        $rule = self::normalizeRuleName(strtolower($rule));
         return new Rule($rule, $parameters);
     }
 
@@ -80,10 +88,25 @@ class ValidationRuleParser
     protected static function parseParameters(string $rule, string $parameter): array
     {
         $rule = strtolower($rule);
-        if (in_array($rule, ['regex', 'not_regex', 'notregex'], true)) {
+        if ($rule === 'regex') {
             return [$parameter];
         }
 
         return str_getcsv($parameter);
+    }
+
+    /**
+     * Normalize some shorthand notations
+     */
+    private static function normalizeRuleName(string $name): string
+    {
+        switch ($name) {
+            case 'int':
+                return 'integer';
+            case 'bool':
+                return 'boolean';
+            default:
+                return $name;
+        }
     }
 }
