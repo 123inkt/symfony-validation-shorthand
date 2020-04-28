@@ -35,15 +35,12 @@ class Rule
 
     public function getIntParam(int $offset): int
     {
-        $argument    = $this->getParameter($offset);
-        $intArgument = (int)$argument;
-        if ((string)$intArgument !== $argument) {
-            throw new InvalidArgumentException(
-                'Invalid int argument for rule: ' . $this->getName() . ', value: ' . $this->parameters[$offset]
-            );
+        $argument = $this->getParameter($offset);
+        if ((string)(int)$argument !== $argument) {
+            throw new InvalidArgumentException('Invalid int argument for rule: ' . $this->getName() . ', value: ' . $this->parameters[$offset]);
         }
 
-        return $intArgument;
+        return (int)$argument;
     }
 
     public function getParameters(): array
