@@ -8,24 +8,14 @@ use Symfony\Component\Validator\Constraint;
 
 class ValidationRuleParser
 {
-    /** @var array<string, array<string|Constraint> */
-    private $data;
-
     /**
-     * @param array<string, array<string|Constraint> $data
-     */
-    public function __construct(array $data)
-    {
-        $this->data = $data;
-    }
-
-    /**
+     * @param array<string, array<string|Constraint> $fieldRules
      * @return array<string, RuleSet>
      */
-    public function parse(): array
+    public function parse(array $fieldRules): array
     {
         $data = [];
-        foreach ($this->data as $field => $rules) {
+        foreach ($fieldRules as $field => $rules) {
             if (is_string($field) === false) {
                 throw new InvalidArgumentException('Invalid field names should be string. Field type is: ' . gettype($field));
             }

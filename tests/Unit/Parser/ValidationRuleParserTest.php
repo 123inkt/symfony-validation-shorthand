@@ -12,10 +12,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Parser\ValidationRuleParser
- * @covers ::__construct
  */
 class ValidationRuleParserTest extends TestCase
 {
+    /** @var ValidationRuleParser */
+    private $parser;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->parser = new ValidationRuleParser();
+    }
+
+
     /**
      * @covers ::parse
      * @covers ::parseRules
@@ -24,9 +33,7 @@ class ValidationRuleParserTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid field names should be string. Field type');
-
-        $parser = new ValidationRuleParser([1 => 'a']);
-        $parser->parse();
+        $this->parser->parse([1 => 'a']);
     }
 
     /**
@@ -38,7 +45,7 @@ class ValidationRuleParserTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid rule definition type. Expecting string or constraint');
-        (new ValidationRuleParser(['username' => [200]]))->parse();
+        $this->parser->parse(['username' => [200]]);
     }
 
     /**
@@ -48,8 +55,7 @@ class ValidationRuleParserTest extends TestCase
     public function testParseRuleWithSingleConstraint(): void
     {
         $constraint = new Assert\NotBlank();
-        $parser     = new ValidationRuleParser(['username' => $constraint]);
-        $result     = $parser->parse();
+        $result     = $this->parser->parse(['username' => $constraint]);
         static::assertCount(1, $result);
         static::assertArrayHasKey('username', $result);
         static::assertInstanceOf(RuleSet::class, $result['username']);
@@ -64,8 +70,7 @@ class ValidationRuleParserTest extends TestCase
      */
     public function testParseRuleWithSingleStringRule(): void
     {
-        $parser = new ValidationRuleParser(['username' => 'required']);
-        $result = $parser->parse();
+        $result = $this->parser->parse(['username' => 'required']);
         static::assertCount(1, $result);
         static::assertArrayHasKey('username', $result);
         static::assertInstanceOf(RuleSet::class, $result['username']);
@@ -81,8 +86,7 @@ class ValidationRuleParserTest extends TestCase
      */
     public function testParseRuleWithSingleStringRuleWithParameter(): void
     {
-        $parser = new ValidationRuleParser(['username' => 'max:123']);
-        $result = $parser->parse();
+        $result = $this->parser->parse(['username' => 'max:123']);
         static::assertCount(1, $result);
         static::assertArrayHasKey('username', $result);
         static::assertInstanceOf(RuleSet::class, $result['username']);
@@ -98,8 +102,7 @@ class ValidationRuleParserTest extends TestCase
      */
     public function testParseRuleWithSingleStringRuleWithMultipleParameters(): void
     {
-        $parser = new ValidationRuleParser(['username' => 'between:5,10']);
-        $result = $parser->parse();
+        $result = $this->parser->parse(['username' => 'between:5,10']);
         static::assertCount(1, $result);
         static::assertArrayHasKey('username', $result);
         static::assertInstanceOf(RuleSet::class, $result['username']);
@@ -115,8 +118,7 @@ class ValidationRuleParserTest extends TestCase
      */
     public function testParseRuleWithSingleStringRuleWithRegexParameter(): void
     {
-        $parser = new ValidationRuleParser(['phone-number' => 'regex:/^\d+$/i']);
-        $result = $parser->parse();
+        $result = $this->parser->parse(['phone-number' => 'regex:/^\d+$/i']);
         static::assertCount(1, $result);
         static::assertArrayHasKey('phone-number', $result);
         static::assertInstanceOf(RuleSet::class, $result['phone-number']);
@@ -132,8 +134,7 @@ class ValidationRuleParserTest extends TestCase
      */
     public function testParseRuleWithMultipleStringRules(): void
     {
-        $parser = new ValidationRuleParser(['username' => 'required|max:30']);
-        $result = $parser->parse();
+        $result = $this->parser->parse(['username' => 'required|max:30']);
         static::assertCount(1, $result);
         static::assertArrayHasKey('username', $result);
         static::assertInstanceOf(RuleSet::class, $result['username']);
@@ -149,8 +150,7 @@ class ValidationRuleParserTest extends TestCase
      */
     public function testParseRuleWithMultipleStringRulesAsArray(): void
     {
-        $parser = new ValidationRuleParser(['username' => ['required', 'max:30']]);
-        $result = $parser->parse();
+        $result = $this->parser->parse(['username' => ['required', 'max:30']]);
         static::assertCount(1, $result);
         static::assertArrayHasKey('username', $result);
         static::assertInstanceOf(RuleSet::class, $result['username']);
@@ -167,8 +167,7 @@ class ValidationRuleParserTest extends TestCase
     public function testParseRuleWithStringRuleAndConstraint(): void
     {
         $constraint = new Assert\NotBlank();
-        $parser     = new ValidationRuleParser(['username' => ['required', $constraint]]);
-        $result     = $parser->parse();
+        $result     = $this->parser->parse(['username' => ['required', $constraint]]);
         static::assertCount(1, $result);
         static::assertArrayHasKey('username', $result);
         static::assertInstanceOf(RuleSet::class, $result['username']);
