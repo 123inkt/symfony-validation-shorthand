@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation;
 
+use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
+use DigitalRevolution\SymfonyRequestValidation\Parser\ValidationRuleParser;
 use DigitalRevolution\SymfonyRequestValidation\Validator\RequestValidator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -29,7 +31,7 @@ abstract class AbstractValidatedRequest
         }
 
         $this->request = $request;
-        $this->isValid = $this->validate($request, new RequestValidator($validator));
+        $this->isValid = $this->validate($request, new RequestValidator($validator, new ValidationRuleParser(new ConstraintResolver())));
     }
 
     public function getRequest(): Request
