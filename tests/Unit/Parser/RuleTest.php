@@ -5,7 +5,6 @@ namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Parser;
 
 use DigitalRevolution\SymfonyRequestValidation\Parser\Rule;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -39,7 +38,7 @@ class RuleTest extends TestCase
      */
     public function testGetParameterInvalidOffset(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(RequestValidationException::class);
         $this->expectExceptionMessage('Unknown offset for rule');
 
         $rule = new Rule('name', ['5']);
@@ -54,7 +53,7 @@ class RuleTest extends TestCase
      */
     public function testGetParameterInvalidIntType(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(RequestValidationException::class);
         $this->expectExceptionMessage('Invalid int argument for rule');
 
         $rule = new Rule('name', ['test']);

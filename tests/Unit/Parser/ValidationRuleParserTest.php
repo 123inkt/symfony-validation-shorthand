@@ -100,11 +100,12 @@ class ValidationRuleParserTest extends TestCase
      */
     public function testParseRuleWithSingleStringRuleWithParameter(): void
     {
-        $result = $this->parser->parse(['username' => 'max:123']);
-        static::assertCount(1, $result);
-        static::assertArrayHasKey('username', $result);
-        static::assertInstanceOf(RuleSet::class, $result['username']);
-        static::assertEquals([new Rule('max', ['123'])], $result['username']->getRules());
+        $optional = new Assert\Optional();
+        $ruleSet  = new RuleSet();
+        $ruleSet->addRule(new Rule('max', ['123']));
+
+        $this->resolverMockHelper->mockResolveRuleSet($ruleSet, $optional);
+        $this->assertCollection(['username' => $optional], $this->parser->parse(['username' => 'max:123']));
     }
 
     /**
@@ -117,11 +118,12 @@ class ValidationRuleParserTest extends TestCase
      */
     public function testParseRuleWithSingleStringRuleWithMultipleParameters(): void
     {
-        $result = $this->parser->parse(['username' => 'between:5,10']);
-        static::assertCount(1, $result);
-        static::assertArrayHasKey('username', $result);
-        static::assertInstanceOf(RuleSet::class, $result['username']);
-        static::assertEquals([new Rule('between', ['5', '10'])], $result['username']->getRules());
+        $optional = new Assert\Optional();
+        $ruleSet  = new RuleSet();
+        $ruleSet->addRule(new Rule('between', ['5', '10']));
+
+        $this->resolverMockHelper->mockResolveRuleSet($ruleSet, $optional);
+        $this->assertCollection(['username' => $optional], $this->parser->parse(['username' => 'between:5,10']));
     }
 
     /**
@@ -134,11 +136,12 @@ class ValidationRuleParserTest extends TestCase
      */
     public function testParseRuleWithSingleStringRuleWithRegexParameter(): void
     {
-        $result = $this->parser->parse(['phone-number' => 'regex:/^\d+$/i']);
-        static::assertCount(1, $result);
-        static::assertArrayHasKey('phone-number', $result);
-        static::assertInstanceOf(RuleSet::class, $result['phone-number']);
-        static::assertEquals([new Rule('regex', ['/^\d+$/i'])], $result['phone-number']->getRules());
+        $optional = new Assert\Optional();
+        $ruleSet  = new RuleSet();
+        $ruleSet->addRule(new Rule('regex', ['/^\d+$/i']));
+
+        $this->resolverMockHelper->mockResolveRuleSet($ruleSet, $optional);
+        $this->assertCollection(['phone-number' => $optional], $this->parser->parse(['phone-number' => 'regex:/^\d+$/i']));
     }
 
     /**
@@ -151,11 +154,13 @@ class ValidationRuleParserTest extends TestCase
      */
     public function testParseRuleWithMultipleStringRules(): void
     {
-        $result = $this->parser->parse(['username' => 'required|max:30']);
-        static::assertCount(1, $result);
-        static::assertArrayHasKey('username', $result);
-        static::assertInstanceOf(RuleSet::class, $result['username']);
-        static::assertEquals([new Rule('required', []), new Rule('max', ['30'])], $result['username']->getRules());
+        $optional = new Assert\Optional();
+        $ruleSet  = new RuleSet();
+        $ruleSet->addRule(new Rule('required', []));
+        $ruleSet->addRule(new Rule('max', ['30']));
+
+        $this->resolverMockHelper->mockResolveRuleSet($ruleSet, $optional);
+        $this->assertCollection(['username' => $optional], $this->parser->parse(['username' => 'required|max:30']));
     }
 
     /**
@@ -168,11 +173,13 @@ class ValidationRuleParserTest extends TestCase
      */
     public function testParseRuleWithMultipleStringRulesAsArray(): void
     {
-        $result = $this->parser->parse(['username' => ['required', 'max:30']]);
-        static::assertCount(1, $result);
-        static::assertArrayHasKey('username', $result);
-        static::assertInstanceOf(RuleSet::class, $result['username']);
-        static::assertEquals([new Rule('required', []), new Rule('max', ['30'])], $result['username']->getRules());
+        $optional = new Assert\Optional();
+        $ruleSet  = new RuleSet();
+        $ruleSet->addRule(new Rule('required', []));
+        $ruleSet->addRule(new Rule('max', ['30']));
+
+        $this->resolverMockHelper->mockResolveRuleSet($ruleSet, $optional);
+        $this->assertCollection(['username' => $optional], $this->parser->parse(['username' => ['required', 'max:30']]));
     }
 
     /**
@@ -186,14 +193,16 @@ class ValidationRuleParserTest extends TestCase
     public function testParseRuleWithStringRuleAndConstraint(): void
     {
         $constraint = new Assert\NotBlank();
-        $result     = $this->parser->parse(['username' => ['required', $constraint]]);
-        static::assertCount(1, $result);
-        static::assertArrayHasKey('username', $result);
-        static::assertInstanceOf(RuleSet::class, $result['username']);
-        static::assertEquals([new Rule('required', []), $constraint], $result['username']->getRules());
+        $optional   = new Assert\Optional();
+        $ruleSet    = new RuleSet();
+        $ruleSet->addRule(new Rule('required', []));
+        $ruleSet->addRule($constraint);
+
+        $this->resolverMockHelper->mockResolveRuleSet($ruleSet, $optional);
+        $this->assertCollection(['username' => $optional], $this->parser->parse(['username' => ['required', $constraint]]));
     }
 
-    private function assertCollection(array $fields, Collection $actual, string $message = '')
+    private function assertCollection(array $fields, Collection $actual, string $message = ''): void
     {
         static::assertEquals(new Assert\Collection(['fields' => $fields]), $actual, $message);
     }
