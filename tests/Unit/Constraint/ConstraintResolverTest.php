@@ -67,6 +67,7 @@ class ConstraintResolverTest extends TestCase
         yield 'integer' => [new Assert\Optional(new Assert\Type('integer')), [new Rule('integer')]];
         yield 'float' => [new Assert\Optional(new Assert\Type('float')), [new Rule('float')]];
         yield 'email' => [new Assert\Optional(new Assert\Email()), [new Rule('email')]];
+        yield 'regex' => [new Assert\Optional(new Assert\Regex(['pattern' => '/^unittest$/'])), [new Rule('regex', ['/^unittest$/'])]];
         yield 'required' => [new Assert\Required(), [new Rule('required')]];
         yield 'required email' => [new Assert\Required(new Assert\Email()), [new Rule('required'), new Rule('email')]];
 

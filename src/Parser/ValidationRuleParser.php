@@ -19,7 +19,7 @@ class ValidationRuleParser
     }
 
     /**
-     * @param array<mixed, string|Constraint|array<string|Constraint>> $fieldRules
+     * @param array<mixed> $fieldRules
      * @throws RequestValidationException
      */
     public function parse(array $fieldRules): Collection
@@ -93,7 +93,7 @@ class ValidationRuleParser
     protected static function parseParameters(string $rule, string $parameter): array
     {
         $rule = strtolower($rule);
-        if ($rule === 'regex') {
+        if ($rule === Rule::RULE_REGEX) {
             return [$parameter];
         }
 
@@ -107,9 +107,9 @@ class ValidationRuleParser
     {
         switch ($name) {
             case 'int':
-                return 'integer';
+                return Rule::RULE_INTEGER;
             case 'bool':
-                return 'boolean';
+                return Rule::RULE_BOOLEAN;
             default:
                 return $name;
         }

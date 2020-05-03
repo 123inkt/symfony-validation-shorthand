@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Optional;
 use Symfony\Component\Validator\Constraints\Range;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
 
@@ -30,7 +31,7 @@ class ConstraintResolver
             }
 
             /** @var Rule $rule */
-            if ($rule->getName() === 'required') {
+            if ($rule->getName() === Rule::RULE_REQUIRED) {
                 $required = true;
                 continue;
             }
@@ -50,31 +51,35 @@ class ConstraintResolver
     protected function resolveConstraint(RuleSet $ruleSet, Rule $rule): Constraint
     {
         switch ($rule->getName()) {
-            case 'boolean':
+            case Rule::RULE_BOOLEAN:
                 return new Type('bool');
-            case 'integer':
+            case Rule::RULE_INTEGER:
                 return new Type('integer');
-            case 'float':
+            case Rule::RULE_FLOAT:
                 return new Type('float');
-            case 'email':
+            case Rule::RULE_EMAIL:
                 return new Email();
-            case 'min':
-                if ($ruleSet->hasRule('integer')) {
+            case Rule::RULE_REGEX:
+                return new Regex(['pattern' => $rule->getParameter(0)]);
+            case Rule::RULE_MIN:
+                if ($ruleSet->hasRule(Rule::RULE_INTEGER)) {
                     return new Range(['min' => $rule->getIntParam(0)]);
                 }
                 return new Length(['min' => $rule->getIntParam(0)]);
-            case 'max':
-                if ($ruleSet->hasRule('integer')) {
+            case Rule::RULE_MAX:
+                if ($ruleSet->hasRule(Rule::RULE_INTEGER)) {
                     return new Range(['max' => $rule->getIntParam(0)]);
                 }
                 return new Length(['max' => $rule->getIntParam(0)]);
-            case 'between':
-                if ($ruleSet->hasRule('integer')) {
+            case Rule::RULE_BETWEEN:
+                if ($ruleSet->hasRule(Rule::RULE_INTEGER)) {
                     return new Range(['min' => $rule->getIntParam(0), 'max' => $rule->getIntParam(1)]);
                 }
                 return new Length(['min' => $rule->getIntParam(0), 'max' => $rule->getIntParam(1)]);
         }
 
-        throw new RequestValidationException('Unable to resolve rule: ' . $rule->getName());
+        throw new RequestValidationException(
+            'Unable to resolve rule: ' . $rule->getName() . '. Supported rules: ' . implode(", ", Rule::ALLOWED_RULES)
+        );
     }
 }
