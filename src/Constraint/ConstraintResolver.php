@@ -9,6 +9,7 @@ use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Optional;
 use Symfony\Component\Validator\Constraints\Range;
@@ -76,6 +77,8 @@ class ConstraintResolver
                 return new Email();
             case Rule::RULE_REGEX:
                 return new Regex(['pattern' => $rule->getParameter(0)]);
+            case Rule::RULE_FILLED:
+                return new NotBlank(['allowNull' => $ruleSet->hasRule(Rule::RULE_NULLABLE)]);
             case Rule::RULE_MIN:
                 if ($ruleSet->hasRule(Rule::RULE_INTEGER)) {
                     return new Range(['min' => $rule->getIntParam(0)]);

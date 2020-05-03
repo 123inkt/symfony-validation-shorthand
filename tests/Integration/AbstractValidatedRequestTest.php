@@ -62,6 +62,7 @@ class AbstractValidatedRequestTest extends TestCase
         // test required fields
         yield "required: name exists" => [['name' => 'Frank'], ['name' => 'required'], true];
         yield "required: name is empty" => [['name' => ''], ['name' => 'required'], true];
+        yield "required: name can't be empty" => [['name' => ''], ['name' => 'required|filled'], false];
         yield "required: name can't be null" => [['name' => null], ['name' => 'required'], false];
         yield "required: name is nullable" => [['name' => null], ['name' => 'required|nullable'], true];
         yield "required: name field is missing" => [[], ['name' => 'required'], false];
@@ -69,8 +70,14 @@ class AbstractValidatedRequestTest extends TestCase
         // test optional string
         yield "optional: name exists" => [['name' => 'Frank'], ['name' => 'string'], true];
         yield "optional: name is empty" => [['name' => ''], ['name' => 'string'], true];
+        yield "optional: name can't be empty" => [['name' => ''], ['name' => 'string|filled'], false];
         yield "optional: name field is missing" => [[], ['name' => 'string'], true];
         yield "optional: name can't be null" => [['name' => null], ['name' => 'string'], false];
         yield "optional: name is nullable" => [['name' => null], ['name' => 'string|nullable'], true];
+
+        // test string must be null or filled, never empty string
+        yield "string: name can be null" => [['name' => null], ['name' => 'string|filled|nullable'], true];
+        yield "string: name can't be empty string" => [['name' => ''], ['name' => 'string|filled|nullable'], false];
+        yield "string: name can be filled" => [['name' => 'unittest'], ['name' => 'string|filled|nullable'], true];
     }
 }
