@@ -22,7 +22,7 @@ class ValidationRuleParser
      * @param array<string, array<string|Constraint> $fieldRules
      * @throws RequestValidationException
      */
-    public function parse(array $fieldRules): Constraint
+    public function parse(array $fieldRules): Collection
     {
         $result = [];
         foreach ($fieldRules as $field => $rules) {
