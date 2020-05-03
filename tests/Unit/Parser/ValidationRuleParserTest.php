@@ -226,7 +226,7 @@ class ValidationRuleParserTest extends TestCase
     }
 
     /**
-     * @param array<Constraint|Constraint[]> $fields
+     * @phpstan-param array<Constraint|Constraint[]> $fields
      */
     private function assertCollection(array $fields, Collection $actual, string $message = ''): void
     {

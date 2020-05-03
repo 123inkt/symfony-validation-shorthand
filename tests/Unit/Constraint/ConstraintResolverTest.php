@@ -58,7 +58,7 @@ class ConstraintResolverTest extends TestCase
     }
 
     /**
-     * @return Generator<string, array<int, Constraint|Rule[]|Constraint[]>>
+     * @phpstan-return Generator<string, array<int, Constraint|Rule[]|Constraint[]>>
      */
     public function dataProvider(): Generator
     {
