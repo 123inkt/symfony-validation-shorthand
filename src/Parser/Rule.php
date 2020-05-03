@@ -13,6 +13,9 @@ class Rule
     /** @var string[] */
     private $parameters;
 
+    /**
+     * @param string[] $parameters
+     */
     public function __construct(string $name, array $parameters = [])
     {
         $this->name       = $name;
@@ -51,6 +54,9 @@ class Rule
         return (int)$argument;
     }
 
+    /**
+     * @return string[]
+     */
     public function getParameters(): array
     {
         return $this->parameters;

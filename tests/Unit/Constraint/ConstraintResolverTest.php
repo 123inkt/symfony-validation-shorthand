@@ -45,6 +45,7 @@ class ConstraintResolverTest extends TestCase
      * @dataProvider dataProvider
      * @covers ::resolveRuleSet
      * @covers ::resolveConstraint
+     * @param array<Rule|Constraint> $rules
      * @throws RequestValidationException
      */
     public function testResolveRuleSet(Constraint $expected, array $rules): void
@@ -56,6 +57,9 @@ class ConstraintResolverTest extends TestCase
         static::assertEquals($expected, $this->resolver->resolveRuleSet($ruleSet));
     }
 
+    /**
+     * @return Generator<string, array<int, Constraint|Rule[]|Constraint[]>>
+     */
     public function dataProvider(): Generator
     {
         yield 'constraint' => [new Assert\Optional(new Assert\NotBlank()), [new Assert\NotBlank()]];

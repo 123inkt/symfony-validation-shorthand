@@ -19,7 +19,7 @@ class ConstraintResolver
     /**
      * @throws RequestValidationException
      */
-    public function resolveRuleSet(RuleSet $ruleSet)
+    public function resolveRuleSet(RuleSet $ruleSet): Constraint
     {
         $required    = false;
         $constraints = [];

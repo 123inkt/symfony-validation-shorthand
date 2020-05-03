@@ -10,6 +10,7 @@ use DigitalRevolution\SymfonyRequestValidation\Parser\ValidationRuleParser;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use DigitalRevolution\SymfonyRequestValidation\Tests\Mock\ConstraintResolverMockHelper;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\Collection;
 
@@ -55,7 +56,7 @@ class ValidationRuleParserTest extends TestCase
     {
         $this->expectException(RequestValidationException::class);
         $this->expectExceptionMessage('Invalid rule definition type. Expecting string or Symfony\Component\Validator\Constraint');
-        $this->parser->parse(['username' => [200]]);
+        $this->parser->parse(['username' => ['200']]);
     }
 
     /**
@@ -224,6 +225,9 @@ class ValidationRuleParserTest extends TestCase
         $this->assertCollection($expected, $this->parser->parse(['productId' => 'int', 'disabled' => 'bool']));
     }
 
+    /**
+     * @param array<Constraint|Constraint[]> $fields
+     */
     private function assertCollection(array $fields, Collection $actual, string $message = ''): void
     {
         static::assertEquals(new Assert\Collection(['fields' => $fields]), $actual, $message);

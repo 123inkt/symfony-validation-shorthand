@@ -19,7 +19,7 @@ class ValidationRuleParser
     }
 
     /**
-     * @param array<string, array<string|Constraint> $fieldRules
+     * @param array<mixed, string|Constraint|array<string|Constraint>> $fieldRules
      * @throws RequestValidationException
      */
     public function parse(array $fieldRules): Collection
@@ -37,6 +37,8 @@ class ValidationRuleParser
 
     /**
      * Parse a set of string rules and constraints
+     *
+     * @param array<string|Constraint> $rules
      * @throws RequestValidationException
      */
     protected function parseRules(array $rules): Constraint

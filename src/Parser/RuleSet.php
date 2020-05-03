@@ -31,7 +31,7 @@ class RuleSet implements Countable
     }
 
     /**
-     * @var Rule|Constraint $rule
+     * @param Rule|Constraint $rule
      */
     public function addRule($rule): self
     {
@@ -44,7 +44,7 @@ class RuleSet implements Countable
     }
 
     /**
-     * @var array<Rule|Constraint> $rules
+     * @param array<Rule|Constraint> $rules
      */
     public function addAll(array $rules): self
     {
@@ -55,7 +55,7 @@ class RuleSet implements Countable
         return $this;
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->rules);
     }
