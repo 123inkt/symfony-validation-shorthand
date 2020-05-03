@@ -9,6 +9,7 @@ use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Optional;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -36,10 +37,22 @@ class ConstraintResolver
                 continue;
             }
 
+            if ($rule->getName() === Rule::RULE_NULLABLE) {
+                continue;
+            }
+
             $constraints[] = $this->resolveConstraint($ruleSet, $rule);
         }
 
+        if ($ruleSet->hasRule(Rule::RULE_NULLABLE) === false) {
+            $constraints[] = new NotNull();
+        }
+
         if ($required) {
+            // if `required` is the only rule specified, default to array|string|null value
+            if (count($constraints) === 0) {
+                $constraints[] = new Type(['array', 'string']);
+            }
             return new Required($constraints);
         }
         return new Optional($constraints);
@@ -57,6 +70,8 @@ class ConstraintResolver
                 return new Type('integer');
             case Rule::RULE_FLOAT:
                 return new Type('float');
+            case Rule::RULE_STRING:
+                return new Type('string');
             case Rule::RULE_EMAIL:
                 return new Email();
             case Rule::RULE_REGEX:

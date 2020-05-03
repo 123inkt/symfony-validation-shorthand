@@ -40,6 +40,8 @@
         "phpcbf": "phpcbf src tests",
         "phpmd": "phpmd src,tests text phpmd.xml.dist --suffixes=php",
         "phpstan": "phpstan analyse",
-        "test": "phpunit --testsuite unit"
+        "test": "phpunit",
+        "test:integration": "phpunit --testsuite integration",
+        "test:unit": "phpunit --testsuite unit"
     }
 }

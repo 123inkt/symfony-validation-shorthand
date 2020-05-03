@@ -11,7 +11,9 @@ class Rule
     public const RULE_BOOLEAN  = 'boolean';
     public const RULE_INTEGER  = 'integer';
     public const RULE_FLOAT    = 'float';
+    public const RULE_STRING   = 'string';
     public const RULE_EMAIL    = 'email';
+    public const RULE_NULLABLE = 'nullable';
     public const RULE_REGEX    = 'regex';
     public const RULE_MIN      = 'min';
     public const RULE_MAX      = 'max';
@@ -22,7 +24,9 @@ class Rule
         self::RULE_BOOLEAN,
         self::RULE_INTEGER,
         self::RULE_FLOAT,
+        self::RULE_STRING,
         self::RULE_EMAIL,
+        self::RULE_NULLABLE,
         self::RULE_REGEX,
         self::RULE_MIN,
         self::RULE_MAX,
