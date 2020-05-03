@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints\Collection;
 
 /**
  * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Parser\ValidationRuleParser
+ * @covers ::__construct()
  */
 class ValidationRuleParserTest extends TestCase
 {
@@ -78,6 +79,7 @@ class ValidationRuleParserTest extends TestCase
      * @covers ::parseRules
      * @covers ::explodeExplicitRule
      * @covers ::parseStringRule
+     * @covers ::normalizeRuleName
      * @throws RequestValidationException
      */
     public function testParseRuleWithSingleStringRule(): void
@@ -200,6 +202,26 @@ class ValidationRuleParserTest extends TestCase
 
         $this->resolverMockHelper->mockResolveRuleSet($ruleSet, $optional);
         $this->assertCollection(['username' => $optional], $this->parser->parse(['username' => ['required', $constraint]]));
+    }
+
+    /**
+     * @covers ::normalizeRuleName
+     * @throws RequestValidationException
+     */
+    public function testParseRuleWithRuleNormalization(): void
+    {
+        $constraintA = new Assert\Required();
+        $constraintB = new Assert\Optional();
+        $ruleSetA    = new RuleSet();
+        $ruleSetA->addRule(new Rule('integer', []));
+        $ruleSetB = new RuleSet();
+        $ruleSetB->addRule(new Rule('boolean', []));
+
+        // expect 2 invocations
+        $this->resolverMockHelper->mockResolveRuleSet([$ruleSetA, $ruleSetB], [$constraintA, $constraintB], 2);
+        $expected = ['productId' => $constraintA, 'disabled' => $constraintB];
+
+        $this->assertCollection($expected, $this->parser->parse(['productId' => 'int', 'disabled' => 'bool']));
     }
 
     private function assertCollection(array $fields, Collection $actual, string $message = ''): void

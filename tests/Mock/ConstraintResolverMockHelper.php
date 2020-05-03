@@ -22,13 +22,30 @@ class ConstraintResolverMockHelper
         $this->resolver = $resolver;
     }
 
-    public function mockResolveRuleSet(RuleSet $ruleSet, Constraint $constraint, int $expects = 1): self
+    /**
+     * @param RuleSet|RuleSet[] $ruleSets
+     * @param Constraint|Constraint[] $constraints
+     */
+    public function mockResolveRuleSet($ruleSets, $constraints, int $expects = 1): self
     {
+        if (is_array($ruleSets) === false) {
+            $ruleSets = [[$ruleSets]];
+        } else {
+            // transform $ruleSets to an array of arrays to support the spread operator for withConsecutive
+            $result = [];
+            foreach ($ruleSets as $ruleSet) {
+                $result[] = [$ruleSet];
+            }
+            $ruleSets = $result;
+        }
+        if (is_array($constraints) === false) {
+            $constraints = [$constraints];
+        }
         $this->resolver
             ->expects(new InvokedCountMatcher($expects))
             ->method('resolveRuleSet')
-            ->with($ruleSet)
-            ->willReturn($constraint);
+            ->withConsecutive(...$ruleSets)
+            ->willReturn(...$constraints);
 
         return $this;
     }

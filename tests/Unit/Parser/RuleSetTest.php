@@ -54,7 +54,6 @@ class RuleSetTest extends TestCase
 
     /**
      * @covers ::addRule
-     * @covers ::setRules
      */
     public function testAddRule(): void
     {
