@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace DigitalRevolution\SymfonyRequestValidation\Parser;
 
 use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
-use InvalidArgumentException;
+use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Collection;
 
@@ -20,13 +20,14 @@ class ValidationRuleParser
 
     /**
      * @param array<string, array<string|Constraint> $fieldRules
+     * @throws RequestValidationException
      */
     public function parse(array $fieldRules): Constraint
     {
         $result = [];
         foreach ($fieldRules as $field => $rules) {
             if (is_string($field) === false) {
-                throw new InvalidArgumentException('Field names should be string. Field type is: ' . gettype($field));
+                throw new RequestValidationException('Field names should be string. Field type is: ' . gettype($field));
             }
             $result[$field] = $this->parseRules(is_array($rules) ? $rules : [$rules]);
         }
@@ -36,6 +37,7 @@ class ValidationRuleParser
 
     /**
      * Parse a set of string rules and constraints
+     * @throws RequestValidationException
      */
     protected function parseRules(array $rules): Constraint
     {
@@ -56,13 +58,14 @@ class ValidationRuleParser
      *
      * @param mixed $rule
      * @return Rule[]
+     * @throws RequestValidationException
      */
     protected function explodeExplicitRule($rule): array
     {
         if (is_string($rule)) {
             return array_map([$this, 'parseStringRule'], explode('|', $rule));
         }
-        throw new InvalidArgumentException('Invalid rule definition type. Expecting string or constraint');
+        throw new RequestValidationException('Invalid rule definition type. Expecting string or constraint');
     }
 
     /**

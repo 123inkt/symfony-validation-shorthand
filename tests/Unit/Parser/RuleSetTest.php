@@ -60,7 +60,6 @@ class RuleSetTest extends TestCase
     {
         $ruleA = new Rule('a');
         $ruleB = new Rule('b');
-        $ruleC = new Rule('C');
 
         $ruleSet = new RuleSet();
         static::assertCount(0, $ruleSet);

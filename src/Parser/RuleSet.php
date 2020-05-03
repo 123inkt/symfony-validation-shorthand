@@ -11,7 +11,10 @@ class RuleSet implements Countable
     /** @var array<Rule|Constraint> */
     private $rules = [];
 
-    /** @var array<string, true> */
+    /**
+     * Rule type lookup index
+     * @var array<string, true>
+     */
     private $ruleTypes = [];
 
     public function hasRule(string $name): bool

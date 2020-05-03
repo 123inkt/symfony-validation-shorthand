@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation\Parser;
 
-use InvalidArgumentException;
+use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 
 class Rule
 {
@@ -24,20 +24,26 @@ class Rule
         return $this->name;
     }
 
+    /**
+     * @throws RequestValidationException
+     */
     public function getParameter(int $offset): string
     {
         if (isset($this->parameters[$offset]) === false) {
-            throw new InvalidArgumentException('Unknown offset for rule: ' . $this->getName() . ', offset:' . $offset);
+            throw new RequestValidationException('Unknown offset for rule: ' . $this->getName() . ', offset:' . $offset);
         }
 
         return $this->parameters[$offset];
     }
 
+    /**
+     * @throws RequestValidationException
+     */
     public function getIntParam(int $offset): int
     {
         $argument = $this->getParameter($offset);
         if ((string)(int)$argument !== $argument) {
-            throw new InvalidArgumentException('Invalid int argument for rule: ' . $this->getName() . ', value: ' . $this->parameters[$offset]);
+            throw new RequestValidationException('Invalid int argument for rule: ' . $this->getName() . ', value: ' . $this->parameters[$offset]);
         }
 
         return (int)$argument;

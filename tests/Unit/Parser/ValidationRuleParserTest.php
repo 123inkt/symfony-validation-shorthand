@@ -6,6 +6,7 @@ namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Parser;
 use DigitalRevolution\SymfonyRequestValidation\Parser\Rule;
 use DigitalRevolution\SymfonyRequestValidation\Parser\RuleSet;
 use DigitalRevolution\SymfonyRequestValidation\Parser\ValidationRuleParser;
+use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -28,6 +29,7 @@ class ValidationRuleParserTest extends TestCase
     /**
      * @covers ::parse
      * @covers ::parseRules
+     * @throws RequestValidationException
      */
     public function testFailParseInvalidFieldName(): void
     {
@@ -40,6 +42,7 @@ class ValidationRuleParserTest extends TestCase
      * @covers ::parse
      * @covers ::parseRules
      * @covers ::explodeExplicitRule
+     * @throws RequestValidationException
      */
     public function testFailParseRuleWithBadRuleType(): void
     {
@@ -51,6 +54,7 @@ class ValidationRuleParserTest extends TestCase
     /**
      * @covers ::parse
      * @covers ::parseRules
+     * @throws RequestValidationException
      */
     public function testParseRuleWithSingleConstraint(): void
     {
@@ -67,6 +71,7 @@ class ValidationRuleParserTest extends TestCase
      * @covers ::parseRules
      * @covers ::explodeExplicitRule
      * @covers ::parseStringRule
+     * @throws RequestValidationException
      */
     public function testParseRuleWithSingleStringRule(): void
     {
@@ -83,6 +88,7 @@ class ValidationRuleParserTest extends TestCase
      * @covers ::explodeExplicitRule
      * @covers ::parseStringRule
      * @covers ::parseParameters
+     * @throws RequestValidationException
      */
     public function testParseRuleWithSingleStringRuleWithParameter(): void
     {
@@ -99,6 +105,7 @@ class ValidationRuleParserTest extends TestCase
      * @covers ::explodeExplicitRule
      * @covers ::parseStringRule
      * @covers ::parseParameters
+     * @throws RequestValidationException
      */
     public function testParseRuleWithSingleStringRuleWithMultipleParameters(): void
     {
@@ -115,6 +122,7 @@ class ValidationRuleParserTest extends TestCase
      * @covers ::explodeExplicitRule
      * @covers ::parseStringRule
      * @covers ::parseParameters
+     * @throws RequestValidationException
      */
     public function testParseRuleWithSingleStringRuleWithRegexParameter(): void
     {
@@ -131,6 +139,7 @@ class ValidationRuleParserTest extends TestCase
      * @covers ::explodeExplicitRule
      * @covers ::parseStringRule
      * @covers ::parseParameters
+     * @throws RequestValidationException
      */
     public function testParseRuleWithMultipleStringRules(): void
     {
@@ -147,6 +156,7 @@ class ValidationRuleParserTest extends TestCase
      * @covers ::explodeExplicitRule
      * @covers ::parseStringRule
      * @covers ::parseParameters
+     * @throws RequestValidationException
      */
     public function testParseRuleWithMultipleStringRulesAsArray(): void
     {
@@ -163,6 +173,7 @@ class ValidationRuleParserTest extends TestCase
      * @covers ::explodeExplicitRule
      * @covers ::parseStringRule
      * @covers ::parseParameters
+     * @throws RequestValidationException
      */
     public function testParseRuleWithStringRuleAndConstraint(): void
     {

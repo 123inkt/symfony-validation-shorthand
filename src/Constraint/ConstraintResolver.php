@@ -5,7 +5,7 @@ namespace DigitalRevolution\SymfonyRequestValidation\Constraint;
 
 use DigitalRevolution\SymfonyRequestValidation\Parser\Rule;
 use DigitalRevolution\SymfonyRequestValidation\Parser\RuleSet;
-use InvalidArgumentException;
+use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
@@ -16,6 +16,9 @@ use Symfony\Component\Validator\Constraints\Type;
 
 class ConstraintResolver
 {
+    /**
+     * @throws RequestValidationException
+     */
     public function resolveRuleSet(RuleSet $ruleSet)
     {
         $required    = false;
@@ -41,7 +44,9 @@ class ConstraintResolver
         return new Optional($constraints);
     }
 
-
+    /**
+     * @throws RequestValidationException
+     */
     protected function resolveConstraint(RuleSet $ruleSet, Rule $rule): Constraint
     {
         switch ($rule->getName()) {
@@ -70,6 +75,6 @@ class ConstraintResolver
                 return new Length(['min' => $rule->getIntParam(0), 'max' => $rule->getIntParam(1)]);
         }
 
-        throw new InvalidArgumentException('Unable to resolve rule: ' . $rule->getName());
+        throw new RequestValidationException('Unable to resolve rule: ' . $rule->getName());
     }
 }

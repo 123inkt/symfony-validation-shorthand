@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Parser;
 
 use DigitalRevolution\SymfonyRequestValidation\Parser\Rule;
+use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
@@ -17,6 +18,7 @@ class RuleTest extends TestCase
      * @covers ::getParameter
      * @covers ::getParameters
      * @covers ::getIntParam
+     * @throws RequestValidationException
      */
     public function testGetParameter(): void
     {
@@ -33,6 +35,7 @@ class RuleTest extends TestCase
      * @covers ::getParameter
      * @covers ::getParameters
      * @covers ::getIntParam
+     * @throws RequestValidationException
      */
     public function testGetParameterInvalidOffset(): void
     {
@@ -47,6 +50,7 @@ class RuleTest extends TestCase
      * @covers ::getParameter
      * @covers ::getParameters
      * @covers ::getIntParam
+     * @throws RequestValidationException
      */
     public function testGetParameterInvalidIntType(): void
     {
