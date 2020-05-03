@@ -30,7 +30,7 @@ class Rule
     public function getParameter(int $offset): string
     {
         if (isset($this->parameters[$offset]) === false) {
-            throw new RequestValidationException('Unknown offset for rule: ' . $this->getName() . ', offset:' . $offset);
+            throw new RequestValidationException('Rule `' . $this->getName() . '` expects at least ' . $offset . ' parameter(s)');
         }
 
         return $this->parameters[$offset];
@@ -43,7 +43,9 @@ class Rule
     {
         $argument = $this->getParameter($offset);
         if ((string)(int)$argument !== $argument) {
-            throw new RequestValidationException('Invalid int argument for rule: ' . $this->getName() . ', value: ' . $this->parameters[$offset]);
+            throw new RequestValidationException(
+                'Rule `' . $this->getName() . '` expects parameter #' . $offset . ' to be an int. Encountered: `' . $argument . '`'
+            );
         }
 
         return (int)$argument;

@@ -65,7 +65,7 @@ class ValidationRuleParser
         if (is_string($rule)) {
             return array_map([$this, 'parseStringRule'], explode('|', $rule));
         }
-        throw new RequestValidationException('Invalid rule definition type. Expecting string or constraint');
+        throw new RequestValidationException('Invalid rule definition type. Expecting string or Symfony\Component\Validator\Constraint');
     }
 
     /**

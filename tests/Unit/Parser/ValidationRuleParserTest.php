@@ -54,7 +54,7 @@ class ValidationRuleParserTest extends TestCase
     public function testFailParseRuleWithBadRuleType(): void
     {
         $this->expectException(RequestValidationException::class);
-        $this->expectExceptionMessage('Invalid rule definition type. Expecting string or constraint');
+        $this->expectExceptionMessage('Invalid rule definition type. Expecting string or Symfony\Component\Validator\Constraint');
         $this->parser->parse(['username' => [200]]);
     }
 
