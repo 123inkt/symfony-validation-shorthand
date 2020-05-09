@@ -13,6 +13,7 @@ class Rule
     public const RULE_FLOAT    = 'float';
     public const RULE_STRING   = 'string';
     public const RULE_EMAIL    = 'email';
+    public const RULE_URL      = 'url';
     public const RULE_NULLABLE = 'nullable';
     public const RULE_FILLED   = 'filled';
     public const RULE_REGEX    = 'regex';
@@ -27,6 +28,7 @@ class Rule
         self::RULE_FLOAT,
         self::RULE_STRING,
         self::RULE_EMAIL,
+        self::RULE_URL,
         self::RULE_NULLABLE,
         self::RULE_FILLED,
         self::RULE_REGEX,

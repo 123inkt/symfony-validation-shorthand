@@ -7,26 +7,26 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class IntegerValidator extends ConstraintValidator
+class FloatNumberValidator extends ConstraintValidator
 {
     /**
      * @inheritDoc
      */
     public function validate($value, Constraint $constraint): void
     {
-        if ($constraint instanceof Integer === false) {
-            throw new UnexpectedTypeException($constraint, Integer::class);
+        if ($constraint instanceof IntegerNumber === false) {
+            throw new UnexpectedTypeException($constraint, IntegerNumber::class);
         }
 
         if ($value === null && $constraint->allowNull) {
             return;
         }
 
-        if (is_int($value)) {
+        if (is_float($value)) {
             return;
         }
 
-        // value should be either int or string
+        // value should be either float or string
         if (is_string($value) === false) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value }}', $this->formatValue($value))
@@ -34,8 +34,8 @@ class IntegerValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        // value can't be cast to int
-        if (((string)(int)$value) !== $value) {
+        // value can't be cast to float
+        if (((string)(float)$value) !== $value) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value }}', $this->formatValue($value))
                 ->setCode($constraint::INVALID_NUMBER_ERROR)

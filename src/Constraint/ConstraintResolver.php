@@ -6,16 +6,21 @@ namespace DigitalRevolution\SymfonyRequestValidation\Constraint;
 use DigitalRevolution\SymfonyRequestValidation\Parser\Rule;
 use DigitalRevolution\SymfonyRequestValidation\Parser\RuleSet;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
+use DigitalRevolution\SymfonyRequestValidation\Validator\Constraint\Boolean;
+use DigitalRevolution\SymfonyRequestValidation\Validator\Constraint\FloatNumber;
+use DigitalRevolution\SymfonyRequestValidation\Validator\Constraint\IntegerNumber;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Optional;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
+use Symfony\Component\Validator\Constraints\Url;
 
 class ConstraintResolver
 {
@@ -65,27 +70,29 @@ class ConstraintResolver
     {
         switch ($rule->getName()) {
             case Rule::RULE_BOOLEAN:
-                return new Type('bool');
+                return new Boolean(['allowNull' => $ruleSet->hasRule(Rule::RULE_NULLABLE)]);
             case Rule::RULE_INTEGER:
-                return new Type('integer');
+                return new IntegerNumber(['allowNull' => $ruleSet->hasRule(Rule::RULE_NULLABLE)]);
             case Rule::RULE_FLOAT:
-                return new Type('float');
+                return new FloatNumber(['allowNull' => $ruleSet->hasRule(Rule::RULE_NULLABLE)]);
             case Rule::RULE_STRING:
                 return new Type('string');
             case Rule::RULE_EMAIL:
                 return new Email();
+            case Rule::RULE_URL:
+                return new Url();
             case Rule::RULE_REGEX:
                 return new Regex(['pattern' => $rule->getParameter(0)]);
             case Rule::RULE_FILLED:
                 return new NotBlank(['allowNull' => $ruleSet->hasRule(Rule::RULE_NULLABLE)]);
             case Rule::RULE_MIN:
                 if ($ruleSet->hasRule(Rule::RULE_INTEGER)) {
-                    return new Range(['min' => $rule->getIntParam(0)]);
+                    return new GreaterThanOrEqual($rule->getIntParam(0));
                 }
                 return new Length(['min' => $rule->getIntParam(0)]);
             case Rule::RULE_MAX:
                 if ($ruleSet->hasRule(Rule::RULE_INTEGER)) {
-                    return new Range(['max' => $rule->getIntParam(0)]);
+                    return new LessThanOrEqual($rule->getIntParam(0));
                 }
                 return new Length(['max' => $rule->getIntParam(0)]);
             case Rule::RULE_BETWEEN:

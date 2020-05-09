@@ -5,10 +5,10 @@ namespace DigitalRevolution\SymfonyRequestValidation\Validator\Constraint;
 
 use Symfony\Component\Validator\Constraint;
 
-class Integer extends Constraint
+class IntegerNumber extends Constraint
 {
-    const INVALID_NUMBER_ERROR = '6495a2b1-da7c-43b2-ac4a-0b2398065e5a';
-    const INVALID_VALUE_TYPE   = 'e6a0aa5f-48fd-47bf-9a0c-a8ea712e75f5';
+    public const INVALID_NUMBER_ERROR = 'fd2ba819-b3ad-4643-ae18-137817d63de9';
+    public const INVALID_VALUE_TYPE   = 'af5ee700-4222-468a-8ff3-c3b394fc500b';
 
     protected static $errorNames = [
         self::INVALID_NUMBER_ERROR => 'INVALID_NUMBER_ERROR',
