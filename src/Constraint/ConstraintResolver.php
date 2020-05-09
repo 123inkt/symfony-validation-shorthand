@@ -20,11 +20,13 @@ use Symfony\Component\Validator\Constraints\Type;
 class ConstraintResolver
 {
     /**
+     * @return Constraint|Constraint[]
      * @throws RequestValidationException
      */
-    public function resolveRuleSet(RuleSet $ruleSet): Constraint
+    public function resolveRuleSet(RuleSet $ruleSet)
     {
         $required    = false;
+        $nullable    = false;
         $constraints = [];
         foreach ($ruleSet->getRules() as $rule) {
             if ($rule instanceof Constraint) {
@@ -39,24 +41,21 @@ class ConstraintResolver
             }
 
             if ($rule->getName() === Rule::RULE_NULLABLE) {
+                $nullable = true;
                 continue;
             }
 
             $constraints[] = $this->resolveConstraint($ruleSet, $rule);
         }
 
-        if ($ruleSet->hasRule(Rule::RULE_NULLABLE) === false) {
+        if ($nullable === false) {
             $constraints[] = new NotNull();
         }
 
-        if ($required) {
-            // if `required` is the only rule specified, default to array|string|null value
-            if (count($constraints) === 0) {
-                $constraints[] = new Type(['array', 'string']);
-            }
-            return new Required($constraints);
+        if ($required === false) {
+            return new Optional($constraints);
         }
-        return new Optional($constraints);
+        return $constraints;
     }
 
     /**

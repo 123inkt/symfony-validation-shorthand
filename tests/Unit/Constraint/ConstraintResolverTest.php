@@ -8,10 +8,12 @@ use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
 use DigitalRevolution\SymfonyRequestValidation\Iterator\RecursiveArrayIterator;
 use DigitalRevolution\SymfonyRequestValidation\Parser\Rule;
 use DigitalRevolution\SymfonyRequestValidation\Parser\RuleSet;
+use DigitalRevolution\SymfonyRequestValidation\Parser\ValidationRuleParser;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use DigitalRevolution\SymfonyRequestValidation\Transformer\StringToIntTransformer;
 use DigitalRevolution\SymfonyRequestValidation\Transformer\TransformerInterface;
 use Generator;
+use phpDocumentor\Reflection\Types\Collection;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -86,7 +88,10 @@ class ConstraintResolverTest extends TestCase
         static::assertSame(['a' => [1, 2]], $result);
     }
 
-    public function testPlayground2()
+    /**
+     * @throws RequestValidationException
+     */
+    public function testPlayground2(): void
     {
         $validator = Validation::createValidator();
 
@@ -108,7 +113,16 @@ class ConstraintResolverTest extends TestCase
             ],
         ];
 
-        $groups = new Assert\GroupSequence(['Default', 'custom']);
+        $constraintResolver = new ConstraintResolver();
+        $parser             = new ValidationRuleParser();
+        $ruleSet            = $parser->parseRules(['required|nullable']);
+
+
+        $constraint = $constraintResolver->resolveRuleSet($ruleSet);
+        $collection = new Assert\Collection(['first_name' => $constraint]);
+
+        $violations = $validator->validate([], $collection);
+        static::assertCount(0, $violations);
 
         $rules = [
             'name'      => [
@@ -155,11 +169,6 @@ class ConstraintResolverTest extends TestCase
                 ]),
             ]),
         ]);
-
-        $iterator = new ArrayIterator($input);
-
-        $violations = $validator->validate($iterator, $constraint, $groups);
-        static::assertCount(0, $violations);
     }
 
     /**

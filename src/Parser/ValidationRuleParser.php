@@ -10,39 +10,18 @@ use Symfony\Component\Validator\Constraints\Collection;
 
 class ValidationRuleParser
 {
-    /** @var ConstraintResolver */
-    private $resolver;
-
-    public function __construct(ConstraintResolver $resolver)
-    {
-        $this->resolver = $resolver;
-    }
-
-    /**
-     * @param array<mixed> $fieldRules
-     * @throws RequestValidationException
-     */
-    public function parse(array $fieldRules): Collection
-    {
-        $result = [];
-        foreach ($fieldRules as $field => $rules) {
-            if (is_string($field) === false) {
-                throw new RequestValidationException('Field names should be string. Field type is: ' . gettype($field));
-            }
-            $result[$field] = $this->parseRules(is_array($rules) ? $rules : [$rules]);
-        }
-
-        return new Collection(['fields' => $result]);
-    }
-
     /**
      * Parse a set of string rules and constraints
      *
-     * @param array<string|Constraint> $rules
+     * @param string|Constraint|array<string|Constraint> $rules
      * @throws RequestValidationException
      */
-    protected function parseRules(array $rules): Constraint
+    public function parseRules($rules): RuleSet
     {
+        if (is_array($rules) === false) {
+            $rules = [$rules];
+        }
+
         $ruleSet = new RuleSet();
         foreach ($rules as $rule) {
             if ($rule instanceof Constraint) {
@@ -52,7 +31,7 @@ class ValidationRuleParser
             }
         }
 
-        return $this->resolver->resolveRuleSet($ruleSet);
+        return $ruleSet;
     }
 
     /**
