@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * @coversNothing
  */
-class ResolveAndValidationTest extends TestCase
+class RequiredFieldValidationTest extends TestCase
 {
     /** @var ValidationRuleParser */
     private $parser;
@@ -37,7 +37,7 @@ class ResolveAndValidationTest extends TestCase
     /**
      * @param string|string[] $rules
      * @param mixed $data
-     * @dataProvider dataProvider
+     * @dataProvider dataProviderRequiredFields
      * @throws RequestValidationException
      */
     public function testResolverRequiredFields($rules, $data, bool $success): void
@@ -52,7 +52,26 @@ class ResolveAndValidationTest extends TestCase
         }
     }
 
-    public function dataProvider(): Generator
+    /**
+     * @param string|string[] $rules
+     * @param mixed $data
+     * @dataProvider dataProviderOptionalFields
+     * @throws RequestValidationException
+     */
+    public function testResolverOptionalFields($rules, $data, bool $success): void
+    {
+        $constraint = $this->resolver->resolveRuleSet($this->parser->parseRules($rules));
+        $dataSet    = $data === false ? [] : ['value' => $data];
+        $violations = $this->validator->validate($dataSet, new Assert\Collection(['value' => $constraint]));
+
+        if ($success) {
+            static::assertCount(0, $violations);
+        } else {
+            static::assertNotCount(0, $violations);
+        }
+    }
+
+    public function dataProviderRequiredFields(): Generator
     {
         yield "required: success" => ['required', 'unit test', true];
         yield "required + empty: success" => ['required', '', true];
@@ -139,5 +158,19 @@ class ResolveAndValidationTest extends TestCase
         yield "required + url + not nullable: false" => ['required|url', null, false];
         yield "required + url + nullable: true" => ['required|url|nullable', null, true];
         yield "required + url + invalid: false" => ['required|url', 'test', false];
+    }
+
+    public function dataProviderOptionalFields(): Generator
+    {
+        yield "optional: null: success" => ['string', false, true];
+        yield "optional: required + string: fail" => ['required|string', false, false];
+        yield "optional: string + nullable: success" => ['string|nullable', null, true];
+        yield "optional: string + nullable: fail" => ['string', null, false];
+        yield "optional: string + filled: fail" => ['string|filled', null, false];
+        yield "optional: string + filled: fail" => ['string|filled', '', false];
+        yield "optional: string + filled: success" => ['string|filled', 'test', true];
+        yield "optional: string + nullable + filled: success A" => ['string|nullable|filled', null, true];
+        yield "optional: string + nullable + filled: success B" => ['string|nullable|filled', 'test', true];
+        yield "optional: string + nullable + filled: success C" => ['string|nullable|filled', '', false];
     }
 }
