@@ -29,7 +29,7 @@ class RecursiveArrayIterator
      */
     public function iterate(): array
     {
-        return $this->walkArray('', $this->data);
+        return $this->walkArray(new Path(), $this->data);
     }
 
     /**
@@ -42,15 +42,15 @@ class RecursiveArrayIterator
      *   $key   = 'a.b.c'
      *   $value = 'd'
      */
-    private function walkArray(string $prefix, array $data): array
+    private function walkArray(Path $path, array $data): array
     {
         foreach ($data as $key => $value) {
-            $path = $prefix . $key;
+            $newPath = new Path($path, $key);
 
             if (is_array($value)) {
-                $data[$key] = $this->walkArray($path . '.', $value);
+                $data[$key] = $this->walkArray($newPath, $value);
             } else {
-                $data[$key] = call_user_func($this->callback, $path, $value);
+                $data[$key] = call_user_func($this->callback, $newPath, $value);
             }
         }
 
