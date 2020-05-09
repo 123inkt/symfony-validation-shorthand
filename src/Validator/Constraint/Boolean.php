@@ -14,5 +14,4 @@ class Boolean extends Constraint
     ];
 
     public $message = '{{ value }} is not a valid boolean.';
-    public $allowNull = false;
 }

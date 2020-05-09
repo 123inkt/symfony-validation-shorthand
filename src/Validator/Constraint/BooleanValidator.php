@@ -18,11 +18,7 @@ class BooleanValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, IntegerNumber::class);
         }
 
-        if ($value === null && $constraint->allowNull) {
-            return;
-        }
-
-        if (is_bool($value)) {
+        if ($value === null || is_bool($value)) {
             return;
         }
 

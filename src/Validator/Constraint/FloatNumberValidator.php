@@ -18,11 +18,7 @@ class FloatNumberValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, IntegerNumber::class);
         }
 
-        if ($value === null && $constraint->allowNull) {
-            return;
-        }
-
-        if (is_float($value)) {
+        if ($value === null || is_float($value) || $value === '') {
             return;
         }
 

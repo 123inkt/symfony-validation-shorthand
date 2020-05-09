@@ -70,11 +70,11 @@ class ConstraintResolver
     {
         switch ($rule->getName()) {
             case Rule::RULE_BOOLEAN:
-                return new Boolean(['allowNull' => $ruleSet->hasRule(Rule::RULE_NULLABLE)]);
+                return new Boolean();
             case Rule::RULE_INTEGER:
-                return new IntegerNumber(['allowNull' => $ruleSet->hasRule(Rule::RULE_NULLABLE)]);
+                return new IntegerNumber();
             case Rule::RULE_FLOAT:
-                return new FloatNumber(['allowNull' => $ruleSet->hasRule(Rule::RULE_NULLABLE)]);
+                return new FloatNumber();
             case Rule::RULE_STRING:
                 return new Type('string');
             case Rule::RULE_EMAIL:

@@ -18,11 +18,7 @@ class IntegerNumberValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, IntegerNumber::class);
         }
 
-        if ($value === null && $constraint->allowNull) {
-            return;
-        }
-
-        if (is_int($value)) {
+        if ($value === null || is_int($value) || $value === '') {
             return;
         }
 
