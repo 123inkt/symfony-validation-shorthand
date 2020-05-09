@@ -3,14 +3,20 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Constraint;
 
+use ArrayIterator;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
+use DigitalRevolution\SymfonyRequestValidation\Iterator\RecursiveArrayIterator;
 use DigitalRevolution\SymfonyRequestValidation\Parser\Rule;
 use DigitalRevolution\SymfonyRequestValidation\Parser\RuleSet;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
+use DigitalRevolution\SymfonyRequestValidation\Transformer\StringToIntTransformer;
+use DigitalRevolution\SymfonyRequestValidation\Transformer\TransformerInterface;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\Validator\Validation;
 
 /**
  * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver
@@ -24,6 +30,136 @@ class ConstraintResolverTest extends TestCase
     {
         parent::setUp();
         $this->resolver = new ConstraintResolver();
+    }
+
+    public function testPlayground(): void
+    {
+        $transformer = new StringToIntTransformer();
+        $data        = ['a' => ['1', '2']];
+        $rules       = [
+            'a.0' => [
+                'required'    => true,
+                'transformer' => $transformer,
+                'constraints' => [new Assert\NotBlank(), new Assert\Type('integer'), new Assert\Range(['min' => 1])]],
+            'a.1' => [
+                'required'    => false,
+                'transformer' => $transformer,
+                'constraints' => [new Assert\NotBlank(), new Assert\Type('integer'), new Assert\Range(['min' => 3])]
+            ]
+        ];
+
+        $violationList = new ConstraintViolationList();
+        $validator     = Validation::createValidator();
+
+        $callable = static function ($key, $value) use ($rules, $validator, $violationList): ?int {
+            if (isset($rules[$key]) === false) {
+                throw new RequestValidationException('missing rule for: ' . $key);
+            }
+
+            $rule = $rules[$key];
+            if (isset($rule['transformer'])) {
+                /** @var TransformerInterface $transformer */
+                $transformer = $rule['transformer'];
+
+                if ($transformer->transformable($value) === false) {
+                    throw new RequestValidationException('unable to transform value to int');
+                }
+
+                $value = $transformer->transform($value);
+            }
+
+            if (isset($rule['constraints']) && count($rule['constraints']) > 0) {
+                $constraints = $rule['constraints'];
+
+                $violations = $validator->validate($value, $constraints);
+                $violationList->addAll($violations);
+                if (count($violations) > 0) {
+                    return null;
+                }
+            }
+
+            return $value;
+        };
+
+        $result = (new RecursiveArrayIterator($data, $callable))->iterate();
+
+        static::assertSame(['a' => [1, 2]], $result);
+    }
+
+    public function testPlayground2()
+    {
+        $validator = Validation::createValidator();
+
+        $input = [
+            'name'      => [
+                'first_name' => 'Fabien',
+                //'last_name'  => 'Potencier',
+            ],
+            'email'     => 'test@email.tld',
+            'simple'    => 'hello',
+            'eye_color' => 3,
+            'file'      => null,
+            'password'  => 'test',
+            'tags'      => [
+                [
+                    'slug'  => 'symfony_doc',
+                    'label' => 'symfony doc',
+                ],
+            ],
+        ];
+
+        $groups = new Assert\GroupSequence(['Default', 'custom']);
+
+        $rules = [
+            'name'      => [
+                'first_name' => 'required|string|min:6',
+                'last_name'  => 'required|string|min:1',
+            ],
+            'email'     => 'required|email',
+            'simple'    => 'required|string|min:5',
+            'eye_color' => 'required|enum:3,4',
+            'file'      => 'required|file',
+            'password'  => 'required|string|min:60',
+            'tags'      => [
+                [
+                    'slug'  => 'required|string|filled',
+                    'label' => 'required|filled'
+                ]
+            ]
+        ];
+
+        $constraint = new Assert\Collection([
+            // the keys correspond to the keys in the input array
+            'name'      => new Assert\Collection([
+                'first_name' => new Assert\Length(['min' => 6]),
+                'last_name'  => new Assert\Optional(new Assert\Length(['min' => 1])),
+            ]),
+            'email'     => new Assert\Email(),
+            'simple'    => new Assert\Length(['min' => 5]),
+            'eye_color' => new Assert\Choice([3, 4]),
+            'file'      => new Assert\File(),
+            'password'  => new Assert\Length(['min' => 4]),
+            'tags'      => new Assert\Optional([
+                new Assert\Type('array'),
+                new Assert\Count(['min' => 1]),
+                new Assert\All([
+                    new Assert\Collection([
+                        'slug'  => [
+                            new Assert\NotBlank(),
+                            new Assert\Type(['type' => 'string'])
+                        ],
+                        'label' => [
+                            new Assert\NotBlank(),
+                        ],
+                    ]),
+                ]),
+            ]),
+        ]);
+
+        $iterator = new ArrayIterator($input);
+
+        $violations = $validator->validate($iterator, $constraint, $groups);
+        static::assertCount(0, $violations);
     }
 
     /**
