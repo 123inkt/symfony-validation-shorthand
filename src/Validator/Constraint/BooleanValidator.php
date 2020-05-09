@@ -23,7 +23,7 @@ class BooleanValidator extends ConstraintValidator
         }
 
         $filtered = filter_var($value, FILTER_VALIDATE_BOOLEAN, ['flags' => FILTER_NULL_ON_FAILURE | FILTER_REQUIRE_SCALAR]);
-        if ($filtered === false) {
+        if ($filtered === null) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value }}', $this->formatValue($value))
                 ->setCode($constraint::INVALID_BOOLEAN_ERROR)

@@ -113,6 +113,6 @@ class ResolveAndValidationTest extends TestCase
         yield "required + bool + string: true" => ['required|bool', '0', true];
         yield "required + bool + string: true" => ['required|bool', 'on', true];
         yield "required + bool + string: true" => ['required|bool', 'off', true];
-        yield "required + bool + string: false" => ['required|bool', 'abc', true];
+        yield "required + bool + string: false" => ['required|bool', 'abc', false];
     }
 }
