@@ -127,5 +127,17 @@ class ResolveAndValidationTest extends TestCase
         yield "required + float null + nullable: true" => ['required|float|nullable', null, true];
         yield "required + float 'abc' + nullable: false" => ['required|float|nullable', 'abc', false];
         yield "required + float '1,0' + nullable: true" => ['required|float|nullable', '1,0', false];
+
+        // field should be email
+        yield "required + email: true" => ['required|email', 'test@example.com', true];
+        yield "required + email + not nullable: false" => ['required|email', null, false];
+        yield "required + email + nullable: true" => ['required|email|nullable', null, true];
+        yield "required + email + invalid: false" => ['required|email', 'test', false];
+
+        // field should be url
+        yield "required + url: true" => ['required|url', 'http://example.com/', true];
+        yield "required + url + not nullable: false" => ['required|url', null, false];
+        yield "required + url + nullable: true" => ['required|url|nullable', null, true];
+        yield "required + url + invalid: false" => ['required|url', 'test', false];
     }
 }

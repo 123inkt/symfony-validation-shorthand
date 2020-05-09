@@ -115,13 +115,13 @@ class ConstraintResolverTest extends TestCase
 
         $constraintResolver = new ConstraintResolver();
         $parser             = new ValidationRuleParser();
-        $ruleSet            = $parser->parseRules(['required|nullable']);
+        $ruleSet            = $parser->parseRules(['required']);
 
 
         $constraint = $constraintResolver->resolveRuleSet($ruleSet);
         $collection = new Assert\Collection(['first_name' => $constraint]);
 
-        $violations = $validator->validate([], $collection);
+        $violations = $validator->validate(['first_name' => null], $collection);
         static::assertCount(0, $violations);
 
         $rules = [
