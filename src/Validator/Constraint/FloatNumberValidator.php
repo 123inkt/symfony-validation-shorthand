@@ -14,27 +14,28 @@ class FloatNumberValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
-        if ($constraint instanceof IntegerNumber === false) {
-            throw new UnexpectedTypeException($constraint, IntegerNumber::class);
+        if ($constraint instanceof FloatNumber === false) {
+            throw new UnexpectedTypeException($constraint, FloatNumber::class);
         }
 
-        if ($value === null || is_float($value) || $value === '') {
+        if ($value === null || is_int($value) || is_float($value) || $value === '') {
             return;
         }
 
-        // value should be either float or string
+        // value should be string
         if (is_string($value) === false) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value }}', $this->formatValue($value))
                 ->setCode($constraint::INVALID_VALUE_TYPE)
                 ->addViolation();
+            return;
         }
 
         // value can't be cast to float
-        if (((string)(float)$value) !== $value) {
+        if (preg_match('/^-?[1-9]\d*(\.\d+)?$/', $value) !== 1) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value }}', $this->formatValue($value))
-                ->setCode($constraint::INVALID_NUMBER_ERROR)
+                ->setCode($constraint::INVALID_DECIMAL_ERROR)
                 ->addViolation();
         }
     }

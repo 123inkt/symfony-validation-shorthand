@@ -86,17 +86,17 @@ class ConstraintResolver
             case Rule::RULE_FILLED:
                 return new NotBlank(['allowNull' => $ruleSet->hasRule(Rule::RULE_NULLABLE)]);
             case Rule::RULE_MIN:
-                if ($ruleSet->hasRule(Rule::RULE_INTEGER)) {
+                if ($ruleSet->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT])) {
                     return new GreaterThanOrEqual($rule->getIntParam(0));
                 }
                 return new Length(['min' => $rule->getIntParam(0)]);
             case Rule::RULE_MAX:
-                if ($ruleSet->hasRule(Rule::RULE_INTEGER)) {
+                if ($ruleSet->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT])) {
                     return new LessThanOrEqual($rule->getIntParam(0));
                 }
                 return new Length(['max' => $rule->getIntParam(0)]);
             case Rule::RULE_BETWEEN:
-                if ($ruleSet->hasRule(Rule::RULE_INTEGER)) {
+                if ($ruleSet->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT])) {
                     return new Range(['min' => $rule->getIntParam(0), 'max' => $rule->getIntParam(1)]);
                 }
                 return new Length(['min' => $rule->getIntParam(0), 'max' => $rule->getIntParam(1)]);

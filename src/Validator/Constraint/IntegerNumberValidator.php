@@ -28,6 +28,7 @@ class IntegerNumberValidator extends ConstraintValidator
                 ->setParameter('{{ value }}', $this->formatValue($value))
                 ->setCode($constraint::INVALID_VALUE_TYPE)
                 ->addViolation();
+            return;
         }
 
         // value can't be cast to int

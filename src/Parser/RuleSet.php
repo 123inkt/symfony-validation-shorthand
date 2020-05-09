@@ -17,9 +17,19 @@ class RuleSet implements Countable
      */
     private $ruleTypes = [];
 
-    public function hasRule(string $name): bool
+    /**
+     * @param string|string[] $names
+     */
+    public function hasRule($names): bool
     {
-        return isset($this->ruleTypes[$name]);
+        $names = is_array($names) ? $names : [$names];
+        foreach ($names as $name) {
+            if (isset($this->ruleTypes[$name]) === true) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

@@ -80,11 +80,13 @@ class ResolveAndValidationTest extends TestCase
         yield "required + string min+max length long: false" => ['required|between:3,5', 'banana', false];
         // without `integer` any value will be treated as string
         yield "required + string max with int: false" => ['required|min:10', 12345, false];
+        yield "required + string max with int: true" => ['required|max:1', 9, true];
 
         // field should be integer or integer castable
         yield "required + int: true" => ['required|int', 3, true];
         yield "required + int: true" => ['required|int', '3', true];
         yield "required + int: false" => ['required|int', '3a', false];
+        yield "required + int: false" => ['required|int', [], false];
 
         // field should have min/max integer size
         yield "required + int + min size: true" => ['required|int|min:3', '3', true];
@@ -114,5 +116,16 @@ class ResolveAndValidationTest extends TestCase
         yield "required + bool + string: true" => ['required|bool', 'on', true];
         yield "required + bool + string: true" => ['required|bool', 'off', true];
         yield "required + bool + string: false" => ['required|bool', 'abc', false];
+
+        // field should be float or float castable
+        yield "required + float 1: true" => ['required|float', 1, true];
+        yield "required + float 1.0: true" => ['required|float', 1.0, true];
+        yield "required + float '1.0': true" => ['required|float', '1.0', true];
+        yield "required + float '-1.0': true" => ['required|float', '-1.0', true];
+        yield "required + float '-1.0' + nullable: true" => ['required|float|nullable', '-1.0', true];
+        yield "required + float '' + nullable: true" => ['required|float|nullable', '', true];
+        yield "required + float null + nullable: true" => ['required|float|nullable', null, true];
+        yield "required + float 'abc' + nullable: false" => ['required|float|nullable', 'abc', false];
+        yield "required + float '1,0' + nullable: true" => ['required|float|nullable', '1,0', false];
     }
 }
