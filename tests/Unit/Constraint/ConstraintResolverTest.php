@@ -112,17 +112,17 @@ class ConstraintResolverTest extends TestCase
 
         $rules = [
             'name'      => [
-                'first_name' => 'required|string|min:6',
-                'last_name'  => 'required|string|min:1',
+                'first_name' => 'required|min:6',
+                'last_name'  => 'required|min:1',
             ],
             'email'     => 'required|email',
-            'simple'    => 'required|string|min:5',
+            'simple'    => 'required|min:5',
             'eye_color' => 'required|enum:3,4',
             'file'      => 'required|file',
-            'password'  => 'required|string|min:60',
+            'password'  => 'required|min:60',
             'tags'      => [
                 [
-                    'slug'  => 'required|string|filled',
+                    'slug'  => 'required|filled',
                     'label' => 'required|filled'
                 ]
             ]
