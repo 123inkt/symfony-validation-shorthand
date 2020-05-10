@@ -1,28 +1,28 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Validator\Constraint;
+namespace DigitalRevolution\SymfonyRequestValidation\Constraint;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class IntegerNumberValidator extends ConstraintValidator
+class FloatNumberValidator extends ConstraintValidator
 {
     /**
      * @inheritDoc
      */
     public function validate($value, Constraint $constraint): void
     {
-        if ($constraint instanceof IntegerNumber === false) {
-            throw new UnexpectedTypeException($constraint, IntegerNumber::class);
+        if ($constraint instanceof FloatNumber === false) {
+            throw new UnexpectedTypeException($constraint, FloatNumber::class);
         }
 
-        if ($value === null || is_int($value) || $value === '') {
+        if ($value === null || is_int($value) || is_float($value) || $value === '') {
             return;
         }
 
-        // value should be either int or string
+        // value should be string
         if (is_string($value) === false) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value }}', $this->formatValue($value))
@@ -31,11 +31,11 @@ class IntegerNumberValidator extends ConstraintValidator
             return;
         }
 
-        // value can't be cast to int
-        if (((string)(int)$value) !== $value) {
+        // value can't be cast to float
+        if (preg_match('/^-?[1-9]\d*(\.\d+)?$/', $value) !== 1) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value }}', $this->formatValue($value))
-                ->setCode($constraint::INVALID_NUMBER_ERROR)
+                ->setCode($constraint::INVALID_DECIMAL_ERROR)
                 ->addViolation();
         }
     }

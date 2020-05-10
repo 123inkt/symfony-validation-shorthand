@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Validator\Constraint;
+namespace DigitalRevolution\SymfonyRequestValidation\Constraint;
 
 use Symfony\Component\Validator\Constraint;
 
