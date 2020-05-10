@@ -98,7 +98,7 @@ class ConstraintResolverTest extends TestCase
         $input = [
             'name'      => [
                 'first_name' => 'Fabien',
-                //'last_name'  => 'Potencier',
+                'last_name'  => 'Potencier',
             ],
             'email'     => 'test@email.tld',
             'simple'    => 'hello',
@@ -125,21 +125,15 @@ class ConstraintResolverTest extends TestCase
         static::assertCount(0, $violations);
 
         $rules = [
-            'name'      => [
-                'first_name' => 'required|min:6',
-                'last_name'  => 'required|min:1',
-            ],
-            'email'     => 'required|email',
-            'simple'    => 'required|min:5',
-            'eye_color' => 'required|enum:3,4',
-            'file'      => 'required|file',
-            'password'  => 'required|min:60',
-            'tags'      => [
-                [
-                    'slug'  => 'required|filled',
-                    'label' => 'required|filled'
-                ]
-            ]
+            'name.first_name' => 'required|min:6',
+            'name.last_name'  => 'min:1',
+            'email'           => 'required|email',
+            'simple'          => 'required|min:5',
+            'eye_color'       => 'required|enum:3,4',
+            'file'            => 'required|file',
+            'password'        => 'required|min:60',
+            'tags?.*.slug'     => 'required|filled',
+            'tags?.*.label'    => 'required|filled',
         ];
 
         $constraint = new Assert\Collection([
