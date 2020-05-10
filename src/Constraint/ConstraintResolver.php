@@ -16,6 +16,11 @@ class ConstraintResolver
      */
     public function resolveRuleList(RuleList $ruleList): Constraint
     {
+        // all Constraints, return early
+        if ($ruleList->hasRules() === false) {
+            return new Assert\Required($ruleList->getRules());
+        }
+
         $required    = false;
         $nullable    = false;
         $constraints = [];

@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Constraint;
 
 use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
+use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\Boolean;
+use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\FloatNumber;
+use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\IntegerNumber;
 use DigitalRevolution\SymfonyRequestValidation\Parser\Rule;
 use DigitalRevolution\SymfonyRequestValidation\Parser\RuleList;
 use DigitalRevolution\SymfonyRequestValidation\Parser\ValidationRuleParser;
@@ -27,7 +30,6 @@ class ConstraintResolverTest extends TestCase
         parent::setUp();
         $this->resolver = new ConstraintResolver();
     }
-
 
     /**
      * @throws RequestValidationException
@@ -73,8 +75,8 @@ class ConstraintResolverTest extends TestCase
             'eye_color'       => 'required|enum:3,4',
             'file'            => 'required|file',
             'password'        => 'required|min:60',
-            'tags?.*.slug'     => 'required|filled',
-            'tags?.*.label'    => 'required|filled',
+            'tags?.*.slug'    => 'required|filled',
+            'tags?.*.label'   => 'required|filled',
         ];
 
         $constraint = new Assert\Collection([
@@ -142,14 +144,18 @@ class ConstraintResolverTest extends TestCase
      */
     public function dataProvider(): Generator
     {
-        yield 'constraint' => [new Assert\Optional(new Assert\NotBlank()), [new Assert\NotBlank()]];
-        yield 'boolean' => [new Assert\Optional(new Assert\Type('bool')), [new Rule('boolean')]];
-        yield 'integer' => [new Assert\Optional(new Assert\Type('integer')), [new Rule('integer')]];
-        yield 'float' => [new Assert\Optional(new Assert\Type('float')), [new Rule('float')]];
-        yield 'email' => [new Assert\Optional(new Assert\Email()), [new Rule('email')]];
-        yield 'regex' => [new Assert\Optional(new Assert\Regex(['pattern' => '/^unittest$/'])), [new Rule('regex', ['/^unittest$/'])]];
-        yield 'required' => [new Assert\Required(), [new Rule('required')]];
-        yield 'required email' => [new Assert\Required(new Assert\Email()), [new Rule('required'), new Rule('email')]];
+        yield 'constraint' => [new Assert\Required(new Assert\NotBlank()), [new Assert\NotBlank()]];
+        yield 'boolean' => [new Assert\Optional([new Boolean(), new Assert\NotNull()]), [new Rule('boolean')]];
+        yield 'integer' => [new Assert\Optional([new IntegerNumber(), new Assert\NotNull()]), [new Rule('integer')]];
+        yield 'float' => [new Assert\Optional([new FloatNumber(), new Assert\NotNull()]), [new Rule('float')]];
+        yield 'email' => [new Assert\Optional([new Assert\Email(), new Assert\NotNull()]), [new Rule('email')]];
+        yield 'url' => [new Assert\Optional([new Assert\Url(), new Assert\NotNull()]), [new Rule('url')]];
+        yield 'regex' => [
+            new Assert\Optional([new Assert\Regex(['pattern' => '/^unittest$/']), new Assert\NotNull()]),
+            [new Rule('regex', ['/^unittest$/'])]
+        ];
+        yield 'required' => [new Assert\Required(new Assert\NotNull()), [new Rule('required')]];
+        yield 'required email' => [new Assert\Required([new Assert\Email(), new Assert\NotNull()]), [new Rule('required'), new Rule('email')]];
 
         // min/max string or array lengths
         yield 'min length' => [new Assert\Optional(new Assert\Length(['min' => 10])), [new Rule('min', ['10'])]];

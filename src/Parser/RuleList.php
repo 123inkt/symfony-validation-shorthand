@@ -33,6 +33,14 @@ class RuleList implements Countable
     }
 
     /**
+     * @return bool false if all rules are of type Constraint. true otherwise.
+     */
+    public function hasRules(): bool
+    {
+        return count($this->ruleTypes) > 0;
+    }
+
+    /**
      * @return array<Rule|Constraint>
      */
     public function getRules(): array
