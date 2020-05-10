@@ -3,16 +3,31 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation\Utility;
 
+use InvalidArgumentException;
+
 class Arrays
 {
     /**
-     * @param mixed    $array
-     * @param string[] $path
-     * @param mixed    $value
-     * @throws ArrayAssignException
+     * Recursively assign the value at given path to the array.
+     * Example:
+     *   array: []
+     *   path: ['a', 'b']
+     *   value: 'c'
+     * Result:
+     *   array: ['a' => ['b' => 'c']]
+     *
+     * @param mixed    $array The array to be assigned. Intentionally by reference for internal recursion
+     * @param string[] $path  The string array path to which to assign the value
+     * @param mixed    $value The value to be assigned to the array
+     * @return array For convenience return the same array that was given
+     * @throws InvalidArrayPathException Thrown when the given path will result in overwriting an existing non array value.
      */
     public static function assignToPath(array &$array, array $path, $value): array
     {
+        if (count($path) === 0) {
+            throw new InvalidArgumentException("\$path can't be empty");
+        }
+
         $key = array_shift($path);
         if (count($path) === 0) {
             $array[$key] = $value;
@@ -22,55 +37,12 @@ class Arrays
         if (array_key_exists($key, $array) === false) {
             $array[$key] = [];
         } elseif (is_array($array[$key]) === false) {
-            throw new ArrayAssignException(
+            throw new InvalidArrayPathException(
                 "Can't assign value to `" . print_r($array, true) . "` as `" . implode('.', $path) . "` is not array"
             );
         }
 
         self::assignToPath($array[$key], $path, $value);
         return $array;
-    }
-
-    /**
-     * @param Path[] $paths
-     */
-    public static function findData(array $paths, array $data): ?array
-    {
-        $result = [];
-        $cursor = $data;
-        $length = count($paths);
-        $route  = [];
-
-        for ($i = 0; $i < $length; $i++) {
-            if (is_array($cursor) === false) {
-                return null;
-            }
-
-            $path = $paths[$i];
-            if ($path->isWildcard()) {
-                $currentRoute = count($route) === 0 ? '' : implode('.', $route) . '.';
-
-                foreach ($cursor as $index => $entry) {
-                    if ($i < $length - 1) {
-                        foreach (self::findData(array_slice($paths, $i + 1), $entry) as $k => $v) {
-                            $result[$currentRoute . $index . '.' . $k] = $v;
-                        }
-                    } else {
-                        $result[$currentRoute . $index] = $entry;
-                    }
-                }
-                return $result;
-            }
-
-            $key = $path->getKey();
-            if (array_key_exists($key, $cursor) === false) {
-                return null;
-            }
-
-            $route[] = $key;
-            $cursor  = $cursor[$key];
-        }
-
-        return [implode('.', $route) => $cursor];
     }
 }

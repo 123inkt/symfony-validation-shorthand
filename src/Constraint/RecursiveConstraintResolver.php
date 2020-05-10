@@ -6,7 +6,7 @@ namespace DigitalRevolution\SymfonyRequestValidation\Constraint;
 use DigitalRevolution\SymfonyRequestValidation\Parser\RuleSet;
 use DigitalRevolution\SymfonyRequestValidation\Parser\ValidationRuleParser;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
-use DigitalRevolution\SymfonyRequestValidation\Utility\ArrayAssignException;
+use DigitalRevolution\SymfonyRequestValidation\Utility\InvalidArrayPathException;
 use DigitalRevolution\SymfonyRequestValidation\Utility\Arrays;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -28,7 +28,7 @@ class RecursiveConstraintResolver
 
     /**
      * @param mixed $rules
-     * @throws RequestValidationException|ArrayAssignException
+     * @throws RequestValidationException|InvalidArrayPathException
      */
     public function resolve($rules): Constraint
     {

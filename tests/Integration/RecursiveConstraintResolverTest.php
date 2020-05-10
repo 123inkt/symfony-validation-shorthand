@@ -16,7 +16,7 @@ class RecursiveConstraintResolverTest extends TestCase
      */
     public function testResolve(): void
     {
-        $data  = ['first_name' => null];
+        $data  = ['first_name' => ''];
         $rules = ['first_name' => 'filled|nullable'];
 
         $resolver   = new RecursiveConstraintResolver();
@@ -33,13 +33,7 @@ class RecursiveConstraintResolverTest extends TestCase
      */
     public function testResolveNestedArray(): void
     {
-        $data  = [
-            'person' =>
-                [
-                    ['first_name' => 'Frank'],
-                    ['first_name' => 'Henk']
-                ]
-        ];
+        $data  = [];
         $rules = ['person.*.first_name' => 'filled|min:5'];
 
         $resolver   = new RecursiveConstraintResolver();

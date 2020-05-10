@@ -5,6 +5,6 @@ namespace DigitalRevolution\SymfonyRequestValidation\Utility;
 
 use Exception;
 
-class ArrayAssignException extends Exception
+class InvalidArrayPathException extends Exception
 {
 }
