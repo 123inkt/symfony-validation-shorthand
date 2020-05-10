@@ -6,17 +6,15 @@ namespace DigitalRevolution\SymfonyRequestValidation;
 use DigitalRevolution\SymfonyRequestValidation\Builder\MapBuilderFactory;
 use DigitalRevolution\SymfonyRequestValidation\Builder\MapBuilderFactoryInterface;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\RequestConstraint;
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\TraversableConstraint;
 use DigitalRevolution\SymfonyRequestValidation\Utility\InvalidArrayPathException;
-use DigitalRevolution\SymfonyRequestValidation\Validator\ArrayValidator;
+use DigitalRevolution\SymfonyRequestValidation\Validator\DataValidator;
 use DigitalRevolution\SymfonyRequestValidation\Validator\RequestValidator;
-use DigitalRevolution\SymfonyRequestValidation\Validator\TraversableDataValidator;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class DataValidatorFactory
+class ValidatorFactory
 {
     /** @var MapBuilderFactoryInterface */
     private $factory;
@@ -54,29 +52,17 @@ class DataValidatorFactory
     }
 
     /**
-     * @param Collection|array<string, string|Constraint|array<string|Constraint>> $ruleDefinitions
+     * @param Assert\Collection|array<string, string|Constraint|array<string|Constraint>> $ruleDefinitions
      * @throws RequestValidationException
      * @throws InvalidArrayPathException
      */
-    public function createArrayValidator($ruleDefinitions): ArrayValidator
+    public function createDataValidator($ruleDefinitions): DataValidator
     {
-        return new ArrayValidator($this->getConstraint($ruleDefinitions), $this->validator);
+        return new DataValidator($this->getConstraint($ruleDefinitions), $this->validator);
     }
 
     /**
-     * @param Collection|array<string, string|Constraint|array<string|Constraint>> $ruleDefinitions
-     * @throws RequestValidationException
-     * @throws InvalidArrayPathException
-     */
-    public function createTraversableDataValidator($ruleDefinitions): TraversableDataValidator
-    {
-        $constraint = new TraversableConstraint($this->getConstraint($ruleDefinitions));
-
-        return new TraversableDataValidator($constraint, $this->validator);
-    }
-
-    /**
-     * @param Collection|array<string, string|Constraint|array<string|Constraint>> $ruleDefinitions
+     * @param Assert\Collection|array<string, string|Constraint|array<string|Constraint>> $ruleDefinitions
      * @throws RequestValidationException
      * @throws InvalidArrayPathException
      */

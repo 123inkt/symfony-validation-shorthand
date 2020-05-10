@@ -29,7 +29,7 @@ abstract class AbstractValidatedRequest
         }
 
         $this->request = $request;
-        $dataValidator = (new DataValidatorFactory($validator))->createRequestValidator($this->getValidationRules($request));
+        $dataValidator = (new ValidatorFactory($validator))->createRequestValidator($this->getValidationRules($request));
         $this->isValid = $this->validate($dataValidator);
     }
 

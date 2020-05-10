@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation;
 
+use InvalidArgumentException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Collection;
 
@@ -15,6 +16,23 @@ class RequestValidationRules
     private $requestRules;
 
     /**
+     * @param array{
+     *          query:   Collection|array<string, string|Constraint|array<string|Constraint>>,
+     *          request: Collection|array<string, string|Constraint|array<string|Constraint>>
+     *        } $definitions
+     */
+    public function __construct(array $definitions)
+    {
+        // expect at least one definition, and no other key than `query` or `request` is allowed
+        if (count($definitions) === 0 || count(array_diff(array_keys($definitions), ['query', 'request'])) > 0) {
+            throw new InvalidArgumentException('Expecting at least `query` or `request` property to be set');
+        }
+
+        $this->queryRules   = $definitions['query'] ?? null;
+        $this->requestRules = $definitions['request'] ?? null;
+    }
+
+    /**
      * @return Collection|array<string, string|Constraint|array<string|Constraint>>|null
      */
     public function getQueryRules()
@@ -23,28 +41,10 @@ class RequestValidationRules
     }
 
     /**
-     * @param Collection|array<string, string|Constraint|array<string|Constraint>>|null $queryRules
-     */
-    public function setQueryRules($queryRules): self
-    {
-        $this->queryRules = $queryRules;
-        return $this;
-    }
-
-    /**
      * @return Collection|array<string, string|Constraint|array<string|Constraint>>|null
      */
     public function getRequestRules()
     {
         return $this->requestRules;
-    }
-
-    /**
-     * @param Collection|array<string, string|Constraint|array<string|Constraint>>|null $requestRules
-     */
-    public function setRequestRules($requestRules): self
-    {
-        $this->requestRules = $requestRules;
-        return $this;
     }
 }

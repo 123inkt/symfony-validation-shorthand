@@ -33,8 +33,7 @@ class AbstractValidatedRequestTest extends TestCase
         $stack->push($request);
 
         $validator       = Validation::createValidator();
-        $validationRules = new RequestValidationRules();
-        $validationRules->setQueryRules($rules);
+        $validationRules = new RequestValidationRules(['query' => $rules]);
 
         // expect exception
         if ($isValid === false) {

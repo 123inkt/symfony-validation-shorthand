@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit;
 
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationRules;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\Collection;
 
@@ -13,20 +14,36 @@ use Symfony\Component\Validator\Constraints\Collection;
 class ValidationRulesTest extends TestCase
 {
     /**
-     * @covers ::setQueryRules
+     * @covers ::__construct
      * @covers ::getQueryRules
-     * @covers ::setRequestRules
      * @covers ::getRequestRules
      */
-    public function testSetRequestRules(): void
+    public function testConstructorAndGetters(): void
     {
-        $rules = new RequestValidationRules();
-        static::assertNull($rules->getQueryRules());
+        $rules = new RequestValidationRules(['query' => 'a']);
+        static::assertSame('a', $rules->getQueryRules());
         static::assertNull($rules->getRequestRules());
 
-        $collectionA = $this->createMock(Collection::class);
-        $collectionB = $this->createMock(Collection::class);
-        static::assertSame($collectionA, $rules->setQueryRules($collectionA)->getQueryRules());
-        static::assertSame($collectionB, $rules->setRequestRules($collectionB)->getRequestRules());
+        $rules = new RequestValidationRules(['query' => 'a', 'request' => 'b']);
+        static::assertSame('a', $rules->getQueryRules());
+        static::assertSame('b', $rules->getRequestRules());
+    }
+
+    /**
+     * @covers ::__construct
+     */
+    public function testEmptyConstructorArgument(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new RequestValidationRules([]);
+    }
+
+    /**
+     * @covers ::__construct
+     */
+    public function testInvalidPropertyArgument(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        new RequestValidationRules(['query' => 'a', 'b']);
     }
 }

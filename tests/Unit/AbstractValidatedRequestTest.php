@@ -6,6 +6,7 @@ namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use DigitalRevolution\SymfonyRequestValidation\Tests\Mock\MockValidatedRequest;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationRules;
+use DigitalRevolution\SymfonyRequestValidation\Utility\InvalidArrayPathException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -39,7 +40,7 @@ class AbstractValidatedRequestTest extends TestCase
      * @covers ::validate
      * @covers ::isValid
      * @covers ::getRequest
-     * @throws RequestValidationException
+     * @throws RequestValidationException|InvalidArrayPathException
      */
     public function testConstructorWithoutViolations(): void
     {
@@ -58,7 +59,7 @@ class AbstractValidatedRequestTest extends TestCase
      * @covers ::__construct
      * @covers ::validate
      * @covers ::handleViolations
-     * @throws RequestValidationException
+     * @throws RequestValidationException|InvalidArrayPathException
      */
     public function testConstructorWithViolations(): void
     {
@@ -68,8 +69,7 @@ class AbstractValidatedRequestTest extends TestCase
 
         // create rules
         $constraint = new Collection(['fields' => ['test' => new NotBlank()]]);
-        $rules      = new RequestValidationRules();
-        $rules->setRequestRules($constraint);
+        $rules      = new RequestValidationRules(['request' => $constraint]);
 
         // create violations
         $violations = new ConstraintViolationList();
