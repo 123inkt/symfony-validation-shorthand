@@ -3,13 +3,12 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation;
 
-use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
-use DigitalRevolution\SymfonyRequestValidation\Parser\ValidationRuleParser;
+use DigitalRevolution\SymfonyRequestValidation\Builder\MapBuilderFactory;
+use DigitalRevolution\SymfonyRequestValidation\Validator\DataValidatorFactory;
 use DigitalRevolution\SymfonyRequestValidation\Validator\RequestValidator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Validator\ConstraintViolationInterface;
-use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class AbstractValidatedRequest
@@ -22,6 +21,7 @@ abstract class AbstractValidatedRequest
 
     /**
      * @throws RequestValidationException
+     * @throws Utility\InvalidArrayPathException
      */
     public function __construct(RequestStack $requestStack, ValidatorInterface $validator)
     {
@@ -30,8 +30,11 @@ abstract class AbstractValidatedRequest
             throw new RequestValidationException('Request is missing, unable to validate');
         }
 
-        $this->request = $request;
-        $this->isValid = $this->validate($request, new RequestValidator($validator, new ValidationRuleParser(new ConstraintResolver())));
+        $this->request    = $request;
+        $validatorFactory = new DataValidatorFactory(new MapBuilderFactory(), $validator);
+        $rules            = $this->getValidationRules($request);
+        $dataValidator    = $validatorFactory->createRequestValidator($rules->getQueryRules(), $rules->getRequestRules());
+        $this->isValid    = $this->validate($request, $dataValidator);
     }
 
     public function getRequest(): Request
@@ -53,10 +56,10 @@ abstract class AbstractValidatedRequest
      * Called when there are one or more violations. Defaults to throwing RequestValidationException. Overwrite
      * to add your own handling
      *
-     * @param ConstraintViolationList<ConstraintViolationInterface> $violationList
+     * @param ConstraintViolationListInterface $violationList
      * @throws RequestValidationException
      */
-    protected function handleViolations(ConstraintViolationList $violationList): void
+    protected function handleViolations(ConstraintViolationListInterface $violationList): void
     {
         throw new RequestValidationException((string)$violationList);
     }
@@ -66,7 +69,7 @@ abstract class AbstractValidatedRequest
      */
     protected function validate(Request $request, RequestValidator $validator): bool
     {
-        $violationList = $validator->validate($request, $this->getValidationRules($request));
+        $violationList = $validator->validate($request);
         if (count($violationList) > 0) {
             $this->handleViolations($violationList);
             // @codeCoverageIgnoreStart

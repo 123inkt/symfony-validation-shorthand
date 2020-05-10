@@ -12,7 +12,7 @@ class ArrayValidator extends AbstractValidator
     /**
      * @param array<mixed>|Traversable&ArrayAccess $data
      */
-    public function validate(array $data): ConstraintViolationListInterface
+    public function validate($data): ConstraintViolationListInterface
     {
         return $this->validator->validate($data, $this->constraint);
     }

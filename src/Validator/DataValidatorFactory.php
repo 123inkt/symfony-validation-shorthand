@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation;
+namespace DigitalRevolution\SymfonyRequestValidation\Validator;
 
+use DigitalRevolution\SymfonyRequestValidation\Builder\MapBuilderFactory;
 use DigitalRevolution\SymfonyRequestValidation\Builder\MapBuilderFactoryInterface;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\RequestConstraint;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\TraversableConstraint;
-use DigitalRevolution\SymfonyRequestValidation\Validator\ArrayValidator;
-use DigitalRevolution\SymfonyRequestValidation\Validator\RequestValidator;
-use DigitalRevolution\SymfonyRequestValidation\Validator\TraversableDataValidator;
+use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
+use DigitalRevolution\SymfonyRequestValidation\Utility\InvalidArrayPathException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Validation;
@@ -18,13 +18,13 @@ class DataValidatorFactory
 {
     /** @var MapBuilderFactoryInterface */
     private $factory;
+
     /** @var ValidatorInterface */
     private $validator;
 
-
-    public function __construct(MapBuilderFactoryInterface $factory, ValidatorInterface $validator = null)
+    public function __construct(MapBuilderFactoryInterface $factory = null, ValidatorInterface $validator = null)
     {
-        $this->factory   = $factory;
+        $this->factory   = $factory ?? new MapBuilderFactory();
         $this->validator = $validator ?? Validation::createValidator();
     }
 
@@ -32,7 +32,7 @@ class DataValidatorFactory
      * @param Collection|array<string, string|Constraint|array<string|Constraint>>|null $queryDefinitions
      * @param Collection|array<string, string|Constraint|array<string|Constraint>>|null $requestDefinitions
      * @throws RequestValidationException
-     * @throws Utility\InvalidArrayPathException
+     * @throws InvalidArrayPathException
      */
     public function createRequestValidator($queryDefinitions, $requestDefinitions): RequestValidator
     {
@@ -54,7 +54,7 @@ class DataValidatorFactory
     /**
      * @param Collection|array<string, string|Constraint|array<string|Constraint>> $ruleDefinitions
      * @throws RequestValidationException
-     * @throws Utility\InvalidArrayPathException
+     * @throws InvalidArrayPathException
      */
     public function createArrayValidator($ruleDefinitions): ArrayValidator
     {
@@ -64,7 +64,7 @@ class DataValidatorFactory
     /**
      * @param Collection|array<string, string|Constraint|array<string|Constraint>> $ruleDefinitions
      * @throws RequestValidationException
-     * @throws Utility\InvalidArrayPathException
+     * @throws InvalidArrayPathException
      */
     public function createTraversableDataValidator($ruleDefinitions): TraversableDataValidator
     {
@@ -76,7 +76,7 @@ class DataValidatorFactory
     /**
      * @param Collection|array<string, string|Constraint|array<string|Constraint>> $ruleDefinitions
      * @throws RequestValidationException
-     * @throws Utility\InvalidArrayPathException
+     * @throws InvalidArrayPathException
      */
     private function getConstraint($ruleDefinitions): Constraint
     {
