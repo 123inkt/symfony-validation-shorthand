@@ -18,7 +18,7 @@ class RuleListMapTest extends TestCase
      * @covers ::getIterator
      * @throws Exception
      */
-    public function testSet(): void
+    public function testSetAndIterator(): void
     {
         $list    = new RuleList();
         $listMap = new RuleListMap();

@@ -18,7 +18,7 @@ class ConstraintMapTest extends TestCase
      * @covers ::getIterator
      * @throws Exception
      */
-    public function testSet(): void
+    public function testSetAndIterator(): void
     {
         $constraint    = new NotBlank();
         $constraintMap = new ConstraintMap();
