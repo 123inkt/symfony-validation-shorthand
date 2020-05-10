@@ -5,7 +5,7 @@ namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Constraint;
 
 use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
 use DigitalRevolution\SymfonyRequestValidation\Parser\Rule;
-use DigitalRevolution\SymfonyRequestValidation\Parser\RuleSet;
+use DigitalRevolution\SymfonyRequestValidation\Parser\RuleList;
 use DigitalRevolution\SymfonyRequestValidation\Parser\ValidationRuleParser;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use Generator;
@@ -59,7 +59,7 @@ class ConstraintResolverTest extends TestCase
         $ruleSet            = $parser->parseRules(['required']);
 
 
-        $constraint = $constraintResolver->resolveRuleSet($ruleSet);
+        $constraint = $constraintResolver->resolveRuleList($ruleSet);
         $collection = new Assert\Collection(['first_name' => $constraint]);
 
         $violations = $validator->validate(['first_name' => null], $collection);
@@ -107,34 +107,34 @@ class ConstraintResolverTest extends TestCase
     }
 
     /**
-     * @covers ::resolveRuleSet
+     * @covers ::resolveRuleList
      * @covers ::resolveConstraint
      * @throws RequestValidationException
      */
     public function testResolveRuleSetUnknownRule(): void
     {
-        $ruleSet = new RuleSet();
+        $ruleSet = new RuleList();
         $ruleSet->addRule(new Rule('unknown'));
 
         $this->expectException(RequestValidationException::class);
         $this->expectExceptionMessage('Unable to resolve rule: unknown');
-        $this->resolver->resolveRuleSet($ruleSet);
+        $this->resolver->resolveRuleList($ruleSet);
     }
 
     /**
      * @dataProvider dataProvider
-     * @covers ::resolveRuleSet
+     * @covers ::resolveRuleList
      * @covers ::resolveConstraint
      * @param array<Rule|Constraint> $rules
      * @throws RequestValidationException
      */
     public function testResolveRuleSet(Constraint $expected, array $rules): void
     {
-        $ruleSet = new RuleSet();
+        $ruleSet = new RuleList();
         foreach ($rules as $rule) {
             $ruleSet->addRule($rule);
         }
-        static::assertEquals($expected, $this->resolver->resolveRuleSet($ruleSet));
+        static::assertEquals($expected, $this->resolver->resolveRuleList($ruleSet));
     }
 
     /**

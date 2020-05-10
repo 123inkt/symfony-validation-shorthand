@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace DigitalRevolution\SymfonyRequestValidation\Tests\Mock;
 
 use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
-use DigitalRevolution\SymfonyRequestValidation\Parser\RuleSet;
+use DigitalRevolution\SymfonyRequestValidation\Parser\RuleList;
 use PHPUnit\Framework\MockObject\Matcher\InvokedCount as InvokedCountMatcher;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Validator\Constraint;
@@ -23,7 +23,7 @@ class ConstraintResolverMockHelper
     }
 
     /**
-     * @param RuleSet|RuleSet[] $ruleSets
+     * @param RuleList|RuleList[]     $ruleSets
      * @param Constraint|Constraint[] $constraints
      */
     public function mockResolveRuleSet($ruleSets, $constraints, int $expects = 1): self

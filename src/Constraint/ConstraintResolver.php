@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace DigitalRevolution\SymfonyRequestValidation\Constraint;
 
 use DigitalRevolution\SymfonyRequestValidation\Parser\Rule;
-use DigitalRevolution\SymfonyRequestValidation\Parser\RuleSet;
+use DigitalRevolution\SymfonyRequestValidation\Parser\RuleList;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Email;
@@ -16,21 +16,21 @@ use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Optional;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\Constraints\Url;
 
 class ConstraintResolver
 {
     /**
-     * @return Constraint|Constraint[]
      * @throws RequestValidationException
      */
-    public function resolveRuleSet(RuleSet $ruleSet)
+    public function resolveRuleList(RuleList $ruleList): Constraint
     {
         $required    = false;
         $nullable    = false;
         $constraints = [];
-        foreach ($ruleSet->getRules() as $rule) {
+        foreach ($ruleList->getRules() as $rule) {
             if ($rule instanceof Constraint) {
                 $constraints[] = $rule;
                 continue;
@@ -47,7 +47,7 @@ class ConstraintResolver
                 continue;
             }
 
-            $constraints[] = $this->resolveConstraint($ruleSet, $rule);
+            $constraints[] = $this->resolveConstraint($ruleList, $rule);
         }
 
         if ($nullable === false) {
@@ -57,13 +57,13 @@ class ConstraintResolver
         if ($required === false) {
             return new Optional($constraints);
         }
-        return $constraints;
+        return new Required($constraints);
     }
 
     /**
      * @throws RequestValidationException
      */
-    protected function resolveConstraint(RuleSet $ruleSet, Rule $rule): Constraint
+    protected function resolveConstraint(RuleList $ruleList, Rule $rule): Constraint
     {
         switch ($rule->getName()) {
             case Rule::RULE_BOOLEAN:
@@ -81,19 +81,19 @@ class ConstraintResolver
             case Rule::RULE_REGEX:
                 return new Regex(['pattern' => $rule->getParameter(0)]);
             case Rule::RULE_FILLED:
-                return new NotBlank(['allowNull' => $ruleSet->hasRule(Rule::RULE_NULLABLE)]);
+                return new NotBlank(['allowNull' => $ruleList->hasRule(Rule::RULE_NULLABLE)]);
             case Rule::RULE_MIN:
-                if ($ruleSet->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT])) {
+                if ($ruleList->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT])) {
                     return new GreaterThanOrEqual($rule->getIntParam(0));
                 }
                 return new Length(['min' => $rule->getIntParam(0)]);
             case Rule::RULE_MAX:
-                if ($ruleSet->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT])) {
+                if ($ruleList->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT])) {
                     return new LessThanOrEqual($rule->getIntParam(0));
                 }
                 return new Length(['max' => $rule->getIntParam(0)]);
             case Rule::RULE_BETWEEN:
-                if ($ruleSet->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT])) {
+                if ($ruleList->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT])) {
                     return new Range(['min' => $rule->getIntParam(0), 'max' => $rule->getIntParam(1)]);
                 }
                 return new Length(['min' => $rule->getIntParam(0), 'max' => $rule->getIntParam(1)]);

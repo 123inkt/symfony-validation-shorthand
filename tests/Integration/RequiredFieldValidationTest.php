@@ -42,7 +42,7 @@ class RequiredFieldValidationTest extends TestCase
      */
     public function testResolverRequiredFields($rules, $data, bool $success): void
     {
-        $constraint = $this->resolver->resolveRuleSet($this->parser->parseRules($rules));
+        $constraint = $this->resolver->resolveRuleList($this->parser->parseRules($rules));
         $violations = $this->validator->validate(['value' => $data], new Assert\Collection(['value' => $constraint]));
 
         if ($success) {
@@ -60,7 +60,7 @@ class RequiredFieldValidationTest extends TestCase
      */
     public function testResolverOptionalFields($rules, $data, bool $success): void
     {
-        $constraint = $this->resolver->resolveRuleSet($this->parser->parseRules($rules));
+        $constraint = $this->resolver->resolveRuleList($this->parser->parseRules($rules));
         $dataSet    = $data === false ? [] : ['value' => $data];
         $violations = $this->validator->validate($dataSet, new Assert\Collection(['value' => $constraint]));
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Parser;
 
 use DigitalRevolution\SymfonyRequestValidation\Parser\Rule;
-use DigitalRevolution\SymfonyRequestValidation\Parser\RuleSet;
+use DigitalRevolution\SymfonyRequestValidation\Parser\RuleList;
 use DigitalRevolution\SymfonyRequestValidation\Parser\ValidationRuleParser;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use PHPUnit\Framework\TestCase;
@@ -43,7 +43,7 @@ class ValidationRuleParserTest extends TestCase
     public function testParseRuleWithSingleConstraint(): void
     {
         $constraint = new Assert\NotBlank();
-        $ruleSet    = new RuleSet();
+        $ruleSet    = new RuleList();
         $ruleSet->addRule($constraint);
 
         static::assertEquals($ruleSet, $this->parser->parseRules($constraint));
@@ -58,7 +58,7 @@ class ValidationRuleParserTest extends TestCase
      */
     public function testParseRuleWithSingleStringRule(): void
     {
-        $ruleSet = new RuleSet();
+        $ruleSet = new RuleList();
         $ruleSet->addRule(new Rule('required'));
 
         $this->assertEquals($ruleSet, $this->parser->parseRules('required'));
@@ -73,7 +73,7 @@ class ValidationRuleParserTest extends TestCase
      */
     public function testParseRuleWithSingleStringRuleWithParameter(): void
     {
-        $ruleSet = new RuleSet();
+        $ruleSet = new RuleList();
         $ruleSet->addRule(new Rule('max', ['123']));
 
         $this->assertEquals($ruleSet, $this->parser->parseRules('max:123'));
@@ -88,7 +88,7 @@ class ValidationRuleParserTest extends TestCase
      */
     public function testParseRuleWithSingleStringRuleWithMultipleParameters(): void
     {
-        $ruleSet  = new RuleSet();
+        $ruleSet  = new RuleList();
         $ruleSet->addRule(new Rule('between', ['5', '10']));
 
         $this->assertEquals($ruleSet, $this->parser->parseRules('between:5,10'));
@@ -103,7 +103,7 @@ class ValidationRuleParserTest extends TestCase
      */
     public function testParseRuleWithSingleStringRuleWithRegexParameter(): void
     {
-        $ruleSet  = new RuleSet();
+        $ruleSet  = new RuleList();
         $ruleSet->addRule(new Rule('regex', ['/^\d+$/i']));
 
         $this->assertEquals($ruleSet, $this->parser->parseRules('regex:/^\d+$/i'));
@@ -118,7 +118,7 @@ class ValidationRuleParserTest extends TestCase
      */
     public function testParseRuleWithMultipleStringRules(): void
     {
-        $ruleSet  = new RuleSet();
+        $ruleSet  = new RuleList();
         $ruleSet->addRule(new Rule('required', []));
         $ruleSet->addRule(new Rule('max', ['30']));
 
@@ -134,7 +134,7 @@ class ValidationRuleParserTest extends TestCase
      */
     public function testParseRuleWithMultipleStringRulesAsArray(): void
     {
-        $ruleSet  = new RuleSet();
+        $ruleSet  = new RuleList();
         $ruleSet->addRule(new Rule('required', []));
         $ruleSet->addRule(new Rule('max', ['30']));
 
@@ -151,7 +151,7 @@ class ValidationRuleParserTest extends TestCase
     public function testParseRuleWithStringRuleAndConstraint(): void
     {
         $constraint = new Assert\NotBlank();
-        $ruleSet    = new RuleSet();
+        $ruleSet    = new RuleList();
         $ruleSet->addRule(new Rule('required', []));
         $ruleSet->addRule($constraint);
 
@@ -164,7 +164,7 @@ class ValidationRuleParserTest extends TestCase
      */
     public function testParseRuleWithRuleNormalization(): void
     {
-        $ruleSet    = new RuleSet();
+        $ruleSet    = new RuleList();
         $ruleSet->addRule(new Rule('integer', []));
         $ruleSet->addRule(new Rule('boolean', []));
 

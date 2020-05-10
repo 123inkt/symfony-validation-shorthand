@@ -6,7 +6,7 @@ namespace DigitalRevolution\SymfonyRequestValidation\Parser;
 use Countable;
 use Symfony\Component\Validator\Constraint;
 
-class RuleSet implements Countable
+class RuleList implements Countable
 {
     /** @var array<Rule|Constraint> */
     private $rules = [];

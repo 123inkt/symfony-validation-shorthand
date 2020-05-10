@@ -3,10 +3,8 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation\Parser;
 
-use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\Collection;
 
 class ValidationRuleParser
 {
@@ -16,13 +14,13 @@ class ValidationRuleParser
      * @param string|Constraint|array<string|Constraint> $rules
      * @throws RequestValidationException
      */
-    public function parseRules($rules): RuleSet
+    public function parseRules($rules): RuleList
     {
         if (is_array($rules) === false) {
             $rules = [$rules];
         }
 
-        $ruleSet = new RuleSet();
+        $ruleSet = new RuleList();
         foreach ($rules as $rule) {
             if ($rule instanceof Constraint) {
                 $ruleSet->addRule($rule);

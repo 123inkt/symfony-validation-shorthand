@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation\Tests\Integration;
 
-use DigitalRevolution\SymfonyRequestValidation\Constraint\NestedConstraintResolver;
+use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintCollectionBuilder;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
+use DigitalRevolution\SymfonyRequestValidation\Utility\InvalidArrayPathException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Validation;
 
@@ -12,14 +13,14 @@ class RecursiveConstraintResolverTest extends TestCase
 {
     /**
      *
-     * @throws RequestValidationException
+     * @throws RequestValidationException|InvalidArrayPathException
      */
     public function testResolve(): void
     {
         $data  = ['first_name' => ''];
         $rules = ['first_name' => 'filled|nullable'];
 
-        $resolver   = new NestedConstraintResolver();
+        $resolver   = new ConstraintCollectionBuilder();
         $constraint = $resolver->resolve($rules);
 
         $validator  = Validation::createValidator();
@@ -36,7 +37,7 @@ class RecursiveConstraintResolverTest extends TestCase
         $data  = [];
         $rules = ['person.*.first_name' => 'filled|min:5'];
 
-        $resolver   = new NestedConstraintResolver();
+        $resolver   = new ConstraintCollectionBuilder();
         $constraint = $resolver->resolve($rules);
 
         $validator  = Validation::createValidator();
@@ -59,7 +60,7 @@ class RecursiveConstraintResolverTest extends TestCase
             "*.#1" => 'string|min:1'
         ];
 
-        $resolver   = new NestedConstraintResolver();
+        $resolver   = new ConstraintCollectionBuilder();
         $constraint = $resolver->resolve($rules);
 
         $validator  = Validation::createValidator();

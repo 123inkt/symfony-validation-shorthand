@@ -4,12 +4,12 @@ declare(strict_types=1);
 namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Parser;
 
 use DigitalRevolution\SymfonyRequestValidation\Parser\Rule;
-use DigitalRevolution\SymfonyRequestValidation\Parser\RuleSet;
+use DigitalRevolution\SymfonyRequestValidation\Parser\RuleList;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Parser\RuleSet
+ * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Parser\RuleList
  */
 class RuleSetTest extends TestCase
 {
@@ -24,7 +24,7 @@ class RuleSetTest extends TestCase
         $ruleB = new Rule('b');
         $ruleC = new Rule('c');
 
-        $ruleSet = new RuleSet();
+        $ruleSet = new RuleList();
         static::assertCount(0, $ruleSet);
 
         // add rule on empty set
@@ -43,7 +43,7 @@ class RuleSetTest extends TestCase
      */
     public function testHasRule(): void
     {
-        $ruleSet = new RuleSet();
+        $ruleSet = new RuleList();
         static::assertFalse($ruleSet->hasRule('unit-test'));
 
         $ruleSet->addRule(new NotBlank());
@@ -60,7 +60,7 @@ class RuleSetTest extends TestCase
         $ruleA = new Rule('a');
         $ruleB = new Rule('b');
 
-        $ruleSet = new RuleSet();
+        $ruleSet = new RuleList();
         static::assertCount(0, $ruleSet);
 
         // add a rule
