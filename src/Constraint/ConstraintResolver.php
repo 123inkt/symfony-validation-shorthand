@@ -56,11 +56,11 @@ class ConstraintResolver
     {
         switch ($rule->getName()) {
             case Rule::RULE_BOOLEAN:
-                return new Boolean();
+                return new Type\Boolean();
             case Rule::RULE_INTEGER:
-                return new IntegerNumber();
+                return new Type\IntegerNumber();
             case Rule::RULE_FLOAT:
-                return new FloatNumber();
+                return new Type\FloatNumber();
             case Rule::RULE_STRING:
                 return new Assert\Type('string');
             case Rule::RULE_EMAIL:
