@@ -50,7 +50,7 @@ class AbstractValidatedRequestTest extends TestCase
     public function dataProvider(): Generator
     {
         // test required fields
-        yield "required: name exists" => [['name' => 'Frank'], ['name' => 'required'], true];
+        yield "required: name exists" => [['name' => 'Foobar'], ['name' => 'required'], true];
         yield "required: name is empty" => [['name' => ''], ['name' => 'required'], true];
         yield "required: name can't be empty" => [['name' => ''], ['name' => 'required|filled'], false];
         yield "required: name can't be null" => [['name' => null], ['name' => 'required'], false];
@@ -58,7 +58,7 @@ class AbstractValidatedRequestTest extends TestCase
         yield "required: name field is missing" => [[], ['name' => 'required'], false];
 
         // test optional string
-        yield "optional: name exists" => [['name' => 'Frank'], ['name' => 'string'], true];
+        yield "optional: name exists" => [['name' => 'Foobar'], ['name' => 'string'], true];
         yield "optional: name is empty" => [['name' => ''], ['name' => 'string'], true];
         yield "optional: name can't be empty" => [['name' => ''], ['name' => 'string|filled'], false];
         yield "optional: name field is missing" => [[], ['name' => 'string'], true];
