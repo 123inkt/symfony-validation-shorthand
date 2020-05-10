@@ -31,17 +31,17 @@ class DataValidatorFactory
     }
 
     /**
-     * @param Collection|array<string, string|Constraint|array<string|Constraint>>|null $queryDefinitions
-     * @param Collection|array<string, string|Constraint|array<string|Constraint>>|null $requestDefinitions
      * @throws RequestValidationException
      * @throws InvalidArrayPathException
      */
-    public function createRequestValidator($queryDefinitions, $requestDefinitions): RequestValidator
+    public function createRequestValidator(RequestValidationRules $validationRules): RequestValidator
     {
-        $options = [
+        $options            = [
             'queryConstraint'   => null,
             'requestConstraint' => null
         ];
+        $queryDefinitions   = $validationRules->getQueryRules();
+        $requestDefinitions = $validationRules->getRequestRules();
 
         if ($queryDefinitions !== null) {
             $options['queryConstraint'] = $this->getConstraint($queryDefinitions);

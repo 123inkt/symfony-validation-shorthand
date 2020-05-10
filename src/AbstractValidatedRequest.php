@@ -29,9 +29,8 @@ abstract class AbstractValidatedRequest
         }
 
         $this->request = $request;
-        $rules         = $this->getValidationRules($request);
-        $dataValidator = (new DataValidatorFactory($validator))->createRequestValidator($rules->getQueryRules(), $rules->getRequestRules());
-        $this->isValid = $this->validate($request, $dataValidator);
+        $dataValidator = (new DataValidatorFactory($validator))->createRequestValidator($this->getValidationRules($request));
+        $this->isValid = $this->validate($dataValidator);
     }
 
     public function getRequest(): Request
@@ -64,9 +63,9 @@ abstract class AbstractValidatedRequest
     /**
      * @throws RequestValidationException
      */
-    protected function validate(Request $request, RequestValidator $validator): bool
+    protected function validate(RequestValidator $validator): bool
     {
-        $violationList = $validator->validate($request);
+        $violationList = $validator->validate($this->request);
         if (count($violationList) > 0) {
             $this->handleViolations($violationList);
             // @codeCoverageIgnoreStart
