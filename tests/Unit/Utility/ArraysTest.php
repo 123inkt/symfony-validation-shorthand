@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Utility;
 
+use DigitalRevolution\SymfonyRequestValidation\Utility\ArrayAssignException;
 use DigitalRevolution\SymfonyRequestValidation\Utility\Arrays;
 use DigitalRevolution\SymfonyRequestValidation\Utility\PathFactory;
 use PHPUnit\Framework\TestCase;
@@ -12,6 +13,17 @@ use PHPUnit\Framework\TestCase;
  */
 class ArraysTest extends TestCase
 {
+    /**
+     *
+     * @throws ArrayAssignException
+     */
+    public function testAssignToPath(): void
+    {
+        $data = ['a' => []];
+
+        static::assertSame(['a' => ['c']], Arrays::assignToPath($data, ['a', '0'], 'c'));
+    }
+
     /**
      * @covers ::findData
      */

@@ -6,6 +6,32 @@ namespace DigitalRevolution\SymfonyRequestValidation\Utility;
 class Arrays
 {
     /**
+     * @param mixed    $array
+     * @param string[] $path
+     * @param mixed    $value
+     * @throws ArrayAssignException
+     */
+    public static function assignToPath(array &$array, array $path, $value): array
+    {
+        $key = array_shift($path);
+        if (count($path) === 0) {
+            $array[$key] = $value;
+            return $array;
+        }
+
+        if (array_key_exists($key, $array) === false) {
+            $array[$key] = [];
+        } elseif (is_array($array[$key]) === false) {
+            throw new ArrayAssignException(
+                "Can't assign value to `" . print_r($array, true) . "` as `" . implode('.', $path) . "` is not array"
+            );
+        }
+
+        self::assignToPath($array[$key], $path, $value);
+        return $array;
+    }
+
+    /**
      * @param Path[] $paths
      */
     public static function findData(array $paths, array $data): ?array
