@@ -7,18 +7,7 @@ use DigitalRevolution\SymfonyRequestValidation\Parser\Rule;
 use DigitalRevolution\SymfonyRequestValidation\Parser\RuleList;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\LessThanOrEqual;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\NotNull;
-use Symfony\Component\Validator\Constraints\Optional;
-use Symfony\Component\Validator\Constraints\Range;
-use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\Required;
-use Symfony\Component\Validator\Constraints\Type;
-use Symfony\Component\Validator\Constraints\Url;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class ConstraintResolver
 {
@@ -51,13 +40,13 @@ class ConstraintResolver
         }
 
         if ($nullable === false) {
-            $constraints[] = new NotNull();
+            $constraints[] = new Assert\NotNull();
         }
 
         if ($required === false) {
-            return new Optional($constraints);
+            return new Assert\Optional($constraints);
         }
-        return new Required($constraints);
+        return new Assert\Required($constraints);
     }
 
     /**
@@ -73,30 +62,30 @@ class ConstraintResolver
             case Rule::RULE_FLOAT:
                 return new FloatNumber();
             case Rule::RULE_STRING:
-                return new Type('string');
+                return new Assert\Type('string');
             case Rule::RULE_EMAIL:
-                return new Email();
+                return new Assert\Email();
             case Rule::RULE_URL:
-                return new Url();
+                return new Assert\Url();
             case Rule::RULE_REGEX:
-                return new Regex(['pattern' => $rule->getParameter(0)]);
+                return new Assert\Regex(['pattern' => $rule->getParameter(0)]);
             case Rule::RULE_FILLED:
-                return new NotBlank(['allowNull' => $ruleList->hasRule(Rule::RULE_NULLABLE)]);
+                return new Assert\NotBlank(['allowNull' => $ruleList->hasRule(Rule::RULE_NULLABLE)]);
             case Rule::RULE_MIN:
                 if ($ruleList->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT])) {
-                    return new GreaterThanOrEqual($rule->getIntParam(0));
+                    return new Assert\GreaterThanOrEqual($rule->getIntParam(0));
                 }
-                return new Length(['min' => $rule->getIntParam(0)]);
+                return new Assert\Length(['min' => $rule->getIntParam(0)]);
             case Rule::RULE_MAX:
                 if ($ruleList->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT])) {
-                    return new LessThanOrEqual($rule->getIntParam(0));
+                    return new Assert\LessThanOrEqual($rule->getIntParam(0));
                 }
-                return new Length(['max' => $rule->getIntParam(0)]);
+                return new Assert\Length(['max' => $rule->getIntParam(0)]);
             case Rule::RULE_BETWEEN:
                 if ($ruleList->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT])) {
-                    return new Range(['min' => $rule->getIntParam(0), 'max' => $rule->getIntParam(1)]);
+                    return new Assert\Range(['min' => $rule->getIntParam(0), 'max' => $rule->getIntParam(1)]);
                 }
-                return new Length(['min' => $rule->getIntParam(0), 'max' => $rule->getIntParam(1)]);
+                return new Assert\Length(['min' => $rule->getIntParam(0), 'max' => $rule->getIntParam(1)]);
         }
 
         throw new RequestValidationException(
