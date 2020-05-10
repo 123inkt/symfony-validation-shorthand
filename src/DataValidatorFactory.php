@@ -1,14 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Validator;
+namespace DigitalRevolution\SymfonyRequestValidation;
 
 use DigitalRevolution\SymfonyRequestValidation\Builder\MapBuilderFactory;
 use DigitalRevolution\SymfonyRequestValidation\Builder\MapBuilderFactoryInterface;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\RequestConstraint;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\TraversableConstraint;
-use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use DigitalRevolution\SymfonyRequestValidation\Utility\InvalidArrayPathException;
+use DigitalRevolution\SymfonyRequestValidation\Validator\ArrayValidator;
+use DigitalRevolution\SymfonyRequestValidation\Validator\RequestValidator;
+use DigitalRevolution\SymfonyRequestValidation\Validator\TraversableDataValidator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Validation;

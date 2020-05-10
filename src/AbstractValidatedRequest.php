@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation;
 
-use DigitalRevolution\SymfonyRequestValidation\Builder\MapBuilderFactory;
-use DigitalRevolution\SymfonyRequestValidation\Validator\DataValidatorFactory;
 use DigitalRevolution\SymfonyRequestValidation\Validator\RequestValidator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -30,11 +28,10 @@ abstract class AbstractValidatedRequest
             throw new RequestValidationException('Request is missing, unable to validate');
         }
 
-        $this->request    = $request;
-        $validatorFactory = new DataValidatorFactory($validator, new MapBuilderFactory());
-        $rules            = $this->getValidationRules($request);
-        $dataValidator    = $validatorFactory->createRequestValidator($rules->getQueryRules(), $rules->getRequestRules());
-        $this->isValid    = $this->validate($request, $dataValidator);
+        $this->request = $request;
+        $rules         = $this->getValidationRules($request);
+        $dataValidator = (new DataValidatorFactory($validator))->createRequestValidator($rules->getQueryRules(), $rules->getRequestRules());
+        $this->isValid = $this->validate($request, $dataValidator);
     }
 
     public function getRequest(): Request
