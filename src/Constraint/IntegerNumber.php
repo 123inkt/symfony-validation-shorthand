@@ -16,5 +16,4 @@ class IntegerNumber extends Constraint
     ];
 
     public $message = '{{ value }} is not a valid number.';
-    public $allowNull = false;
 }

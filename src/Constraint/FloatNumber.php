@@ -16,5 +16,4 @@ class FloatNumber extends Constraint
     ];
 
     public $message   = '{{ value }} is not a valid decimal.';
-    public $allowNull = false;
 }
