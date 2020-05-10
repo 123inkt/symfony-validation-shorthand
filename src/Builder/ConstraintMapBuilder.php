@@ -1,32 +1,30 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Constraint;
+namespace DigitalRevolution\SymfonyRequestValidation\Builder;
 
+use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintMap;
+use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
 use DigitalRevolution\SymfonyRequestValidation\Parser\RuleListMap;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 
-class ConstraintsMapper
+class ConstraintMapBuilder
 {
-    /** @var RuleListMap */
-    private $ruleListMap;
-
     /** @var ConstraintResolver */
     private $resolver;
 
-    public function __construct(RuleListMap $ruleListMap, ?ConstraintResolver $resolver)
+    public function __construct(ConstraintResolver $resolver)
     {
-        $this->ruleListMap = $ruleListMap;
-        $this->resolver    = $resolver ?? new ConstraintResolver();
+        $this->resolver = $resolver;
     }
 
     /**
      * @throws RequestValidationException
      */
-    public function createConstraintMap(): ConstraintMap
+    public function build(RuleListMap $ruleListMap): ConstraintMap
     {
         $constraintMap = new ConstraintMap();
-        foreach ($this->ruleListMap as $key => $ruleList) {
+        foreach ($ruleListMap as $key => $ruleList) {
             $constraintMap->set($key, $this->resolver->resolveRuleList($ruleList));
         }
 

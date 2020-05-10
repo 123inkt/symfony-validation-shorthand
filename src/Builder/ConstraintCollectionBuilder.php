@@ -1,8 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Constraint;
+namespace DigitalRevolution\SymfonyRequestValidation\Builder;
 
+use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintFactory;
+use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintMap;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use DigitalRevolution\SymfonyRequestValidation\Utility\Arrays;
 use DigitalRevolution\SymfonyRequestValidation\Utility\InvalidArrayPathException;
@@ -17,7 +19,7 @@ class ConstraintCollectionBuilder
     /**
      * @throws RequestValidationException|InvalidArrayPathException
      */
-    public function buildCollections(ConstraintMap $constraintsMap): Constraint
+    public function build(ConstraintMap $constraintsMap): Constraint
     {
         $constraintTreeMap = [];
         foreach ($constraintsMap as $key => $constraints) {
