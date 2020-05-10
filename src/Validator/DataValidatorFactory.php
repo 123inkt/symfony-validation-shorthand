@@ -22,10 +22,10 @@ class DataValidatorFactory
     /** @var ValidatorInterface */
     private $validator;
 
-    public function __construct(MapBuilderFactoryInterface $factory = null, ValidatorInterface $validator = null)
+    public function __construct(ValidatorInterface $validator = null, MapBuilderFactoryInterface $factory = null)
     {
-        $this->factory   = $factory ?? new MapBuilderFactory();
         $this->validator = $validator ?? Validation::createValidator();
+        $this->factory   = $factory ?? new MapBuilderFactory();
     }
 
     /**

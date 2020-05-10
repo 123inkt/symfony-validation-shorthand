@@ -31,7 +31,7 @@ abstract class AbstractValidatedRequest
         }
 
         $this->request    = $request;
-        $validatorFactory = new DataValidatorFactory(new MapBuilderFactory(), $validator);
+        $validatorFactory = new DataValidatorFactory($validator, new MapBuilderFactory());
         $rules            = $this->getValidationRules($request);
         $dataValidator    = $validatorFactory->createRequestValidator($rules->getQueryRules(), $rules->getRequestRules());
         $this->isValid    = $this->validate($request, $dataValidator);
