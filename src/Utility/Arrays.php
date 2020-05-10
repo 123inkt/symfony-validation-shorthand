@@ -7,6 +7,9 @@ use InvalidArgumentException;
 
 class Arrays
 {
+    private const ERROR_ALREADY_ASSIGNED = "Can't assign value to `%s` as `%s` is already assigned.";
+    private const ERROR_NOT_ARRAY        = "Can't assign value to `%s` as `%s` is not an array.";
+
     /**
      * Recursively assign the value at given path to the array.
      * Example:
@@ -28,20 +31,24 @@ class Arrays
             throw new InvalidArgumentException("\$path can't be empty");
         }
 
+        // reached the tail, try to assign the value
         $key = array_shift($path);
         if (count($path) === 0) {
+            if (array_key_exists($key, $array)) {
+                throw new InvalidArrayPathException(sprintf(self::ERROR_ALREADY_ASSIGNED, print_r($array, true), implode('.', $path)));
+            }
             $array[$key] = $value;
             return $array;
         }
 
+        // create child array if necessary to build the path
         if (array_key_exists($key, $array) === false) {
             $array[$key] = [];
         } elseif (is_array($array[$key]) === false) {
-            throw new InvalidArrayPathException(
-                "Can't assign value to `" . print_r($array, true) . "` as `" . implode('.', $path) . "` is not array"
-            );
+            throw new InvalidArrayPathException(sprintf(self::ERROR_NOT_ARRAY, print_r($array, true), implode('.', $path)));
         }
 
+        // continue assigned the value
         self::assignToPath($array[$key], $path, $value);
         return $array;
     }
