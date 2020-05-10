@@ -6,7 +6,6 @@ namespace DigitalRevolution\SymfonyRequestValidation\Constraint\Type;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
@@ -44,8 +43,8 @@ class RequestConstraintValidator extends ConstraintValidator
             $context->getValidator()
                 ->inContext($context)
                 ->atPath('[request]')
-                ->validate($value->query->all(), $constraint->requestConstraint);
-        } elseif (count($value->query) > 0) {
+                ->validate($value->request->all(), $constraint->requestConstraint);
+        } elseif (count($value->request) > 0) {
             $context->buildViolation($constraint->missingRequestConstraintMessage)
                 ->atPath('[request]')
                 ->setCode($constraint::MISSING_REQUEST_CONSTRAINT)

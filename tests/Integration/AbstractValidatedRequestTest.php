@@ -6,6 +6,7 @@ namespace DigitalRevolution\SymfonyRequestValidation\Tests\Integration;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use DigitalRevolution\SymfonyRequestValidation\Tests\Mock\MockValidatedRequest;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationRules;
+use DigitalRevolution\SymfonyRequestValidation\Utility\InvalidArrayPathException;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,21 +20,11 @@ use Symfony\Component\Validator\Validation;
  */
 class AbstractValidatedRequestTest extends TestCase
 {
-//    public function testDummy(): void
-//    {
-//        $data       = ['name' => null];
-//        $validator  = Validation::createValidator();
-//        $constraint = new Collection(['fields' => ['name' => new Type(['string'])]]);
-//
-//        $violations = $validator->validate($data, $constraint);
-//        static::assertCount(0, $violations);
-//    }
-
     /**
      * @dataProvider dataProvider
      * @param array<string, mixed> $data
      * @param Collection|array<string, string|Constraint|array<string|Constraint>>|null $rules
-     * @throws RequestValidationException
+     * @throws RequestValidationException|InvalidArrayPathException
      */
     public function testGetRequestValidation(array $data, $rules, bool $isValid): void
     {
