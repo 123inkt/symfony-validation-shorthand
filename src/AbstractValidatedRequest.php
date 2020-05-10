@@ -47,7 +47,7 @@ abstract class AbstractValidatedRequest
     /**
      * Get all the constraints for the current query params
      */
-    abstract protected function getValidationRules(Request $request): ValidationRules;
+    abstract protected function getValidationRules(Request $request): RequestValidationRules;
 
     /**
      * Called when there are one or more violations. Defaults to throwing RequestValidationException. Overwrite

@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit;
 
-use DigitalRevolution\SymfonyRequestValidation\ValidationRules;
+use DigitalRevolution\SymfonyRequestValidation\RequestValidationRules;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\Collection;
 
 /**
- * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\ValidationRules
+ * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\RequestValidationRules
  */
 class ValidationRulesTest extends TestCase
 {
@@ -20,7 +20,7 @@ class ValidationRulesTest extends TestCase
      */
     public function testSetRequestRules(): void
     {
-        $rules = new ValidationRules();
+        $rules = new RequestValidationRules();
         static::assertNull($rules->getQueryRules());
         static::assertNull($rules->getRequestRules());
 

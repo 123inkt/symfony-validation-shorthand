@@ -6,7 +6,7 @@ namespace DigitalRevolution\SymfonyRequestValidation;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Collection;
 
-class ValidationRules
+class RequestValidationRules
 {
     /** @var Collection|array<string, string|Constraint|array<string|Constraint>>|null */
     private $queryRules;

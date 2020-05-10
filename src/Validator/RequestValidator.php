@@ -5,7 +5,7 @@ namespace DigitalRevolution\SymfonyRequestValidation\Validator;
 
 use DigitalRevolution\SymfonyRequestValidation\Parser\ValidationRuleParser;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
-use DigitalRevolution\SymfonyRequestValidation\ValidationRules;
+use DigitalRevolution\SymfonyRequestValidation\RequestValidationRules;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintViolationInterface;
@@ -30,7 +30,7 @@ class RequestValidator
      * @return ConstraintViolationList<ConstraintViolationInterface>
      * @throws RequestValidationException
      */
-    public function validate(Request $request, ValidationRules $rules): ConstraintViolationList
+    public function validate(Request $request, RequestValidationRules $rules): ConstraintViolationList
     {
         $violations   = new ConstraintViolationList();
         $queryRules   = $rules->getQueryRules();

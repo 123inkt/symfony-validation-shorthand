@@ -5,7 +5,7 @@ namespace DigitalRevolution\SymfonyRequestValidation\Tests\Integration;
 
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use DigitalRevolution\SymfonyRequestValidation\Tests\Mock\MockValidatedRequest;
-use DigitalRevolution\SymfonyRequestValidation\ValidationRules;
+use DigitalRevolution\SymfonyRequestValidation\RequestValidationRules;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,7 +42,7 @@ class AbstractValidatedRequestTest extends TestCase
         $stack->push($request);
 
         $validator       = Validation::createValidator();
-        $validationRules = new ValidationRules();
+        $validationRules = new RequestValidationRules();
         $validationRules->setQueryRules($rules);
 
         // expect exception

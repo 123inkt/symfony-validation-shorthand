@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation\Tests\Integration;
 
-use DigitalRevolution\SymfonyRequestValidation\Constraint\RecursiveConstraintResolver;
+use DigitalRevolution\SymfonyRequestValidation\Constraint\NestedConstraintResolver;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Validation;
@@ -19,7 +19,7 @@ class RecursiveConstraintResolverTest extends TestCase
         $data  = ['first_name' => ''];
         $rules = ['first_name' => 'filled|nullable'];
 
-        $resolver   = new RecursiveConstraintResolver();
+        $resolver   = new NestedConstraintResolver();
         $constraint = $resolver->resolve($rules);
 
         $validator  = Validation::createValidator();
@@ -36,7 +36,7 @@ class RecursiveConstraintResolverTest extends TestCase
         $data  = [];
         $rules = ['person.*.first_name' => 'filled|min:5'];
 
-        $resolver   = new RecursiveConstraintResolver();
+        $resolver   = new NestedConstraintResolver();
         $constraint = $resolver->resolve($rules);
 
         $validator  = Validation::createValidator();
@@ -59,7 +59,7 @@ class RecursiveConstraintResolverTest extends TestCase
             "*.#1" => 'string|min:1'
         ];
 
-        $resolver   = new RecursiveConstraintResolver();
+        $resolver   = new NestedConstraintResolver();
         $constraint = $resolver->resolve($rules);
 
         $validator  = Validation::createValidator();

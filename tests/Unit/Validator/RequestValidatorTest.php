@@ -6,7 +6,7 @@ namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Validator;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
 use DigitalRevolution\SymfonyRequestValidation\Parser\ValidationRuleParser;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
-use DigitalRevolution\SymfonyRequestValidation\ValidationRules;
+use DigitalRevolution\SymfonyRequestValidation\RequestValidationRules;
 use DigitalRevolution\SymfonyRequestValidation\Validator\RequestValidator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,7 +43,7 @@ class RequestValidatorTest extends TestCase
      */
     public function testValidateNoRules(): void
     {
-        static::assertCount(0, $this->requestValidator->validate(new Request(), new ValidationRules()));
+        static::assertCount(0, $this->requestValidator->validate(new Request(), new RequestValidationRules()));
     }
 
     /**
@@ -55,7 +55,7 @@ class RequestValidatorTest extends TestCase
         $request           = new Request(['test' => 'unit'], ['foo' => 'bar']);
         $queryConstraint   = new Collection(['fields' => ['test' => new NotBlank()]]);
         $requestConstraint = new Collection(['fields' => ['foo' => new NotBlank()]]);
-        $rules             = new ValidationRules();
+        $rules             = new RequestValidationRules();
         $rules->setQueryRules($queryConstraint);
         $rules->setRequestRules($requestConstraint);
 
@@ -71,7 +71,7 @@ class RequestValidatorTest extends TestCase
         $request           = new Request(['test' => 'unit'], ['foo' => 'bar']);
         $queryConstraint   = new Collection(['fields' => ['test' => new Positive()]]);
         $requestConstraint = new Collection(['fields' => ['foo' => new Negative()]]);
-        $rules             = new ValidationRules();
+        $rules             = new RequestValidationRules();
         $rules->setQueryRules($queryConstraint);
         $rules->setRequestRules($requestConstraint);
 

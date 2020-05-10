@@ -11,7 +11,10 @@ use DigitalRevolution\SymfonyRequestValidation\Utility\InvalidArrayPathException
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Collection;
 
-class RecursiveConstraintResolver
+/**
+ * Transform a rule-definition set to a nested set of Assert\All or Assert\Collection constraints.
+ */
+class NestedConstraintResolver
 {
     /** @var ConstraintResolver */
     private $resolver;
@@ -19,10 +22,10 @@ class RecursiveConstraintResolver
     /** @var ValidationRuleParser */
     private $parser;
 
-    public function __construct()
+    public function __construct(?ValidationRuleParser $parser, ?ConstraintResolver $resolver)
     {
-        $this->parser   = new ValidationRuleParser();
-        $this->resolver = new ConstraintResolver();
+        $this->parser   = $parser ?? new ValidationRuleParser();
+        $this->resolver = $resolver ?? new ConstraintResolver();
     }
 
     /**
