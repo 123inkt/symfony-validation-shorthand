@@ -74,6 +74,7 @@ class IntegerNumberValidatorTest extends TestCase
             'int 0'     => [0, 0],
             // failures
             'a'         => ['a', 1],
+            '0 prefix'  => ['01', 1],
             'true'      => ['true', 1],
             'bool true' => [true, 1],
             'max int'   => ['11111111111', 1]
