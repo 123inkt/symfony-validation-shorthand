@@ -88,4 +88,18 @@ class FloatNumberValidatorTest extends TestCase
             'bool true'   => [true, 1],
         ];
     }
+
+    /**
+     * @covers ::validate
+     */
+    public function testValidateViolation(): void
+    {
+        $this->validator->validate('a', $this->constraint);
+        $violations = $this->context->getViolations();
+        static::assertCount(1, $violations);
+
+        $violation = $violations->get(0);
+        static::assertSame($this->constraint->message, $violation->getMessageTemplate());
+        static::assertSame(['{{ value }}' => '"a"'], $violation->getParameters());
+    }
 }

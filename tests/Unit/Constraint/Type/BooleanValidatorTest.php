@@ -14,7 +14,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Constraint\Type\BooleanValidator
- * @covers \DigitalRevolution\SymfonyRequestValidation\Constraint\Type\Boolean
  */
 class BooleanValidatorTest extends TestCase
 {

@@ -16,7 +16,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Constraint\Type\IntegerNumberValidator
- * @covers \DigitalRevolution\SymfonyRequestValidation\Constraint\Type\IntegerNumber
  */
 class IntegerNumberValidatorTest extends TestCase
 {

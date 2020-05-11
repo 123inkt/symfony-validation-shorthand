@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation\Constraint\Type;
 
-use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -20,12 +19,14 @@ class RequestConstraintValidator extends ConstraintValidator
         if ($value === null) {
             return;
         }
+        $context = $this->context;
 
         if ($value instanceof Request === false) {
-            throw new InvalidArgumentException('Expecting value to be of type Symfony\Component\HttpFoundation\Request');
+            $context->buildViolation($constraint->wrongTypeMessage)
+                ->setCode($constraint::WRONG_VALUE_TYPE)
+                ->addViolation();
+            return;
         }
-
-        $context = $this->context;
 
         if ($constraint->query !== null) {
             $context->getValidator()
