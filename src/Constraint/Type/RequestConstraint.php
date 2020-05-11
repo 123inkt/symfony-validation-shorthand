@@ -20,17 +20,17 @@ class RequestConstraint extends Constraint
     public $missingRequestConstraintMessage = 'Request::request is not empty, but there is no constraint configured.';
 
     /** @var Constraint|null */
-    public $queryConstraint;
+    public $query;
 
     /** @var Constraint|null */
-    public $requestConstraint;
+    public $request;
 
     public function __construct($options = null)
     {
-        if (isset($options['queryConstraint']) && $options['queryConstraint'] instanceof Constraint === false) {
+        if (isset($options['query']) && $options['query'] instanceof Constraint === false) {
             throw new ConstraintDefinitionException('The option "queryConstraint" is expected to be a Constraint');
         }
-        if (isset($options['requestConstraint']) && $options['requestConstraint'] instanceof Constraint === false) {
+        if (isset($options['request']) && $options['request'] instanceof Constraint === false) {
             throw new ConstraintDefinitionException('The option "requestConstraint" is expected to be a Constraint');
         }
 
@@ -39,6 +39,6 @@ class RequestConstraint extends Constraint
 
     public function getRequiredOptions(): array
     {
-        return ['queryConstraint', 'requestConstraint'];
+        return ['query', 'request'];
     }
 }

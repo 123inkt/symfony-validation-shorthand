@@ -27,11 +27,11 @@ class RequestConstraintValidator extends ConstraintValidator
 
         $context = $this->context;
 
-        if ($constraint->queryConstraint !== null) {
+        if ($constraint->query !== null) {
             $context->getValidator()
                 ->inContext($context)
                 ->atPath('[query]')
-                ->validate($value->query->all(), $constraint->queryConstraint);
+                ->validate($value->query->all(), $constraint->query);
         } elseif (count($value->query) > 0) {
             $context->buildViolation($constraint->missingQueryConstraintMessage)
                 ->atPath('[query]')
@@ -39,11 +39,11 @@ class RequestConstraintValidator extends ConstraintValidator
                 ->addViolation();
         }
 
-        if ($constraint->requestConstraint !== null) {
+        if ($constraint->request !== null) {
             $context->getValidator()
                 ->inContext($context)
                 ->atPath('[request]')
-                ->validate($value->request->all(), $constraint->requestConstraint);
+                ->validate($value->request->all(), $constraint->request);
         } elseif (count($value->request) > 0) {
             $context->buildViolation($constraint->missingRequestConstraintMessage)
                 ->atPath('[request]')

@@ -6,6 +6,7 @@ namespace DigitalRevolution\SymfonyRequestValidation;
 use DigitalRevolution\SymfonyRequestValidation\Validator\RequestValidator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -13,6 +14,12 @@ abstract class AbstractValidatedRequest
 {
     /** @var Request */
     protected $request;
+
+    /** @var ValidatorInterface */
+    protected $validator;
+
+    /** @var Constraint */
+    protected $constraint;
 
     /** @var bool */
     protected $isValid;
@@ -28,9 +35,10 @@ abstract class AbstractValidatedRequest
             throw new RequestValidationException('Request is missing, unable to validate');
         }
 
-        $this->request = $request;
-        $dataValidator = (new ValidatorFactory($validator))->createRequestValidator($this->getValidationRules($request));
-        $this->isValid = $this->validate($dataValidator);
+        $this->request    = $request;
+        $this->validator  = $validator;
+        $this->constraint = (new ConstraintFactory())->createRequestConstraint($this->getValidationRules($request));
+        $this->isValid    = $this->validate();
     }
 
     public function getRequest(): Request
@@ -63,9 +71,9 @@ abstract class AbstractValidatedRequest
     /**
      * @throws RequestValidationException
      */
-    protected function validate(RequestValidator $validator): bool
+    protected function validate(): bool
     {
-        $violationList = $validator->validate($this->request);
+        $violationList = $this->validator->validate($this->request, $this->constraint);
         if (count($violationList) > 0) {
             $this->handleViolations($violationList);
             // @codeCoverageIgnoreStart

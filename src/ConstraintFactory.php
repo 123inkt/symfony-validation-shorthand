@@ -14,41 +14,34 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class ValidatorFactory
+class ConstraintFactory
 {
     /** @var MapBuilderFactoryInterface */
     private $factory;
 
-    /** @var ValidatorInterface */
-    private $validator;
-
-    public function __construct(ValidatorInterface $validator = null, MapBuilderFactoryInterface $factory = null)
+    public function __construct(MapBuilderFactoryInterface $factory = null)
     {
-        $this->validator = $validator ?? Validation::createValidator();
-        $this->factory   = $factory ?? new MapBuilderFactory();
+        $this->factory = $factory ?? new MapBuilderFactory();
     }
 
     /**
      * @throws RequestValidationException
      * @throws InvalidArrayPathException
      */
-    public function createRequestValidator(RequestValidationRules $validationRules): RequestValidator
+    public function createRequestConstraint(RequestValidationRules $validationRules): RequestConstraint
     {
-        $options            = [
-            'queryConstraint'   => null,
-            'requestConstraint' => null
-        ];
+        $options            = [];
         $queryDefinitions   = $validationRules->getQueryRules();
         $requestDefinitions = $validationRules->getRequestRules();
 
         if ($queryDefinitions !== null) {
-            $options['queryConstraint'] = $this->getConstraint($queryDefinitions);
+            $options['queryConstraint'] = $this->createConstraintFromDefinition($queryDefinitions);
         }
         if ($requestDefinitions !== null) {
-            $options['requestConstraint'] = $this->getConstraint($requestDefinitions);
+            $options['requestConstraint'] = $this->createConstraintFromDefinition($requestDefinitions);
         }
 
-        return new RequestValidator(new RequestConstraint($options), $this->validator);
+        return new RequestConstraint($options);
     }
 
     /**
@@ -56,17 +49,7 @@ class ValidatorFactory
      * @throws RequestValidationException
      * @throws InvalidArrayPathException
      */
-    public function createDataValidator($ruleDefinitions): DataValidator
-    {
-        return new DataValidator($this->getConstraint($ruleDefinitions), $this->validator);
-    }
-
-    /**
-     * @param Assert\Collection|array<string, string|Constraint|array<string|Constraint>> $ruleDefinitions
-     * @throws RequestValidationException
-     * @throws InvalidArrayPathException
-     */
-    private function getConstraint($ruleDefinitions): Constraint
+    public function createConstraintFromDefinition($ruleDefinitions): Constraint
     {
         if ($ruleDefinitions instanceof Constraint) {
             return $ruleDefinitions;
