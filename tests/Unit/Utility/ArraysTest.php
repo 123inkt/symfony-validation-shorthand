@@ -15,6 +15,8 @@ use PHPUnit\Framework\TestCase;
 class ArraysTest extends TestCase
 {
     /**
+     * @param array<mixed> $data
+     * @param array<mixed> $expected
      * @dataProvider dataProvider
      * @covers ::assignToPath
      * @throws InvalidArrayPathException
@@ -24,6 +26,9 @@ class ArraysTest extends TestCase
         static::assertSame($expected, Arrays::assignToPath($data, explode('.', $path), $value));
     }
 
+    /**
+     * @return Generator<string, array<array<mixed>, string, string, array<mixed>>>
+     */
     public function dataProvider(): Generator
     {
         yield 'assign empty array: key => value' => [[], 'a', 'b', ['a' => 'b']];

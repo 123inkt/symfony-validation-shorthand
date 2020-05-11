@@ -19,10 +19,10 @@ class Arrays
      * Result:
      *   array: ['a' => ['b' => 'c']]
      *
-     * @param mixed    $array The array to be assigned. Intentionally by reference for internal recursion
-     * @param string[] $path  The string array path to which to assign the value
-     * @param mixed    $value The value to be assigned to the array
-     * @return array For convenience return the same array that was given
+     * @param array<mixed> $array The array to be assigned. Intentionally by reference for internal recursion
+     * @param string[]     $path  The string array path to which to assign the value
+     * @param mixed        $value The value to be assigned to the array
+     * @return array<mixed> For convenience return the same array that was given
      * @throws InvalidArrayPathException Thrown when the given path will result in overwriting an existing non array value.
      */
     public static function assignToPath(array &$array, array $path, $value): array
@@ -32,6 +32,7 @@ class Arrays
         }
 
         // reached the tail, try to assign the value
+        /** @var string $key */
         $key = array_shift($path);
         if (count($path) === 0) {
             if (array_key_exists($key, $array)) {

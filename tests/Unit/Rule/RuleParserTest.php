@@ -61,7 +61,7 @@ class RuleParserTest extends TestCase
         $ruleSet = new RuleList();
         $ruleSet->addRule(new Rule('required'));
 
-        $this->assertEquals($ruleSet, $this->parser->parseRules('required'));
+        static::assertEquals($ruleSet, $this->parser->parseRules('required'));
     }
 
     /**
@@ -76,7 +76,7 @@ class RuleParserTest extends TestCase
         $ruleSet = new RuleList();
         $ruleSet->addRule(new Rule('max', ['123']));
 
-        $this->assertEquals($ruleSet, $this->parser->parseRules('max:123'));
+        static::assertEquals($ruleSet, $this->parser->parseRules('max:123'));
     }
 
     /**
@@ -91,7 +91,7 @@ class RuleParserTest extends TestCase
         $ruleSet  = new RuleList();
         $ruleSet->addRule(new Rule('between', ['5', '10']));
 
-        $this->assertEquals($ruleSet, $this->parser->parseRules('between:5,10'));
+        static::assertEquals($ruleSet, $this->parser->parseRules('between:5,10'));
     }
 
     /**
@@ -106,7 +106,7 @@ class RuleParserTest extends TestCase
         $ruleSet  = new RuleList();
         $ruleSet->addRule(new Rule('regex', ['/^\d+$/i']));
 
-        $this->assertEquals($ruleSet, $this->parser->parseRules('regex:/^\d+$/i'));
+        static::assertEquals($ruleSet, $this->parser->parseRules('regex:/^\d+$/i'));
     }
 
     /**
@@ -122,7 +122,7 @@ class RuleParserTest extends TestCase
         $ruleSet->addRule(new Rule('required', []));
         $ruleSet->addRule(new Rule('max', ['30']));
 
-        $this->assertEquals($ruleSet, $this->parser->parseRules('required|max:30'));
+        static::assertEquals($ruleSet, $this->parser->parseRules('required|max:30'));
     }
 
     /**
@@ -138,7 +138,7 @@ class RuleParserTest extends TestCase
         $ruleSet->addRule(new Rule('required', []));
         $ruleSet->addRule(new Rule('max', ['30']));
 
-        $this->assertEquals($ruleSet, $this->parser->parseRules(['required', 'max:30']));
+        static::assertEquals($ruleSet, $this->parser->parseRules(['required', 'max:30']));
     }
 
     /**
@@ -155,7 +155,7 @@ class RuleParserTest extends TestCase
         $ruleSet->addRule(new Rule('required', []));
         $ruleSet->addRule($constraint);
 
-        $this->assertEquals($ruleSet, $this->parser->parseRules(['required', $constraint]));
+        static::assertEquals($ruleSet, $this->parser->parseRules(['required', $constraint]));
     }
 
     /**
@@ -168,6 +168,6 @@ class RuleParserTest extends TestCase
         $ruleSet->addRule(new Rule('integer', []));
         $ruleSet->addRule(new Rule('boolean', []));
 
-        $this->assertEquals($ruleSet, $this->parser->parseRules('int|bool'));
+        static::assertEquals($ruleSet, $this->parser->parseRules('int|bool'));
     }
 }

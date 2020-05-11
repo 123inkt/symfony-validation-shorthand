@@ -17,8 +17,8 @@ class RequestValidationRules
 
     /**
      * @param array{
-     *          query:   Collection|array<string, string|Constraint|array<string|Constraint>>,
-     *          request: Collection|array<string, string|Constraint|array<string|Constraint>>
+     *          query?:   Collection|array<string, string|Constraint|array<string|Constraint>>,
+     *          request?: Collection|array<string, string|Constraint|array<string|Constraint>>
      *        } $definitions
      */
     public function __construct(array $definitions)
