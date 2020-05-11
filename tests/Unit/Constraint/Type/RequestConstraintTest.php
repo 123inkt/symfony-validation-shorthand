@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Constraint\Type;
+namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Constraint\Type;
 
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\RequestConstraint;
 use PHPUnit\Framework\TestCase;

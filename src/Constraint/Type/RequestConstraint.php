@@ -8,8 +8,8 @@ use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 
 class RequestConstraint extends Constraint
 {
-    public const WRONG_VALUE_TYPE         = '08937cc5-9ea6-460c-9917-d3f6ba912998';
-    public const MISSING_QUERY_CONSTRAINT = 'b62ab5ca-ee6f-4baf-bdef-ffbe14f674d6';
+    public const WRONG_VALUE_TYPE           = '08937cc5-9ea6-460c-9917-d3f6ba912998';
+    public const MISSING_QUERY_CONSTRAINT   = 'b62ab5ca-ee6f-4baf-bdef-ffbe14f674d6';
     public const MISSING_REQUEST_CONSTRAINT = 'c3990dad-3638-449b-9dd3-4dd42e90c52f';
 
     /** @var array<string, string> */
@@ -44,8 +44,8 @@ class RequestConstraint extends Constraint
             throw new ConstraintDefinitionException('The option "request" is expected to be a Constraint');
         }
 
-        $options['query']   = $options['query'] ?? null;
-        $options['request'] = $options['request'] ?? null;
+        // make sure defaults are set
+        $options = ['query' => $options['query'] ?? null, 'request' => $options['request'] ?? null];
 
         parent::__construct($options);
     }
