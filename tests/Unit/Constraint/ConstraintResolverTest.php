@@ -69,11 +69,18 @@ class ConstraintResolverTest extends TestCase
     public function dataProvider(): Generator
     {
         yield 'constraint' => [new Assert\Required(new Assert\NotBlank()), [new Assert\NotBlank()]];
+        yield 'rule + constraint' => [
+            new Assert\Required([new Assert\NotBlank(), new Assert\NotNull()]),
+            [new Rule('required'), new Assert\NotBlank()]
+        ];
         yield 'boolean' => [new Assert\Optional([new Boolean(), new Assert\NotNull()]), [new Rule('boolean')]];
         yield 'integer' => [new Assert\Optional([new IntegerNumber(), new Assert\NotNull()]), [new Rule('integer')]];
         yield 'float' => [new Assert\Optional([new FloatNumber(), new Assert\NotNull()]), [new Rule('float')]];
+        yield 'string' => [new Assert\Optional([new Assert\Type('string'), new Assert\NotNull()]), [new Rule('string')]];
         yield 'email' => [new Assert\Optional([new Assert\Email(), new Assert\NotNull()]), [new Rule('email')]];
         yield 'url' => [new Assert\Optional([new Assert\Url(), new Assert\NotNull()]), [new Rule('url')]];
+        yield 'filled' => [new Assert\Optional([new Assert\NotBlank(), new Assert\NotNull()]), [new Rule('filled')]];
+        yield 'filled nullable' => [new Assert\Optional([new Assert\NotBlank(['allowNull' => true])]), [new Rule('filled'), new Rule('nullable')]];
         yield 'regex' => [
             new Assert\Optional([new Assert\Regex(['pattern' => '/^unittest$/']), new Assert\NotNull()]),
             [new Rule('regex', ['/^unittest$/'])]
