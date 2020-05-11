@@ -28,7 +28,7 @@ class ConstraintCollectionBuilder
     }
 
     /**
-     *
+     * @param array<string|int, Constraint|array<Constraint>> $constraintTreeMap
      * @throws RequestValidationException
      */
     private function createConstraintCollection(array $constraintTreeMap): Constraint

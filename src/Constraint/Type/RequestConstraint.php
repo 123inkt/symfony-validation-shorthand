@@ -11,12 +11,15 @@ class RequestConstraint extends Constraint
     public const MISSING_QUERY_CONSTRAINT   = 'b62ab5ca-ee6f-4baf-bdef-ffbe14f674d6';
     public const MISSING_REQUEST_CONSTRAINT = 'c3990dad-3638-449b-9dd3-4dd42e90c52f';
 
+    /** @var array<string, string> */
     protected static $errorNames = [
         self::MISSING_QUERY_CONSTRAINT   => 'MISSING_QUERY_CONSTRAINT',
         self::MISSING_REQUEST_CONSTRAINT => 'MISSING_REQUEST_CONSTRAINT',
     ];
 
+    /** @var string */
     public $queryMessage   = 'Request::query is not empty, but there is no constraint configured.';
+    /** @var string */
     public $requestMessage = 'Request::request is not empty, but there is no constraint configured.';
 
     /** @var Constraint|null */

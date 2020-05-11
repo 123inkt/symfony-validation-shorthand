@@ -7,6 +7,8 @@ use DigitalRevolution\SymfonyRequestValidation\Validator\RequestValidator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\ConstraintViolation;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -60,12 +62,17 @@ abstract class AbstractValidatedRequest
      * Called when there are one or more violations. Defaults to throwing RequestValidationException. Overwrite
      * to add your own handling
      *
-     * @param ConstraintViolationListInterface $violationList
+     * @param ConstraintViolationListInterface<ConstraintViolationInterface> $violationList
      * @throws RequestValidationException
      */
     protected function handleViolations(ConstraintViolationListInterface $violationList): void
     {
-        throw new RequestValidationException((string)$violationList);
+        $messages = [];
+        foreach ($violationList as $violation) {
+            $messages[] = $violation->getMessage();
+        }
+
+        throw new RequestValidationException(implode("\n", $messages));
     }
 
     /**

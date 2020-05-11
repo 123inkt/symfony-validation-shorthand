@@ -7,9 +7,12 @@ use ArrayIterator;
 use IteratorAggregate;
 use Symfony\Component\Validator\Constraint;
 
+/**
+ * @template-implements IteratorAggregate<string, Constraint>
+ */
 class ConstraintMap implements IteratorAggregate
 {
-    /** @var array<string, Constraint */
+    /** @var array<string, Constraint> */
     private $map = [];
 
     public function set(string $key, Constraint $constraint): self
@@ -19,7 +22,10 @@ class ConstraintMap implements IteratorAggregate
         return $this;
     }
 
-    public function getIterator()
+    /**
+     * @return ArrayIterator<string, Constraint>
+     */
+    public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->map);
     }
