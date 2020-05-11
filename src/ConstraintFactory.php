@@ -23,11 +23,8 @@ class ConstraintFactory
     /** @var ConstraintCollectionBuilder */
     private $collectionBuilder;
 
-    public function __construct(
-        RuleParser $parser = null,
-        ConstraintResolver $resolver = null,
-        ConstraintCollectionBuilder $collectionBuilder = null
-    ) {
+    public function __construct(RuleParser $parser = null, ConstraintResolver $resolver = null, ConstraintCollectionBuilder $collectionBuilder = null)
+    {
         $this->parser            = $parser ?? new RuleParser();
         $this->resolver          = $resolver ?? new ConstraintResolver();
         $this->collectionBuilder = $collectionBuilder ?? new ConstraintCollectionBuilder();
