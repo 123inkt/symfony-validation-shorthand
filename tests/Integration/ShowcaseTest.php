@@ -8,6 +8,9 @@ use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\RequestConstraint
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationRules;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * @SuppressWarnings(PHPMD)
+ */
 class ShowcaseTest
 {
     public function testArrayValidation(): void

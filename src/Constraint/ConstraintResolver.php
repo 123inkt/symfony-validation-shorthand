@@ -56,6 +56,7 @@ class ConstraintResolver
 
     /**
      * @throws RequestValidationException
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     protected function resolveConstraint(RuleList $ruleList, Rule $rule): Constraint
     {

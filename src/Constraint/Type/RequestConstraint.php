@@ -16,8 +16,8 @@ class RequestConstraint extends Constraint
         self::MISSING_REQUEST_CONSTRAINT => 'MISSING_REQUEST_CONSTRAINT',
     ];
 
-    public $missingQueryConstraintMessage   = 'Request::query is not empty, but there is no constraint configured.';
-    public $missingRequestConstraintMessage = 'Request::request is not empty, but there is no constraint configured.';
+    public $queryMessage   = 'Request::query is not empty, but there is no constraint configured.';
+    public $requestMessage = 'Request::request is not empty, but there is no constraint configured.';
 
     /** @var Constraint|null */
     public $query;
