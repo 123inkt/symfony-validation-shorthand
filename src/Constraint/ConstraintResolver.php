@@ -58,7 +58,7 @@ class ConstraintResolver
      * @throws RequestValidationException
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    protected function resolveConstraint(RuleList $ruleList, Rule $rule): Constraint
+    private function resolveConstraint(RuleList $ruleList, Rule $rule): Constraint
     {
         switch ($rule->getName()) {
             case Rule::RULE_BOOLEAN:
@@ -93,7 +93,7 @@ class ConstraintResolver
     /**
      * @throws RequestValidationException
      */
-    protected function resolveMinConstraint(Rule $rule, bool $isNumeric): Constraint
+    private function resolveMinConstraint(Rule $rule, bool $isNumeric): Constraint
     {
         if ($isNumeric) {
             return new Assert\GreaterThanOrEqual($rule->getIntParam(0));
@@ -104,7 +104,7 @@ class ConstraintResolver
     /**
      * @throws RequestValidationException
      */
-    protected function resolveMaxConstraint(Rule $rule, bool $isNumeric): Constraint
+    private function resolveMaxConstraint(Rule $rule, bool $isNumeric): Constraint
     {
         if ($isNumeric) {
             return new Assert\LessThanOrEqual($rule->getIntParam(0));
@@ -115,7 +115,7 @@ class ConstraintResolver
     /**
      * @throws RequestValidationException
      */
-    protected function resolveBetweenConstraint(Rule $rule, bool $isNumeric): Constraint
+    private function resolveBetweenConstraint(Rule $rule, bool $isNumeric): Constraint
     {
         if ($isNumeric) {
             return new Assert\Range(['min' => $rule->getIntParam(0), 'max' => $rule->getIntParam(1)]);
