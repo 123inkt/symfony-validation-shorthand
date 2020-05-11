@@ -6,7 +6,6 @@ namespace DigitalRevolution\SymfonyRequestValidation\Tests\Integration;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\IntegerNumber;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\RequestConstraint;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationRules;
-use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class ShowcaseTest
