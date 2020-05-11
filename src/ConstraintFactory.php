@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation;
 
-use DigitalRevolution\SymfonyRequestValidation\Builder\ConstraintCollectionBuilder;
+use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintCollectionBuilder;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintMap;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\RequestConstraint;
