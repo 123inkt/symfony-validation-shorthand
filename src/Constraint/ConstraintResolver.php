@@ -77,24 +77,48 @@ class ConstraintResolver
             case Rule::RULE_FILLED:
                 return new Assert\NotBlank(['allowNull' => $ruleList->hasRule(Rule::RULE_NULLABLE)]);
             case Rule::RULE_MIN:
-                if ($ruleList->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT])) {
-                    return new Assert\GreaterThanOrEqual($rule->getIntParam(0));
-                }
-                return new Assert\Length(['min' => $rule->getIntParam(0)]);
+                return $this->resolveMinConstraint($rule, $ruleList->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT]));
             case Rule::RULE_MAX:
-                if ($ruleList->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT])) {
-                    return new Assert\LessThanOrEqual($rule->getIntParam(0));
-                }
-                return new Assert\Length(['max' => $rule->getIntParam(0)]);
+                return $this->resolveMaxConstraint($rule, $ruleList->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT]));
             case Rule::RULE_BETWEEN:
-                if ($ruleList->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT])) {
-                    return new Assert\Range(['min' => $rule->getIntParam(0), 'max' => $rule->getIntParam(1)]);
-                }
-                return new Assert\Length(['min' => $rule->getIntParam(0), 'max' => $rule->getIntParam(1)]);
+                return $this->resolveBetweenConstraint($rule, $ruleList->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT]));
         }
 
         throw new RequestValidationException(
             'Unable to resolve rule: ' . $rule->getName() . '. Supported rules: ' . implode(", ", Rule::ALLOWED_RULES)
         );
+    }
+
+    /**
+     * @throws RequestValidationException
+     */
+    protected function resolveMinConstraint(Rule $rule, bool $isNumeric): Constraint
+    {
+        if ($isNumeric) {
+            return new Assert\GreaterThanOrEqual($rule->getIntParam(0));
+        }
+        return new Assert\Length(['min' => $rule->getIntParam(0)]);
+    }
+
+    /**
+     * @throws RequestValidationException
+     */
+    protected function resolveMaxConstraint(Rule $rule, bool $isNumeric): Constraint
+    {
+        if ($isNumeric) {
+            return new Assert\LessThanOrEqual($rule->getIntParam(0));
+        }
+        return new Assert\Length(['max' => $rule->getIntParam(0)]);
+    }
+
+    /**
+     * @throws RequestValidationException
+     */
+    protected function resolveBetweenConstraint(Rule $rule, bool $isNumeric): Constraint
+    {
+        if ($isNumeric) {
+            return new Assert\Range(['min' => $rule->getIntParam(0), 'max' => $rule->getIntParam(1)]);
+        }
+        return new Assert\Length(['min' => $rule->getIntParam(0), 'max' => $rule->getIntParam(1)]);
     }
 }

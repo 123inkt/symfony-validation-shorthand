@@ -7,15 +7,13 @@ use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\Boolean;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\FloatNumber;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\IntegerNumber;
+use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use DigitalRevolution\SymfonyRequestValidation\Rule\Rule;
 use DigitalRevolution\SymfonyRequestValidation\Rule\RuleList;
-use DigitalRevolution\SymfonyRequestValidation\Rule\RuleParser;
-use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Validation;
 
 /**
  * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver
@@ -29,83 +27,6 @@ class ConstraintResolverTest extends TestCase
     {
         parent::setUp();
         $this->resolver = new ConstraintResolver();
-    }
-
-    /**
-     * @throws RequestValidationException
-     */
-    public function testPlayground2(): void
-    {
-        $validator = Validation::createValidator();
-
-        $input = [
-            'name'      => [
-                'first_name' => 'Fabien',
-                'last_name'  => 'Potencier',
-            ],
-            'email'     => 'test@email.tld',
-            'simple'    => 'hello',
-            'eye_color' => 3,
-            'file'      => null,
-            'password'  => 'test',
-            'tags'      => [
-                [
-                    'slug'  => 'symfony_doc',
-                    'label' => 'symfony doc',
-                ],
-            ],
-        ];
-
-        $constraintResolver = new ConstraintResolver();
-        $parser             = new RuleParser();
-        $ruleSet            = $parser->parseRules(['required']);
-
-
-        $constraint = $constraintResolver->resolveRuleList($ruleSet);
-        $collection = new Assert\Collection(['first_name' => $constraint]);
-
-        $violations = $validator->validate(['first_name' => null], $collection);
-        static::assertCount(0, $violations);
-
-        $rules = [
-            'name.first_name' => 'required|min:6',
-            'name.last_name'  => 'min:1',
-            'email'           => 'required|email',
-            'simple'          => 'required|min:5',
-            'eye_color'       => 'required|enum:3,4',
-            'file'            => 'required|file',
-            'password'        => 'required|min:60',
-            'tags?.*.slug'    => 'required|filled',
-            'tags?.*.label'   => 'required|filled',
-        ];
-
-        $constraint = new Assert\Collection([
-            // the keys correspond to the keys in the input array
-            'name'      => new Assert\Collection([
-                'first_name' => new Assert\Length(['min' => 6]),
-                'last_name'  => new Assert\Optional(new Assert\Length(['min' => 1])),
-            ]),
-            'email'     => new Assert\Email(),
-            'simple'    => new Assert\Length(['min' => 5]),
-            'eye_color' => new Assert\Choice([3, 4]),
-            'file'      => new Assert\File(),
-            'password'  => new Assert\Length(['min' => 4]),
-            'tags'      => new Assert\Optional([
-                new Assert\Type('array'),
-                new Assert\Count(['min' => 1]),
-                new Assert\All([
-                    new Assert\Collection([
-                        'slug'  => [
-                            new Assert\NotBlank(),
-                            new Assert\Type(['type' => 'string'])
-                        ],
-                        'label' => [
-                            new Assert\NotBlank(),
-                        ],
-                    ]),
-                ]),
-            ]),
-        ]);
     }
 
     /**
@@ -127,6 +48,9 @@ class ConstraintResolverTest extends TestCase
      * @dataProvider dataProvider
      * @covers ::resolveRuleList
      * @covers ::resolveConstraint
+     * @covers ::resolveMinConstraint
+     * @covers ::resolveMaxConstraint
+     * @covers ::resolveBetweenConstraint
      * @param array<Rule|Constraint> $rules
      * @throws RequestValidationException
      */
@@ -158,21 +82,24 @@ class ConstraintResolverTest extends TestCase
         yield 'required email' => [new Assert\Required([new Assert\Email(), new Assert\NotNull()]), [new Rule('required'), new Rule('email')]];
 
         // min/max string or array lengths
-        yield 'min length' => [new Assert\Optional(new Assert\Length(['min' => 10])), [new Rule('min', ['10'])]];
-        yield 'max length' => [new Assert\Optional(new Assert\Length(['max' => 10])), [new Rule('max', ['10'])]];
-        yield 'min/max length' => [new Assert\Optional(new Assert\Length(['min' => 10, 'max' => 20])), [new Rule('between', ['10', '20'])]];
+        yield 'min length' => [new Assert\Optional([new Assert\Length(['min' => 10]), new Assert\NotNull()]), [new Rule('min', ['10'])]];
+        yield 'max length' => [new Assert\Optional([new Assert\Length(['max' => 10]), new Assert\NotNull()]), [new Rule('max', ['10'])]];
+        yield 'min/max length' => [
+            new Assert\Optional([new Assert\Length(['min' => 10, 'max' => 20]), new Assert\NotNull()]),
+            [new Rule('between', ['10', '20'])]
+        ];
 
         // min/max integer size
         yield 'min integer' => [
-            new Assert\Optional([new Assert\Type('integer'), new Assert\Range(['min' => 10])]),
+            new Assert\Optional([new IntegerNumber(), new Assert\GreaterThanOrEqual(10), new Assert\NotNull()]),
             [new Rule('integer'), new Rule('min', ['10'])]
         ];
         yield 'max integer' => [
-            new Assert\Optional([new Assert\Type('integer'), new Assert\Range(['max' => 20])]),
+            new Assert\Optional([new IntegerNumber(), new Assert\LessThanOrEqual(20), new Assert\NotNull()]),
             [new Rule('integer'), new Rule('max', ['20'])]
         ];
         yield 'min/max integer' => [
-            new Assert\Optional([new Assert\Type('integer'), new Assert\Range(['min' => 10, 'max' => 20])]),
+            new Assert\Optional([new IntegerNumber(), new Assert\Range(['min' => 10, 'max' => 20]), new Assert\NotNull()]),
             [new Rule('integer'), new Rule('between', ['10', '20'])]
         ];
     }
