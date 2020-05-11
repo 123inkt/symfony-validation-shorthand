@@ -18,7 +18,7 @@ class FloatNumberValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, FloatNumber::class);
         }
 
-        if ($value === null || is_int($value) || is_float($value) || $value === '') {
+        if ($value === null || is_int($value) || is_float($value)) {
             return;
         }
 
@@ -32,7 +32,7 @@ class FloatNumberValidator extends ConstraintValidator
         }
 
         // value can't be cast to float
-        if (preg_match('/^-?[1-9]\d*(\.\d+)?$/', $value) !== 1) {
+        if ($value === '' || $value === '-' || preg_match('/^-?(?:[1-9]\d*|0)?(?:\.\d*)?$/', $value) !== 1) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value }}', $this->formatValue($value))
                 ->setCode($constraint::INVALID_DECIMAL_ERROR)
