@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Parser;
+namespace DigitalRevolution\SymfonyRequestValidation\Rule;
 
 use Countable;
 use Symfony\Component\Validator\Constraint;

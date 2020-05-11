@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace DigitalRevolution\SymfonyRequestValidation\Tests\Integration;
 
 use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
-use DigitalRevolution\SymfonyRequestValidation\Parser\ValidationRuleParser;
+use DigitalRevolution\SymfonyRequestValidation\Rule\RuleParser;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use Generator;
 use PHPUnit\Framework\TestCase;
@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class RequiredFieldValidationTest extends TestCase
 {
-    /** @var ValidationRuleParser */
+    /** @var RuleParser */
     private $parser;
 
     /** @var ConstraintResolver */
@@ -29,7 +29,7 @@ class RequiredFieldValidationTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->parser    = new ValidationRuleParser();
+        $this->parser    = new RuleParser();
         $this->resolver  = new ConstraintResolver();
         $this->validator = Validation::createValidator();
     }

@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Parser;
+namespace DigitalRevolution\SymfonyRequestValidation\Rule;
 
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use Symfony\Component\Validator\Constraint;
 
-class ValidationRuleParser
+class RuleParser
 {
     /**
      * Parse a set of string rules and constraints

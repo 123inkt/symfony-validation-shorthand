@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace DigitalRevolution\SymfonyRequestValidation\Tests\Mock;
 
 use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
-use DigitalRevolution\SymfonyRequestValidation\Parser\RuleList;
+use DigitalRevolution\SymfonyRequestValidation\Rule\RuleList;
 use PHPUnit\Framework\MockObject\Matcher\InvokedCount as InvokedCountMatcher;
 use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Validator\Constraint;

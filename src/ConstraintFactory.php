@@ -3,25 +3,34 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation;
 
-use DigitalRevolution\SymfonyRequestValidation\Builder\MapBuilderFactory;
-use DigitalRevolution\SymfonyRequestValidation\Builder\MapBuilderFactoryInterface;
+use DigitalRevolution\SymfonyRequestValidation\Builder\ConstraintCollectionBuilder;
+use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintMap;
+use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\RequestConstraint;
+use DigitalRevolution\SymfonyRequestValidation\Rule\RuleParser;
 use DigitalRevolution\SymfonyRequestValidation\Utility\InvalidArrayPathException;
-use DigitalRevolution\SymfonyRequestValidation\Validator\DataValidator;
-use DigitalRevolution\SymfonyRequestValidation\Validator\RequestValidator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ConstraintFactory
 {
-    /** @var MapBuilderFactoryInterface */
-    private $factory;
+    /** @var RuleParser */
+    private $parser;
 
-    public function __construct(MapBuilderFactoryInterface $factory = null)
-    {
-        $this->factory = $factory ?? new MapBuilderFactory();
+    /** @var ConstraintResolver */
+    private $resolver;
+
+    /** @var ConstraintCollectionBuilder */
+    private $collectionBuilder;
+
+    public function __construct(
+        RuleParser $parser = null,
+        ConstraintResolver $resolver = null,
+        ConstraintCollectionBuilder $collectionBuilder = null
+    ) {
+        $this->parser            = $parser ?? new RuleParser();
+        $this->resolver          = $resolver ?? new ConstraintResolver();
+        $this->collectionBuilder = $collectionBuilder ?? new ConstraintCollectionBuilder();
     }
 
     /**
@@ -35,10 +44,10 @@ class ConstraintFactory
         $requestDefinitions = $validationRules->getRequestRules();
 
         if ($queryDefinitions !== null) {
-            $options['queryConstraint'] = $this->createConstraintFromDefinition($queryDefinitions);
+            $options['queryConstraint'] = $this->createConstraintFromDefinitions($queryDefinitions);
         }
         if ($requestDefinitions !== null) {
-            $options['requestConstraint'] = $this->createConstraintFromDefinition($requestDefinitions);
+            $options['requestConstraint'] = $this->createConstraintFromDefinitions($requestDefinitions);
         }
 
         return new RequestConstraint($options);
@@ -49,14 +58,26 @@ class ConstraintFactory
      * @throws RequestValidationException
      * @throws InvalidArrayPathException
      */
-    public function createConstraintFromDefinition($ruleDefinitions): Constraint
+    public function createConstraintFromDefinitions($ruleDefinitions): Constraint
     {
         if ($ruleDefinitions instanceof Constraint) {
             return $ruleDefinitions;
         }
 
-        $ruleList      = $this->factory->createRuleListMapBuilder()->build($ruleDefinitions);
-        $constraintMap = $this->factory->createConstraintMapBuilder()->build($ruleList);
-        return $this->factory->createConstraintCollectionBuilder()->build($constraintMap);
+        // transform rule definitions to ConstraintMap
+        $constraintMap = new ConstraintMap();
+        foreach ($ruleDefinitions as $key => $rules) {
+            // transform rules to RuleList
+            $ruleList = $this->parser->parseRules($rules);
+
+            // transform RuleList to ConstraintMap
+            $constraint = $this->resolver->resolveRuleList($ruleList);
+
+            // add to set
+            $constraintMap->set($key, $constraint);
+        }
+
+        // transform ConstraintMap to ConstraintCollection
+        return $this->collectionBuilder->build($constraintMap);
     }
 }

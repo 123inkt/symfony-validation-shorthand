@@ -1,27 +1,27 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Parser;
+namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Rule;
 
-use DigitalRevolution\SymfonyRequestValidation\Parser\Rule;
-use DigitalRevolution\SymfonyRequestValidation\Parser\RuleList;
-use DigitalRevolution\SymfonyRequestValidation\Parser\ValidationRuleParser;
+use DigitalRevolution\SymfonyRequestValidation\Rule\Rule;
+use DigitalRevolution\SymfonyRequestValidation\Rule\RuleList;
+use DigitalRevolution\SymfonyRequestValidation\Rule\RuleParser;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Parser\ValidationRuleParser
+ * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Rule\RuleParser
  */
-class ValidationRuleParserTest extends TestCase
+class RuleParserTest extends TestCase
 {
-    /** @var ValidationRuleParser */
+    /** @var RuleParser */
     private $parser;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->parser = new ValidationRuleParser();
+        $this->parser = new RuleParser();
     }
 
     /**

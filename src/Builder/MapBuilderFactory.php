@@ -4,19 +4,19 @@ declare(strict_types=1);
 namespace DigitalRevolution\SymfonyRequestValidation\Builder;
 
 use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
-use DigitalRevolution\SymfonyRequestValidation\Parser\ValidationRuleParser;
+use DigitalRevolution\SymfonyRequestValidation\Rule\RuleParser;
 
 class MapBuilderFactory implements MapBuilderFactoryInterface
 {
-    /** @var ValidationRuleParser|null */
+    /** @var RuleParser|null */
     private $parser;
 
     /** @var ConstraintResolver|null */
     private $resolver;
 
-    public function __construct(ValidationRuleParser $parser = null, ConstraintResolver $resolver = null)
+    public function __construct(RuleParser $parser = null, ConstraintResolver $resolver = null)
     {
-        $this->parser   = $parser ?? new ValidationRuleParser();
+        $this->parser   = $parser ?? new RuleParser();
         $this->resolver = $resolver ?? new ConstraintResolver();
     }
 

@@ -7,9 +7,9 @@ use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\Boolean;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\FloatNumber;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\IntegerNumber;
-use DigitalRevolution\SymfonyRequestValidation\Parser\Rule;
-use DigitalRevolution\SymfonyRequestValidation\Parser\RuleList;
-use DigitalRevolution\SymfonyRequestValidation\Parser\ValidationRuleParser;
+use DigitalRevolution\SymfonyRequestValidation\Rule\Rule;
+use DigitalRevolution\SymfonyRequestValidation\Rule\RuleList;
+use DigitalRevolution\SymfonyRequestValidation\Rule\RuleParser;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use Generator;
 use PHPUnit\Framework\TestCase;
@@ -57,7 +57,7 @@ class ConstraintResolverTest extends TestCase
         ];
 
         $constraintResolver = new ConstraintResolver();
-        $parser             = new ValidationRuleParser();
+        $parser             = new RuleParser();
         $ruleSet            = $parser->parseRules(['required']);
 
 
