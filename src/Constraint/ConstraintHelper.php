@@ -6,7 +6,7 @@ namespace DigitalRevolution\SymfonyRequestValidation\Constraint;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class ConstraintFactory
+class ConstraintHelper
 {
     /**
      * Assert\All should be used instead of Assert\Collection when:

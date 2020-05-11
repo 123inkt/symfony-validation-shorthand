@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation\Builder;
 
-use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintFactory;
+use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintHelper;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintMap;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use DigitalRevolution\SymfonyRequestValidation\Utility\Arrays;
@@ -43,7 +43,7 @@ class ConstraintCollectionBuilder
         }
 
         // create Assert\All constraint if needed.
-        $constraint = ConstraintFactory::createAllConstraint($constraintTreeMap);
+        $constraint = ConstraintHelper::createAllConstraint($constraintTreeMap);
         if ($constraint === null) {
             $constraint = new Collection($constraintTreeMap);
         }
