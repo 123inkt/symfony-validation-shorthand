@@ -7,14 +7,14 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class BooleanValidator extends ConstraintValidator
+class BooleanValueValidator extends ConstraintValidator
 {
     /**
      * @inheritDoc
      */
     public function validate($value, Constraint $constraint): void
     {
-        if ($constraint instanceof Boolean === false) {
+        if ($constraint instanceof BooleanValue === false) {
             throw new UnexpectedTypeException($constraint, IntegerNumber::class);
         }
 

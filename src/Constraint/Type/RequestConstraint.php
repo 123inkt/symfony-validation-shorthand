@@ -33,7 +33,7 @@ class RequestConstraint extends Constraint
     public $request;
 
     /**
-     * @param array{query?: Constraint, request?: Constraint}|null $options
+     * @param array{?query: Constraint, ?request: Constraint}|null $options
      */
     public function __construct($options = null)
     {

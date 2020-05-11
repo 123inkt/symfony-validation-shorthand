@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Constraint;
 
 use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\Boolean;
+use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\BooleanValue;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\FloatNumber;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\IntegerNumber;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
@@ -73,7 +73,7 @@ class ConstraintResolverTest extends TestCase
             new Assert\Required([new Assert\NotBlank(), new Assert\NotNull()]),
             [new Rule('required'), new Assert\NotBlank()]
         ];
-        yield 'boolean' => [new Assert\Optional([new Boolean(), new Assert\NotNull()]), [new Rule('boolean')]];
+        yield 'boolean' => [new Assert\Optional([new BooleanValue(), new Assert\NotNull()]), [new Rule('boolean')]];
         yield 'integer' => [new Assert\Optional([new IntegerNumber(), new Assert\NotNull()]), [new Rule('integer')]];
         yield 'float' => [new Assert\Optional([new FloatNumber(), new Assert\NotNull()]), [new Rule('float')]];
         yield 'string' => [new Assert\Optional([new Assert\Type('string'), new Assert\NotNull()]), [new Rule('string')]];

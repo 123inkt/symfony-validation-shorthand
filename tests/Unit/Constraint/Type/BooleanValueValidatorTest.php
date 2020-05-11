@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Constraint\Type;
 
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\Boolean;
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\BooleanValidator;
+use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\BooleanValue;
+use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\BooleanValueValidator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContext;
@@ -13,24 +13,24 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Constraint\Type\BooleanValidator
+ * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Constraint\Type\BooleanValueValidator
  */
-class BooleanValidatorTest extends TestCase
+class BooleanValueValidatorTest extends TestCase
 {
     /** @var ExecutionContext */
     private $context;
 
-    /** @var BooleanValidator */
+    /** @var BooleanValueValidator */
     private $validator;
 
-    /** @var Boolean */
+    /** @var BooleanValue */
     private $constraint;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->constraint = new Boolean();
-        $this->validator  = new BooleanValidator();
+        $this->constraint = new BooleanValue();
+        $this->validator  = new BooleanValueValidator();
         $this->context    = new ExecutionContext(Validation::createValidator(), 'root', $this->createMock(TranslatorInterface::class));
         $this->context->setConstraint($this->constraint);
         $this->validator->initialize($this->context);
@@ -42,7 +42,7 @@ class BooleanValidatorTest extends TestCase
     public function testValidateUnexpectedTypeException(): void
     {
         $this->expectException(UnexpectedTypeException::class);
-        $validator = new BooleanValidator();
+        $validator = new BooleanValueValidator();
         $validator->validate(null, new NotBlank());
     }
 

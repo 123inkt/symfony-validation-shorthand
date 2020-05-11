@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Constraint\Type;
 
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\Boolean;
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\BooleanValidator;
+use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\BooleanValue;
+use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\BooleanValueValidator;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\IntegerNumber;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\IntegerNumberValidator;
 use PHPUnit\Framework\TestCase;
@@ -22,10 +22,10 @@ class IntegerNumberValidatorTest extends TestCase
     /** @var ExecutionContext */
     private $context;
 
-    /** @var BooleanValidator */
+    /** @var BooleanValueValidator */
     private $validator;
 
-    /** @var Boolean */
+    /** @var BooleanValue */
     private $constraint;
 
     protected function setUp(): void

@@ -41,10 +41,10 @@ class ConstraintFactory
         $requestDefinitions = $validationRules->getRequestRules();
 
         if ($queryDefinitions !== null) {
-            $options['queryConstraint'] = $this->createConstraintFromDefinitions($queryDefinitions);
+            $options['query'] = $this->createConstraintFromDefinitions($queryDefinitions);
         }
         if ($requestDefinitions !== null) {
-            $options['requestConstraint'] = $this->createConstraintFromDefinitions($requestDefinitions);
+            $options['request'] = $this->createConstraintFromDefinitions($requestDefinitions);
         }
 
         return new RequestConstraint($options);

@@ -62,7 +62,7 @@ class ConstraintResolver
     {
         switch ($rule->getName()) {
             case Rule::RULE_BOOLEAN:
-                return new Type\Boolean();
+                return new Type\BooleanValue();
             case Rule::RULE_INTEGER:
                 return new Type\IntegerNumber();
             case Rule::RULE_FLOAT:

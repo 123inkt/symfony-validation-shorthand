@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Constraint\Type;
 
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\BooleanValidator;
+use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\BooleanValueValidator;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\RequestConstraint;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\RequestConstraintValidator;
 use PHPUnit\Framework\TestCase;
@@ -22,7 +22,7 @@ class RequestConstraintValidatorTest extends TestCase
     /** @var ExecutionContext */
     private $context;
 
-    /** @var BooleanValidator */
+    /** @var BooleanValueValidator */
     private $validator;
 
     protected function setUp(): void

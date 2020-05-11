@@ -5,7 +5,7 @@ namespace DigitalRevolution\SymfonyRequestValidation\Constraint\Type;
 
 use Symfony\Component\Validator\Constraint;
 
-class Boolean extends Constraint
+class BooleanValue extends Constraint
 {
     public const INVALID_BOOLEAN_ERROR = '83f4a7ef-a109-469e-941a-7fa757c73e22';
 
