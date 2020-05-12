@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class ConstraintResolverTest extends TestCase
 {
