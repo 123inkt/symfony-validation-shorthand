@@ -58,14 +58,14 @@ class BooleanValueValidatorTest extends TestCase
     }
 
     /**
-     * @return array<string, null|bool|int|string>
+     * @return array<string, array<null|bool|int|string>>
      */
     public function dataProvider(): array
     {
         return [
             'null'       => [null],
-            '1'          => ['1'],
-            '0'          => ['0'],
+            'string 1'          => ['1'],
+            'string 0'          => ['0'],
             'on'         => ['on'],
             'off'        => ['off'],
             'true'       => ['true'],

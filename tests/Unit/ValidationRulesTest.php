@@ -6,7 +6,8 @@ namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationRules;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 /**
  * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\RequestValidationRules
@@ -20,13 +21,15 @@ class ValidationRulesTest extends TestCase
      */
     public function testConstructorAndGetters(): void
     {
-        $rules = new RequestValidationRules(['query' => 'a']);
-        static::assertSame('a', $rules->getQueryRules());
+        $constraintA = new NotBlank();
+        $constraintB = new NotNull();
+        $rules       = new RequestValidationRules(['query' => $constraintA]);
+        static::assertSame($constraintA, $rules->getQueryRules());
         static::assertNull($rules->getRequestRules());
 
-        $rules = new RequestValidationRules(['query' => 'a', 'request' => 'b']);
-        static::assertSame('a', $rules->getQueryRules());
-        static::assertSame('b', $rules->getRequestRules());
+        $rules = new RequestValidationRules(['query' => $constraintA, 'request' => $constraintB]);
+        static::assertSame($constraintA, $rules->getQueryRules());
+        static::assertSame($constraintB, $rules->getRequestRules());
     }
 
     /**
