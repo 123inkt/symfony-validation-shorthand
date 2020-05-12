@@ -9,16 +9,16 @@ use Symfony\Component\Validator\Constraints\Collection;
 
 class RequestValidationRules
 {
-    /** @var Collection|array<string, string|Constraint|array<string|Constraint>>|null */
+    /** @var Constraint|array<string, string|Constraint|array<string|Constraint>>|null */
     private $queryRules;
 
-    /** @var Collection|array<string, string|Constraint|array<string|Constraint>>|null */
+    /** @var Constraint|array<string, string|Constraint|array<string|Constraint>>|null */
     private $requestRules;
 
     /**
      * @param array{
-     *          ?query:   Collection|array<string, string|Constraint|array<string|Constraint>>,
-     *          ?request: Collection|array<string, string|Constraint|array<string|Constraint>>
+     *          ?query:   Constraint|array<string, string|Constraint|array<string|Constraint>>,
+     *          ?request: Constraint|array<string, string|Constraint|array<string|Constraint>>
      *        } $definitions
      */
     public function __construct(array $definitions)
@@ -33,7 +33,7 @@ class RequestValidationRules
     }
 
     /**
-     * @return Collection|array<string, string|Constraint|array<string|Constraint>>|null
+     * @return Constraint|array<string, string|Constraint|array<string|Constraint>>|null
      */
     public function getQueryRules()
     {
@@ -41,7 +41,7 @@ class RequestValidationRules
     }
 
     /**
-     * @return Collection|array<string, string|Constraint|array<string|Constraint>>|null
+     * @return Constraint|array<string, string|Constraint|array<string|Constraint>>|null
      */
     public function getRequestRules()
     {

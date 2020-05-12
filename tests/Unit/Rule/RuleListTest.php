@@ -53,6 +53,24 @@ class RuleListTest extends TestCase
     }
 
     /**
+     * @covers ::hasRules
+     */
+    public function testHasRules(): void
+    {
+        // empty set doesn't have any rules
+        $ruleList = new RuleList();
+        static::assertFalse($ruleList->hasRules());
+
+        // NotBlank is a constraint, not a rule
+        $ruleList->addRule(new NotBlank());
+        static::assertFalse($ruleList->hasRules());
+
+        // now this list has a rule next to the constraint
+        $ruleList->addRule(new Rule('unit-test'));
+        static::assertTrue($ruleList->hasRules());
+    }
+
+    /**
      * @covers ::addRule
      */
     public function testAddRule(): void

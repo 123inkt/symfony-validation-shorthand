@@ -10,7 +10,6 @@ use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\RequestConstraint
 use DigitalRevolution\SymfonyRequestValidation\Rule\RuleParser;
 use DigitalRevolution\SymfonyRequestValidation\Utility\InvalidArrayPathException;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class ConstraintFactory
 {
@@ -51,7 +50,7 @@ class ConstraintFactory
     }
 
     /**
-     * @param Assert\Collection|array<string, string|Constraint|array<string|Constraint>> $ruleDefinitions
+     * @param Constraint|array<string, string|Constraint|array<string|Constraint>> $ruleDefinitions
      * @throws RequestValidationException
      * @throws InvalidArrayPathException
      */
