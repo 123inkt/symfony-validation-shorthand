@@ -45,7 +45,9 @@ class RequestConstraint extends Constraint
         }
 
         // make sure defaults are set
-        $options = ['query' => $options['query'] ?? null, 'request' => $options['request'] ?? null];
+        $options            = $options ?? [];
+        $options['query']   = $options['query'] ?? null;
+        $options['request'] = $options['request'] ?? null;
 
         parent::__construct($options);
     }
