@@ -1,9 +1,12 @@
 <?php
 declare(strict_types=1);
 
+namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit;
+
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\RequestConstraint;
 use DigitalRevolution\SymfonyRequestValidation\ConstraintFactory;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationRules;
+use Exception;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints as Assert;
 
