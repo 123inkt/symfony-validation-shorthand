@@ -22,7 +22,7 @@ class RequestConstraintValidatorTest extends TestCase
     /** @var ExecutionContext */
     private $context;
 
-    /** @var BooleanValueValidator */
+    /** @var RequestConstraintValidator */
     private $validator;
 
     protected function setUp(): void

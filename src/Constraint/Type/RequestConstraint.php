@@ -37,9 +37,11 @@ class RequestConstraint extends Constraint
      */
     public function __construct($options = null)
     {
+        // @phpstan-ignore-next-line
         if (isset($options['query']) && $options['query'] instanceof Constraint === false) {
             throw new ConstraintDefinitionException('The option "query" is expected to be a Constraint');
         }
+        // @phpstan-ignore-next-line
         if (isset($options['request']) && $options['request'] instanceof Constraint === false) {
             throw new ConstraintDefinitionException('The option "request" is expected to be a Constraint');
         }
