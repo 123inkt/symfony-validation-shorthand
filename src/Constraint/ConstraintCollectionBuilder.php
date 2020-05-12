@@ -8,6 +8,8 @@ use DigitalRevolution\SymfonyRequestValidation\Utility\Arrays;
 use DigitalRevolution\SymfonyRequestValidation\Utility\InvalidArrayPathException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\Constraints\Optional;
+use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * Transform a key-constraint map to a nested set of Assert\All or Assert\Collection constraints.
@@ -33,17 +35,31 @@ class ConstraintCollectionBuilder
      */
     private function createConstraintCollection(array $constraintTreeMap): Constraint
     {
+        $constraintMap = [];
+
         // array contains arrays, recursively resolve
         foreach ($constraintTreeMap as $key => $set) {
             if ($set instanceof Constraint === false) {
-                $constraintTreeMap[$key] = $this->createConstraintCollection($set);
+                $set = $this->createConstraintCollection($set);
             }
+
+            // check for optional
+            if (str_ends_with($key, '?')) {
+                $key = substr($key, 0, -1);
+
+                // mark this key as optional
+                if ($set instanceof Required === false && $set instanceof Optional === false) {
+                    $set = new Optional($set);
+                }
+            }
+
+            $constraintMap[$key] = $set;
         }
 
         // create Assert\All constraint if needed.
-        $constraint = ConstraintHelper::createAllConstraint($constraintTreeMap);
+        $constraint = ConstraintHelper::createAllConstraint($constraintMap);
         if ($constraint === null) {
-            $constraint = new Collection($constraintTreeMap);
+            $constraint = new Collection($constraintMap);
         }
 
         return $constraint;
