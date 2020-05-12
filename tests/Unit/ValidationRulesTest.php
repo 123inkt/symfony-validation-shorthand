@@ -32,15 +32,6 @@ class ValidationRulesTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testEmptyConstructorArgument(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        new RequestValidationRules([]);
-    }
-
-    /**
-     * @covers ::__construct
-     */
     public function testInvalidPropertyArgument(): void
     {
         $this->expectException(InvalidArgumentException::class);

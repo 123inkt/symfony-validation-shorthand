@@ -23,9 +23,9 @@ class RequestValidationRules
      */
     public function __construct(array $definitions)
     {
-        // expect at least one definition, and no other key than `query` or `request` is allowed
-        if (count($definitions) === 0 || count(array_diff(array_keys($definitions), ['query', 'request'])) > 0) {
-            throw new InvalidArgumentException('Expecting at least `query` or `request` property to be set');
+        // expect no other keys than `query` or `request`
+        if (count(array_diff(array_keys($definitions), ['query', 'request'])) > 0) {
+            throw new InvalidArgumentException('Expecting at most `query` or `request` property to be set');
         }
 
         $this->queryRules   = $definitions['query'] ?? null;

@@ -24,7 +24,7 @@ class MockValidatedRequest extends AbstractValidatedRequest
     /**
      * @inheritDoc
      */
-    protected function getValidationRules(Request $request): RequestValidationRules
+    protected function getValidationRules(): RequestValidationRules
     {
         if ($this->rules === null) {
             throw new RuntimeException('ValidationRules not set');

@@ -39,7 +39,7 @@ abstract class AbstractValidatedRequest
 
         $this->request    = $request;
         $this->validator  = $validator;
-        $this->constraint = (new ConstraintFactory())->createRequestConstraint($this->getValidationRules($request));
+        $this->constraint = (new ConstraintFactory())->createRequestConstraint($this->getValidationRules());
         $this->isValid    = $this->validate();
     }
 
@@ -56,7 +56,7 @@ abstract class AbstractValidatedRequest
     /**
      * Get all the constraints for the current query params
      */
-    abstract protected function getValidationRules(Request $request): RequestValidationRules;
+    abstract protected function getValidationRules(): RequestValidationRules;
 
     /**
      * Called when there are one or more violations. Defaults to throwing RequestValidationException. Overwrite
