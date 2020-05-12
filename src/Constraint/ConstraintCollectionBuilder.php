@@ -44,7 +44,7 @@ class ConstraintCollectionBuilder
             }
 
             // check for optional
-            if (str_ends_with($key, '?')) {
+            if (is_string($key) && str_ends_with($key, '?')) {
                 $key = substr($key, 0, -1);
 
                 // mark this key as optional

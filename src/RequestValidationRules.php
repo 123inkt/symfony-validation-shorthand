@@ -5,7 +5,6 @@ namespace DigitalRevolution\SymfonyRequestValidation;
 
 use InvalidArgumentException;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Constraints\Collection;
 
 class RequestValidationRules
 {
@@ -17,8 +16,8 @@ class RequestValidationRules
 
     /**
      * @param array{
-     *          ?query:   Constraint|array<string, string|Constraint|array<string|Constraint>>,
-     *          ?request: Constraint|array<string, string|Constraint|array<string|Constraint>>
+     *          query?:   Constraint|array<string, string|Constraint|array<string|Constraint>>,
+     *          request?: Constraint|array<string, string|Constraint|array<string|Constraint>>
      *        } $definitions
      */
     public function __construct(array $definitions)
