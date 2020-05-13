@@ -100,6 +100,7 @@ class FieldValidationTest extends TestCase
         // without `integer` any value will be treated as string
         yield "required + string max with int: false" => ['required|min:10', 12345, false];
         yield "required + string max with int: true" => ['required|max:1', 9, true];
+        yield "required + string type with int: true" => ['required|string', 9, false];
 
         // field should be integer or integer castable
         yield "required + int: true" => ['required|int', 3, true];
