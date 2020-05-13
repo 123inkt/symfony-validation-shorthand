@@ -12,14 +12,17 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ConstraintResolver
 {
     /**
-     * @throws RequestValidationException
      * @return Constraint[]
+     * @throws RequestValidationException
      */
     public function resolveRuleList(RuleList $ruleList): array
     {
         // all Constraints, return early
         if ($ruleList->hasRules() === false) {
-            return $ruleList->getRules();
+            /** @var Constraint[] $constraints */
+            $constraints = $ruleList->getRules();
+
+            return $constraints;
         }
 
         $nullable    = false;
@@ -48,11 +51,6 @@ class ConstraintResolver
         }
 
         return $constraints;
-
-//        if ($required === false) {
-//            return new Assert\Optional($constraints);
-//        }
-//        return new Assert\Required($constraints);
     }
 
     /**
