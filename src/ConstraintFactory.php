@@ -40,10 +40,10 @@ class ConstraintFactory
         $requestDefinitions = $validationRules->getRequestRules();
 
         if ($queryDefinitions !== null) {
-            $options['query'] = $this->createConstraintFromDefinitions($queryDefinitions);
+            $options['query'] = $this->fromRuleDefinitions($queryDefinitions);
         }
         if ($requestDefinitions !== null) {
-            $options['request'] = $this->createConstraintFromDefinitions($requestDefinitions);
+            $options['request'] = $this->fromRuleDefinitions($requestDefinitions);
         }
 
         return new RequestConstraint($options);
@@ -54,7 +54,7 @@ class ConstraintFactory
      * @throws RequestValidationException
      * @throws InvalidArrayPathException
      */
-    public function createConstraintFromDefinitions($ruleDefinitions): Constraint
+    public function fromRuleDefinitions($ruleDefinitions): Constraint
     {
         if ($ruleDefinitions instanceof Constraint) {
             return $ruleDefinitions;

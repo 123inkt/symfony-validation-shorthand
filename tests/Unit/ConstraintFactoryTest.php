@@ -35,21 +35,21 @@ class ConstraintFactoryTest extends TestCase
     }
 
     /**
-     * @covers ::createConstraintFromDefinitions
+     * @covers ::fromRuleDefinitions
      * @throws Exception
      */
-    public function testCreateConstraintFromDefinitionsConstraintOnly(): void
+    public function testFromRuleDefinitionsConstraintOnly(): void
     {
         $factory    = new ConstraintFactory();
         $constraint = new Assert\NotBlank();
-        static::assertSame($constraint, $factory->createConstraintFromDefinitions($constraint));
+        static::assertSame($constraint, $factory->fromRuleDefinitions($constraint));
     }
 
     /**
-     * @covers ::createConstraintFromDefinitions
+     * @covers ::fromRuleDefinitions
      * @throws Exception
      */
-    public function testCreateConstraintFromDefinitionsWithRule(): void
+    public function testFromRuleDefinitionsWithRule(): void
     {
         $factory = new ConstraintFactory();
         $expect  = new Assert\Collection([
@@ -58,6 +58,6 @@ class ConstraintFactoryTest extends TestCase
                 new Assert\NotNull()
             ])
         ]);
-        static::assertEquals($expect, $factory->createConstraintFromDefinitions(['email' => 'required|email']));
+        static::assertEquals($expect, $factory->fromRuleDefinitions(['email' => 'required|email']));
     }
 }
