@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * @coversNothing
  */
-class RequiredFieldValidationTest extends TestCase
+class FieldValidationTest extends TestCase
 {
     /** @var RuleParser */
     private $parser;
@@ -142,6 +142,7 @@ class RequiredFieldValidationTest extends TestCase
         yield "required + float '1.0': true" => ['required|float', '1.0', true];
         yield "required + float '-1.0': true" => ['required|float', '-1.0', true];
         yield "required + float '-1.0' + nullable: true" => ['required|float|nullable', '-1.0', true];
+        yield "required + float '.1' + nullable: true" => ['required|float|nullable', '.1', true];
         yield "required + float '' + nullable: true" => ['required|float|nullable', '', false];
         yield "required + float null + nullable: true" => ['required|float|nullable', null, true];
         yield "required + float 'abc' + nullable: false" => ['required|float|nullable', 'abc', false];
