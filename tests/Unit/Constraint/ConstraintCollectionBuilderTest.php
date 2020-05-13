@@ -5,6 +5,7 @@ namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Constraint;
 
 use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintCollectionBuilder;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintMap;
+use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintMapItem;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\Blank;
@@ -15,6 +16,9 @@ use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintCollectionBuilder
+ * @covers ::createConstraintTree
+ * @covers ::createAllConstraint
+ * @covers ::createCollectionConstraint
  */
 class ConstraintCollectionBuilderTest extends TestCase
 {
@@ -29,14 +33,13 @@ class ConstraintCollectionBuilderTest extends TestCase
 
     /**
      * @covers ::build
-     * @covers ::createConstraintCollection
      * @throws Exception
      */
     public function testBuildSingleNonNestedConstraint(): void
     {
         $constraint    = new NotNull();
         $constraintMap = new ConstraintMap();
-        $constraintMap->set('a', $constraint);
+        $constraintMap->set('a', new ConstraintMapItem([$constraint], true));
 
         $result = $this->builder->build($constraintMap);
         $expect = new Collection(['a' => new NotNull()]);
@@ -45,14 +48,13 @@ class ConstraintCollectionBuilderTest extends TestCase
 
     /**
      * @covers ::build
-     * @covers ::createConstraintCollection
      * @throws Exception
      */
     public function testBuildSingleNestedConstraint(): void
     {
         $constraint    = new NotNull();
         $constraintMap = new ConstraintMap();
-        $constraintMap->set('a.b', $constraint);
+        $constraintMap->set('a.b', new ConstraintMapItem([$constraint], true));
 
         $result = $this->builder->build($constraintMap);
         $expect = new Collection(['a' => new Collection(['b' => new NotNull()])]);
@@ -61,7 +63,6 @@ class ConstraintCollectionBuilderTest extends TestCase
 
     /**
      * @covers ::build
-     * @covers ::createConstraintCollection
      * @throws Exception
      */
     public function testBuildMultipleNestedConstraints(): void
@@ -69,8 +70,8 @@ class ConstraintCollectionBuilderTest extends TestCase
         $constraintA   = new NotNull();
         $constraintB   = new Blank();
         $constraintMap = new ConstraintMap();
-        $constraintMap->set('a.a', $constraintA);
-        $constraintMap->set('a.b', $constraintB);
+        $constraintMap->set('a.a', new ConstraintMapItem([$constraintA], true));
+        $constraintMap->set('a.b', new ConstraintMapItem([$constraintB], true));
 
         $result = $this->builder->build($constraintMap);
         $expect = new Collection([
@@ -84,14 +85,13 @@ class ConstraintCollectionBuilderTest extends TestCase
 
     /**
      * @covers ::build
-     * @covers ::createConstraintCollection
      * @throws Exception
      */
     public function testBuildOptionalConstraints(): void
     {
         $constraint    = new NotNull();
         $constraintMap = new ConstraintMap();
-        $constraintMap->set('a?.b', $constraint);
+        $constraintMap->set('a?.b', new ConstraintMapItem([$constraint], true));
 
         $result = $this->builder->build($constraintMap);
         $expect = new Collection([
@@ -108,14 +108,13 @@ class ConstraintCollectionBuilderTest extends TestCase
      * If the constraint is set to required but the path is marked as optional, then always assume Required
      *
      * @covers ::build
-     * @covers ::createConstraintCollection
      * @throws Exception
      */
     public function testBuildOptionalConstraintShouldNotOverwriteRequired(): void
     {
         $constraint    = new NotNull();
         $constraintMap = new ConstraintMap();
-        $constraintMap->set('a.b?', new Required($constraint));
+        $constraintMap->set('a.b?', new ConstraintMapItem([$constraint], true));
 
         $result = $this->builder->build($constraintMap);
         $expect = new Collection([

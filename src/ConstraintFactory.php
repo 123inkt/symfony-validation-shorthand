@@ -5,6 +5,7 @@ namespace DigitalRevolution\SymfonyRequestValidation;
 
 use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintCollectionBuilder;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintMap;
+use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintMapItem;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
 use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\RequestConstraint;
 use DigitalRevolution\SymfonyRequestValidation\Rule\RuleParser;
@@ -67,10 +68,10 @@ class ConstraintFactory
             $ruleList = $this->parser->parseRules($rules);
 
             // transform RuleList to ConstraintMap
-            $constraint = $this->resolver->resolveRuleList($ruleList);
+            $constraints = $this->resolver->resolveRuleList($ruleList);
 
             // add to set
-            $constraintMap->set($key, $constraint);
+            $constraintMap->set($key, new ConstraintMapItem($constraints, $ruleList->hasRule('required')));
         }
 
         // transform ConstraintMap to ConstraintCollection

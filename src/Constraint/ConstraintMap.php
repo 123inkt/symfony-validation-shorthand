@@ -8,22 +8,22 @@ use IteratorAggregate;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * @template-implements IteratorAggregate<string, Constraint>
+ * @template-implements IteratorAggregate<string, ConstraintMapItem>
  */
 class ConstraintMap implements IteratorAggregate
 {
-    /** @var array<string, Constraint> */
+    /** @var array<string, ConstraintMapItem> */
     private $map = [];
 
-    public function set(string $key, Constraint $constraint): self
+    public function set(string $key, ConstraintMapItem $item): self
     {
-        $this->map[$key] = $constraint;
+        $this->map[$key] = $item;
 
         return $this;
     }
 
     /**
-     * @return ArrayIterator<string, Constraint>
+     * @return ArrayIterator<string, ConstraintMapItem>
      */
     public function getIterator(): ArrayIterator
     {

@@ -52,10 +52,11 @@ class ConstraintResolverTest extends TestCase
      * @covers ::resolveMinConstraint
      * @covers ::resolveMaxConstraint
      * @covers ::resolveBetweenConstraint
+     * @param Constraint[]
      * @param array<Rule|Constraint> $rules
      * @throws RequestValidationException
      */
-    public function testResolveRuleSet(Constraint $expected, array $rules): void
+    public function testResolveRuleSet(array $expected, array $rules): void
     {
         $ruleSet = new RuleList();
         foreach ($rules as $rule) {
@@ -69,45 +70,42 @@ class ConstraintResolverTest extends TestCase
      */
     public function dataProvider(): Generator
     {
-        yield 'constraint' => [new Assert\Required(new Assert\NotBlank()), [new Assert\NotBlank()]];
-        yield 'rule + constraint' => [
-            new Assert\Required([new Assert\NotBlank(), new Assert\NotNull()]),
-            [new Rule('required'), new Assert\NotBlank()]
-        ];
-        yield 'boolean' => [new Assert\Optional([new BooleanValue(), new Assert\NotNull()]), [new Rule('boolean')]];
-        yield 'integer' => [new Assert\Optional([new IntegerNumber(), new Assert\NotNull()]), [new Rule('integer')]];
-        yield 'float' => [new Assert\Optional([new FloatNumber(), new Assert\NotNull()]), [new Rule('float')]];
-        yield 'string' => [new Assert\Optional([new Assert\Type('string'), new Assert\NotNull()]), [new Rule('string')]];
-        yield 'email' => [new Assert\Optional([new Assert\Email(), new Assert\NotNull()]), [new Rule('email')]];
-        yield 'url' => [new Assert\Optional([new Assert\Url(), new Assert\NotNull()]), [new Rule('url')]];
-        yield 'filled' => [new Assert\Optional([new Assert\NotBlank(), new Assert\NotNull()]), [new Rule('filled')]];
-        yield 'filled nullable' => [new Assert\Optional([new Assert\NotBlank(['allowNull' => true])]), [new Rule('filled'), new Rule('nullable')]];
+        yield 'constraint' => [[new Assert\NotBlank()], [new Assert\NotBlank()]];
+        yield 'rule + constraint' => [[new Assert\NotBlank(), new Assert\NotNull()],[new Rule('required'), new Assert\NotBlank()]];
+        yield 'boolean' => [[new BooleanValue(), new Assert\NotNull()], [new Rule('boolean')]];
+        yield 'integer' => [[new IntegerNumber(), new Assert\NotNull()], [new Rule('integer')]];
+        yield 'float' => [[new FloatNumber(), new Assert\NotNull()], [new Rule('float')]];
+        yield 'string' => [[new Assert\Type('string'), new Assert\NotNull()], [new Rule('string')]];
+        yield 'email' => [[new Assert\Email(), new Assert\NotNull()], [new Rule('email')]];
+        yield 'url' => [[new Assert\Url(), new Assert\NotNull()], [new Rule('url')]];
+        yield 'filled' => [[new Assert\NotBlank(), new Assert\NotNull()], [new Rule('filled')]];
+        yield 'filled nullable' => [[new Assert\NotBlank(['allowNull' => true])], [new Rule('filled'), new Rule('nullable')]];
         yield 'regex' => [
-            new Assert\Optional([new Assert\Regex(['pattern' => '/^unittest$/']), new Assert\NotNull()]),
+            [new Assert\Regex(['pattern' => '/^unittest$/']), new Assert\NotNull()],
             [new Rule('regex', ['/^unittest$/'])]
         ];
-        yield 'required' => [new Assert\Required(new Assert\NotNull()), [new Rule('required')]];
-        yield 'required email' => [new Assert\Required([new Assert\Email(), new Assert\NotNull()]), [new Rule('required'), new Rule('email')]];
+        yield 'required' => [[new Assert\NotNull()], [new Rule('required')]];
+        yield 'required email' => [[new Assert\Email(), new Assert\NotNull()], [new Rule('required'), new Rule('email')]];
 
         // min/max string or array lengths
-        yield 'min length' => [new Assert\Optional([new Assert\Length(['min' => 10]), new Assert\NotNull()]), [new Rule('min', ['10'])]];
-        yield 'max length' => [new Assert\Optional([new Assert\Length(['max' => 10]), new Assert\NotNull()]), [new Rule('max', ['10'])]];
+        yield 'min length' => [[new Assert\Length(['min' => 10]), new Assert\NotNull()], [new Rule('min', ['10'])]];
+        yield 'max length' => [[new Assert\Length(['max' => 10]), new Assert\NotNull()], [new Rule('max', ['10'])]];
         yield 'min/max length' => [
-            new Assert\Optional([new Assert\Length(['min' => 10, 'max' => 20]), new Assert\NotNull()]),
+            [new Assert\Length(['min' => 10, 'max' => 20]), new Assert\NotNull()],
             [new Rule('between', ['10', '20'])]
         ];
 
         // min/max integer size
         yield 'min integer' => [
-            new Assert\Optional([new IntegerNumber(), new Assert\GreaterThanOrEqual(10), new Assert\NotNull()]),
+            [new IntegerNumber(), new Assert\GreaterThanOrEqual(10), new Assert\NotNull()],
             [new Rule('integer'), new Rule('min', ['10'])]
         ];
         yield 'max integer' => [
-            new Assert\Optional([new IntegerNumber(), new Assert\LessThanOrEqual(20), new Assert\NotNull()]),
+            [new IntegerNumber(), new Assert\LessThanOrEqual(20), new Assert\NotNull()],
             [new Rule('integer'), new Rule('max', ['20'])]
         ];
         yield 'min/max integer' => [
-            new Assert\Optional([new IntegerNumber(), new Assert\Range(['min' => 10, 'max' => 20]), new Assert\NotNull()]),
+            [new IntegerNumber(), new Assert\Range(['min' => 10, 'max' => 20]), new Assert\NotNull()],
             [new Rule('integer'), new Rule('between', ['10', '20'])]
         ];
     }

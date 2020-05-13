@@ -13,15 +13,15 @@ class ConstraintResolver
 {
     /**
      * @throws RequestValidationException
+     * @return Constraint[]
      */
-    public function resolveRuleList(RuleList $ruleList): Constraint
+    public function resolveRuleList(RuleList $ruleList): array
     {
         // all Constraints, return early
         if ($ruleList->hasRules() === false) {
-            return new Assert\Required($ruleList->getRules());
+            return $ruleList->getRules();
         }
 
-        $required    = false;
         $nullable    = false;
         $constraints = [];
         foreach ($ruleList->getRules() as $rule) {
@@ -32,7 +32,6 @@ class ConstraintResolver
 
             /** @var Rule $rule */
             if ($rule->getName() === Rule::RULE_REQUIRED) {
-                $required = true;
                 continue;
             }
 
@@ -48,10 +47,12 @@ class ConstraintResolver
             $constraints[] = new Assert\NotNull();
         }
 
-        if ($required === false) {
-            return new Assert\Optional($constraints);
-        }
-        return new Assert\Required($constraints);
+        return $constraints;
+
+//        if ($required === false) {
+//            return new Assert\Optional($constraints);
+//        }
+//        return new Assert\Required($constraints);
     }
 
     /**

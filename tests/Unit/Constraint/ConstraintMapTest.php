@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Constraint;
 
 use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintMap;
+use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintMapItem;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -20,11 +21,11 @@ class ConstraintMapTest extends TestCase
      */
     public function testSetAndIterator(): void
     {
-        $constraint    = new NotBlank();
         $constraintMap = new ConstraintMap();
+        $mapItem       = new ConstraintMapItem([new NotBlank()], true);
         static::assertSame([], iterator_to_array($constraintMap->getIterator()));
 
-        $constraintMap->set('test', $constraint);
-        static::assertSame(['test' => $constraint], iterator_to_array($constraintMap->getIterator()));
+        $constraintMap->set('test', $mapItem);
+        static::assertSame(['test' => $mapItem], iterator_to_array($constraintMap->getIterator()));
     }
 }
