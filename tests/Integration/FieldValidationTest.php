@@ -160,6 +160,11 @@ class FieldValidationTest extends TestCase
         yield "required + url + not nullable: false" => ['required|url', null, false];
         yield "required + url + nullable: true" => ['required|url|nullable', null, true];
         yield "required + url + invalid: false" => ['required|url', 'test', false];
+
+        // rule + constraint combination
+        yield "required + rule + constraint: true" => [['required', 'string', new Assert\NotBlank()], 'test', true];
+        yield "required + rule + constraint: false" => [['required', 'string', new Assert\NotBlank()], '', false];
+        yield "required + rule + constraint: false" => [['required', 'string', new Assert\NotBlank()], 5, false];
     }
 
     public function dataProviderOptionalFields(): Generator
