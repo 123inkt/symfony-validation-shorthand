@@ -78,7 +78,7 @@ class IntegerNumberValidatorTest extends TestCase
             'true'      => ['true', 1],
             'bool true' => [true, 1],
             '-'         => ['-', 1],
-            'max int'   => ['11111111111', 1]
+            'max int'   => [PHP_INT_MAX . '2', 1]
         ];
     }
 
