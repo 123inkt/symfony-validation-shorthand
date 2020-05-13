@@ -7,7 +7,6 @@ use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\RequestConstraint
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
-use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 use Symfony\Component\Validator\Exception\InvalidOptionsException;
 
 /**
@@ -35,26 +34,6 @@ class RequestConstraintTest extends TestCase
         $constraint  = new RequestConstraint(['query' => $constraintA, 'request' => $constraintB]);
         static::assertSame($constraintA, $constraint->query);
         static::assertSame($constraintB, $constraint->request);
-    }
-
-    /**
-     * @covers ::__construct
-     */
-    public function testConstructInvalidQueryOption(): void
-    {
-        $this->expectException(ConstraintDefinitionException::class);
-        $this->expectExceptionMessage('The option "query" is expected to be a Constraint');
-        new RequestConstraint(['query' => 'invalid']);
-    }
-
-    /**
-     * @covers ::__construct
-     */
-    public function testConstructInvalidRequestOption(): void
-    {
-        $this->expectException(ConstraintDefinitionException::class);
-        $this->expectExceptionMessage('The option "request" is expected to be a Constraint');
-        new RequestConstraint(['request' => 'invalid']);
     }
 
     /**

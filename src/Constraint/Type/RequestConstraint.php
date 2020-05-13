@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace DigitalRevolution\SymfonyRequestValidation\Constraint\Type;
 
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 
 class RequestConstraint extends Constraint
 {
@@ -26,26 +25,17 @@ class RequestConstraint extends Constraint
     /** @var string */
     public $requestMessage = 'Request::request is not empty, but there is no constraint configured.';
 
-    /** @var Constraint|null */
+    /** @var Constraint|Constraint[]|null */
     public $query;
 
-    /** @var Constraint|null */
+    /** @var Constraint|Constraint[]|null */
     public $request;
 
     /**
-     * @param array{query?: Constraint, request?: Constraint}|null $options
+     * @param array{query?: Constraint|Constraint[], request?: Constraint|Constraint[]}|null $options
      */
     public function __construct($options = null)
     {
-        // @phpstan-ignore-next-line
-        if (isset($options['query']) && $options['query'] instanceof Constraint === false) {
-            throw new ConstraintDefinitionException('The option "query" is expected to be a Constraint');
-        }
-        // @phpstan-ignore-next-line
-        if (isset($options['request']) && $options['request'] instanceof Constraint === false) {
-            throw new ConstraintDefinitionException('The option "request" is expected to be a Constraint');
-        }
-
         // make sure defaults are set
         $options            = $options ?? [];
         $options['query']   = $options['query'] ?? null;
