@@ -16,7 +16,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "DigitalRevolution\\SymfonyRequestValidation\\Tests\\": "tests"
+            "DigitalRevolution\\SymfonyRequestValidation\\Tests\\": "tests/"
         }
     },
     "require": {
