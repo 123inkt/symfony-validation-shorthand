@@ -15,9 +15,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ConstraintCollectionBuilder
 {
     /**
+     * @return Constraint|Constraint[]
      * @throws RequestValidationException|InvalidArrayPathException
      */
-    public function build(ConstraintMap $constraintsMap): Constraint
+    public function build(ConstraintMap $constraintsMap)
     {
         $constraintTreeMap = [];
         foreach ($constraintsMap as $key => $constraints) {
@@ -29,9 +30,10 @@ class ConstraintCollectionBuilder
 
     /**
      * @param array<string|int, ConstraintMapItem|array<ConstraintMapItem>> $constraintTreeMap
+     * @return Constraint|Constraint[]
      * @throws RequestValidationException
      */
-    private function createConstraintTree(array $constraintTreeMap): Constraint
+    private function createConstraintTree(array $constraintTreeMap)
     {
         if (count($constraintTreeMap) === 1 && isset($constraintTreeMap['*'])) {
             return $this->createAllConstraint($constraintTreeMap['*']);
@@ -42,20 +44,21 @@ class ConstraintCollectionBuilder
 
     /**
      * @param ConstraintMapItem|array<ConstraintMapItem> $node
+     * @return Constraint|Constraint[]
      * @throws RequestValidationException
      */
-    private function createAllConstraint($node): Assert\All
+    private function createAllConstraint($node)
     {
+        $required = false;
         if ($node instanceof ConstraintMapItem) {
             $constraints = $node->getConstraints();
-            if ($node->isRequired()) {
-                if (is_array($constraints) === false) {
-                    $constraints = [$constraints];
-                }
-                array_unshift($constraints, new Assert\Count(1));
-            }
+            $required    = $node->isRequired();
         } else {
             $constraints = $this->createConstraintTree($node);
+        }
+
+        if ($required) {
+            return [new Assert\Count(['min' => 1]), new Assert\All($constraints)];
         }
 
         return new Assert\All($constraints);

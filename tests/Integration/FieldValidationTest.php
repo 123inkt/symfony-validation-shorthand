@@ -169,7 +169,8 @@ class FieldValidationTest extends TestCase
 
     public function dataProviderOptionalFields(): Generator
     {
-        yield "optional: null: success" => ['string', false, true];
+        yield "optional: null: success" => ['string', false, false];
+        yield "optional: null: success" => ['string|nullable', null, true];
         yield "optional: required + string: fail" => ['required|string', false, false];
         yield "optional: string + nullable: success" => ['string|nullable', null, true];
         yield "optional: string + nullable: fail" => ['string', null, false];

@@ -52,10 +52,11 @@ class ConstraintFactory
 
     /**
      * @param Constraint|array<string, string|Constraint|array<string|Constraint>> $ruleDefinitions
+     * @return Constraint|Constraint[]
      * @throws RequestValidationException
      * @throws InvalidArrayPathException
      */
-    public function fromRuleDefinitions($ruleDefinitions): Constraint
+    public function fromRuleDefinitions($ruleDefinitions)
     {
         if ($ruleDefinitions instanceof Constraint) {
             return $ruleDefinitions;
