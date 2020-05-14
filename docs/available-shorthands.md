@@ -18,7 +18,7 @@ The value must be a bool.
 The value must be a valid email.
 
 ## filled
-The vaule must be filled and not be null (except if [nullable](#nullable) is also set). If the value is an empty string, this validation rule fails.
+The value must be filled and not be null (except if [nullable](#nullable) is also set). If the value is an empty string, this validation rule fails.
 
 ## float
 The value must be a float.
