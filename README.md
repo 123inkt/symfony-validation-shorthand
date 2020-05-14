@@ -18,12 +18,12 @@ composer require "DigitalRevolution/SymfonyValidationShorthand"
 public function validate(array $data, ValidatorInterface $validator) {
     $rules = [
         'name.first_name' => 'required|string|min:5',
-        'name.last_name'  => 'string|min:6',                                // last name is optional
+        'name.last_name'  => 'string|min:6',                     // last name is optional
         'email'           => 'required|email',
         'password'        => 'required|string|between:7,40',
         'phone_number'    => 'required|regex:/^020\d+$/',
         'news_letter'     => 'required|bool',
-        'tags?.*'         => 'string'                                       // if tags is set, must be array of strings 
+        'tags?.*'         => 'required|string'                  // if tags is set, must be array of all strings with count > 0 
     ];        
 
     // construct a symfony constraint
