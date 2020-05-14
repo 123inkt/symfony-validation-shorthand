@@ -3,9 +3,12 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit;
 
+use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\RequestConstraint;
 use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
 use DigitalRevolution\SymfonyRequestValidation\Tests\Mock\MockValidatedRequest;
-use DigitalRevolution\SymfonyRequestValidation\ValidationRules;
+use DigitalRevolution\SymfonyRequestValidation\RequestValidationRules;
+use DigitalRevolution\SymfonyRequestValidation\Utility\InvalidArrayPathException;
+use Exception;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -23,7 +26,7 @@ class AbstractValidatedRequestTest extends TestCase
 {
     /**
      * @covers ::__construct
-     * @throws RequestValidationException
+     * @throws Exception
      */
     public function testConstructorNullRequest(): void
     {
@@ -39,7 +42,7 @@ class AbstractValidatedRequestTest extends TestCase
      * @covers ::validate
      * @covers ::isValid
      * @covers ::getRequest
-     * @throws RequestValidationException
+     * @throws Exception
      */
     public function testConstructorWithoutViolations(): void
     {
@@ -47,7 +50,7 @@ class AbstractValidatedRequestTest extends TestCase
         $stack   = new RequestStack();
         $stack->push($request);
 
-        $rules = new ValidationRules();
+        $rules = new RequestValidationRules([]);
 
         $validatedRequest = new MockValidatedRequest($stack, Validation::createValidator(), $rules);
         static::assertTrue($validatedRequest->isValid());
@@ -58,7 +61,7 @@ class AbstractValidatedRequestTest extends TestCase
      * @covers ::__construct
      * @covers ::validate
      * @covers ::handleViolations
-     * @throws RequestValidationException
+     * @throws RequestValidationException|InvalidArrayPathException
      */
     public function testConstructorWithViolations(): void
     {
@@ -68,8 +71,7 @@ class AbstractValidatedRequestTest extends TestCase
 
         // create rules
         $constraint = new Collection(['fields' => ['test' => new NotBlank()]]);
-        $rules      = new ValidationRules();
-        $rules->setRequestRules($constraint);
+        $rules      = new RequestValidationRules(['request' => $constraint]);
 
         // create violations
         $violations = new ConstraintViolationList();
@@ -80,7 +82,7 @@ class AbstractValidatedRequestTest extends TestCase
         $validator
             ->expects(self::once())
             ->method('validate')
-            ->with([], $constraint)
+            ->with($request, new RequestConstraint(['request' => $constraint]))
             ->willReturn($violations);
 
         $this->expectException(RequestValidationException::class);
