@@ -15,7 +15,7 @@ composer require "DigitalRevolution/SymfonyValidationShorthand"
 
 **Example**
 ```php
-public function validate(ValidatorInterface $validator) {
+public function validate(array $data, ValidatorInterface $validator) {
     $rules = [
         'name.first_name' => 'required|string|min:5',
         'name.last_name'  => 'string|min:6',                                // last name is optional
