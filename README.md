@@ -47,8 +47,6 @@ Validates:
 ]
 ```
 
-
-
 All available shorthands are [documented here](docs/available-shorthands.md)
 
 ## About us
