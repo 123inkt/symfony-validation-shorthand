@@ -1,22 +1,22 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Constraint;
+namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Constraint;
 
-use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\BooleanValue;
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\FloatNumber;
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\IntegerNumber;
-use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
-use DigitalRevolution\SymfonyRequestValidation\Rule\Rule;
-use DigitalRevolution\SymfonyRequestValidation\Rule\RuleList;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintResolver;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValue;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\FloatNumber;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\IntegerNumber;
+use DigitalRevolution\SymfonyValidationShorthand\RequestValidationException;
+use DigitalRevolution\SymfonyValidationShorthand\Rule\Rule;
+use DigitalRevolution\SymfonyValidationShorthand\Rule\RuleList;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver
+ * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintResolver
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class ConstraintResolverTest extends TestCase

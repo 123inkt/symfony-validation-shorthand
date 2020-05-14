@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Constraint\Type;
+namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Constraint\Type;
 
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\BooleanValue;
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\BooleanValueValidator;
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\IntegerNumber;
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\IntegerNumberValidator;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValue;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValueValidator;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\IntegerNumber;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\IntegerNumberValidator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContext;
@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Constraint\Type\IntegerNumberValidator
+ * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\IntegerNumberValidator
  */
 class IntegerNumberValidatorTest extends TestCase
 {

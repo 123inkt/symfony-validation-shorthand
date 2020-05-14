@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Tests\Mock;
+namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Mock;
 
-use DigitalRevolution\SymfonyRequestValidation\AbstractValidatedRequest;
-use DigitalRevolution\SymfonyRequestValidation\RequestValidationRules;
+use DigitalRevolution\SymfonyValidationShorthand\AbstractValidatedRequest;
+use DigitalRevolution\SymfonyValidationShorthand\RequestValidationRules;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;

@@ -6,9 +6,9 @@ A validation shorthand component for Symfony, similar to the syntax in the "illu
 ![Run tests](https://github.com/123inkt/symfony-request-validation/workflows/Run%20tests/badge.svg)
 
 ## Installation
-Include the library as a dependency in your own project by running: 
+Include the library as dependency in your own project via: 
 ```
-composer require "DigitalRevolution/SymfonyRequestValidation"
+composer require "DigitalRevolution/SymfonyValidationShorthand"
 ```
 
 ## Usage

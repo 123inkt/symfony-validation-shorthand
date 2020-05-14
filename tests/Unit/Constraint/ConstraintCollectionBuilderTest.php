@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Constraint;
+namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Constraint;
 
-use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintCollectionBuilder;
-use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintMap;
-use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintMapItem;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintCollectionBuilder;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMap;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMapItem;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\Blank;
@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints\Optional;
 use Symfony\Component\Validator\Constraints\Required;
 
 /**
- * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintCollectionBuilder
+ * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintCollectionBuilder
  * @covers ::createConstraintTree
  * @covers ::createAllConstraint
  * @covers ::createCollectionConstraint

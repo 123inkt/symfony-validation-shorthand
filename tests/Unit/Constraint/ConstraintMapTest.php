@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Constraint;
+namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Constraint;
 
-use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintMap;
-use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintMapItem;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMap;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMapItem;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintMap
+ * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMap
  */
 class ConstraintMapTest extends TestCase
 {

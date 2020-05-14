@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Constraint;
+namespace DigitalRevolution\SymfonyValidationShorthand\Constraint;
 
-use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
-use DigitalRevolution\SymfonyRequestValidation\Utility\Arrays;
-use DigitalRevolution\SymfonyRequestValidation\Utility\InvalidArrayPathException;
+use DigitalRevolution\SymfonyValidationShorthand\RequestValidationException;
+use DigitalRevolution\SymfonyValidationShorthand\Utility\Arrays;
+use DigitalRevolution\SymfonyValidationShorthand\Utility\InvalidArrayPathException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
 

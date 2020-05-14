@@ -1,17 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit;
+namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit;
 
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\RequestConstraint;
-use DigitalRevolution\SymfonyRequestValidation\ConstraintFactory;
-use DigitalRevolution\SymfonyRequestValidation\RequestValidationRules;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\RequestConstraint;
+use DigitalRevolution\SymfonyValidationShorthand\ConstraintFactory;
+use DigitalRevolution\SymfonyValidationShorthand\RequestValidationRules;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\ConstraintFactory
+ * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\ConstraintFactory
  * @covers ::__construct
  */
 class ConstraintFactoryTest extends TestCase

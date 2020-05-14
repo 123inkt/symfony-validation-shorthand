@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Utility;
+namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Utility;
 
-use DigitalRevolution\SymfonyRequestValidation\Utility\Arrays;
-use DigitalRevolution\SymfonyRequestValidation\Utility\InvalidArrayPathException;
+use DigitalRevolution\SymfonyValidationShorthand\Utility\Arrays;
+use DigitalRevolution\SymfonyValidationShorthand\Utility\InvalidArrayPathException;
 use Generator;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Utility\Arrays
+ * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Utility\Arrays
  */
 class ArraysTest extends TestCase
 {

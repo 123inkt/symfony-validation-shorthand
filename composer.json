@@ -1,17 +1,17 @@
 {
-    "name": "digitalrevolution/symfony-request-validation",
-    "description": "Automatic request validation for symfony",
+    "name": "digitalrevolution/symfony-validation-shorthand",
+    "description": "Validation shorthand for symfony",
     "license": "MIT",
     "type": "symfony-bundle",
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "DigitalRevolution\\SymfonyRequestValidation\\": "src/"
+            "DigitalRevolution\\SymfonyValidationShorthand\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "DigitalRevolution\\SymfonyRequestValidation\\Tests\\": "tests/"
+            "DigitalRevolution\\SymfonyValidationShorthand\\Tests\\": "tests/"
         }
     },
     "require": {

@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Rule;
+namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Rule;
 
-use DigitalRevolution\SymfonyRequestValidation\Rule\Rule;
-use DigitalRevolution\SymfonyRequestValidation\Rule\RuleList;
+use DigitalRevolution\SymfonyValidationShorthand\Rule\Rule;
+use DigitalRevolution\SymfonyValidationShorthand\Rule\RuleList;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Rule\RuleList
+ * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Rule\RuleList
  */
 class RuleListTest extends TestCase
 {

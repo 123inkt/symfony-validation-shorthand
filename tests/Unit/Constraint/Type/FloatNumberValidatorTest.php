@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Constraint\Type;
+namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Constraint\Type;
 
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\BooleanValueValidator;
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\FloatNumber;
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\FloatNumberValidator;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValueValidator;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\FloatNumber;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\FloatNumberValidator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContext;
@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Constraint\Type\FloatNumberValidator
+ * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\FloatNumberValidator
  */
 class FloatNumberValidatorTest extends TestCase
 {
