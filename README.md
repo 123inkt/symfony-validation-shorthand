@@ -23,7 +23,7 @@ public function validate(array $data, ValidatorInterface $validator) {
         'password'        => 'required|string|between:7,40',
         'phone_number'    => 'required|regex:/^020\d+$/',
         'news_letter'     => 'required|bool',
-        'tags?.*'         => 'required|string'                  // if tags is set, must be array of all strings with count > 0 
+        'tags?.*'         => 'required|string'                   // if tags is set, must be array of all strings with count > 0 
     ];        
 
     // construct a symfony constraint
