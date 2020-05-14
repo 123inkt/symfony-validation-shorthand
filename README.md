@@ -20,7 +20,7 @@ public function validate(array $data, ValidatorInterface $validator) {
         'name.first_name' => 'required|string|min:5',
         'name.last_name'  => 'string|min:6',                                // last name is optional
         'email'           => 'required|email',
-        'password'        => 'required|string|between:8,40',
+        'password'        => 'required|string|between:7,40',
         'phone_number'    => 'required|regex:/^020\d+$/',
         'news_letter'     => 'required|bool',
         'tags?.*'         => 'string'                                       // if tags is set, must be array of strings 
