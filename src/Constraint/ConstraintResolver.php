@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Constraint;
+namespace DigitalRevolution\SymfonyValidationShorthand\Constraint;
 
-use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
-use DigitalRevolution\SymfonyRequestValidation\Rule\Rule;
-use DigitalRevolution\SymfonyRequestValidation\Rule\RuleList;
+use DigitalRevolution\SymfonyValidationShorthand\RequestValidationException;
+use DigitalRevolution\SymfonyValidationShorthand\Rule\Rule;
+use DigitalRevolution\SymfonyValidationShorthand\Rule\RuleList;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
 

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Rule;
+namespace DigitalRevolution\SymfonyValidationShorthand\Rule;
 
-use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
+use DigitalRevolution\SymfonyValidationShorthand\RequestValidationException;
 use Symfony\Component\Validator\Constraint;
 
 class RuleParser

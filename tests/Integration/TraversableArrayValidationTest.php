@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Tests\Integration;
+namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Integration;
 
 use ArrayIterator;
-use DigitalRevolution\SymfonyRequestValidation\ConstraintFactory;
+use DigitalRevolution\SymfonyValidationShorthand\ConstraintFactory;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Validation;

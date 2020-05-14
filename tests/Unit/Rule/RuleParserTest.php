@@ -1,17 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Rule;
+namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Rule;
 
-use DigitalRevolution\SymfonyRequestValidation\Rule\Rule;
-use DigitalRevolution\SymfonyRequestValidation\Rule\RuleList;
-use DigitalRevolution\SymfonyRequestValidation\Rule\RuleParser;
-use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
+use DigitalRevolution\SymfonyValidationShorthand\Rule\Rule;
+use DigitalRevolution\SymfonyValidationShorthand\Rule\RuleList;
+use DigitalRevolution\SymfonyValidationShorthand\Rule\RuleParser;
+use DigitalRevolution\SymfonyValidationShorthand\RequestValidationException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Rule\RuleParser
+ * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Rule\RuleParser
  */
 class RuleParserTest extends TestCase
 {

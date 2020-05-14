@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Rule;
+namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Rule;
 
-use DigitalRevolution\SymfonyRequestValidation\Rule\Rule;
-use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
+use DigitalRevolution\SymfonyValidationShorthand\Rule\Rule;
+use DigitalRevolution\SymfonyValidationShorthand\RequestValidationException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Rule\Rule
+ * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Rule\Rule
  * @covers ::__construct
  */
 class RuleTest extends TestCase

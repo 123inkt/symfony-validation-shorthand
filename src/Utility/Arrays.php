@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Utility;
+namespace DigitalRevolution\SymfonyValidationShorthand\Utility;
 
 use InvalidArgumentException;
 

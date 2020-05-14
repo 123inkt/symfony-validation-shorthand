@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit;
+namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit;
 
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\RequestConstraint;
-use DigitalRevolution\SymfonyRequestValidation\RequestValidationException;
-use DigitalRevolution\SymfonyRequestValidation\Tests\Mock\MockValidatedRequest;
-use DigitalRevolution\SymfonyRequestValidation\RequestValidationRules;
-use DigitalRevolution\SymfonyRequestValidation\Utility\InvalidArrayPathException;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\RequestConstraint;
+use DigitalRevolution\SymfonyValidationShorthand\RequestValidationException;
+use DigitalRevolution\SymfonyValidationShorthand\Tests\Mock\MockValidatedRequest;
+use DigitalRevolution\SymfonyValidationShorthand\RequestValidationRules;
+use DigitalRevolution\SymfonyValidationShorthand\Utility\InvalidArrayPathException;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\AbstractValidatedRequest
+ * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\AbstractValidatedRequest
  */
 class AbstractValidatedRequestTest extends TestCase
 {

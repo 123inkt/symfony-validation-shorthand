@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit;
+namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit;
 
-use DigitalRevolution\SymfonyRequestValidation\RequestValidationRules;
+use DigitalRevolution\SymfonyValidationShorthand\RequestValidationRules;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 
 /**
- * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\RequestValidationRules
+ * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\RequestValidationRules
  */
 class ValidationRulesTest extends TestCase
 {

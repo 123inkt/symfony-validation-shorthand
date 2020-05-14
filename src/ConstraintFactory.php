@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation;
+namespace DigitalRevolution\SymfonyValidationShorthand;
 
-use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintCollectionBuilder;
-use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintMap;
-use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintMapItem;
-use DigitalRevolution\SymfonyRequestValidation\Constraint\ConstraintResolver;
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\RequestConstraint;
-use DigitalRevolution\SymfonyRequestValidation\Rule\RuleParser;
-use DigitalRevolution\SymfonyRequestValidation\Utility\InvalidArrayPathException;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintCollectionBuilder;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMap;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMapItem;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintResolver;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\RequestConstraint;
+use DigitalRevolution\SymfonyValidationShorthand\Rule\RuleParser;
+use DigitalRevolution\SymfonyValidationShorthand\Utility\InvalidArrayPathException;
 use Symfony\Component\Validator\Constraint;
 
 class ConstraintFactory

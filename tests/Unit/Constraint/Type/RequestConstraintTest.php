@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace DigitalRevolution\SymfonyRequestValidation\Tests\Unit\Constraint\Type;
+namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Constraint\Type;
 
-use DigitalRevolution\SymfonyRequestValidation\Constraint\Type\RequestConstraint;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\RequestConstraint;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Exception\InvalidOptionsException;
 
 /**
- * @coversDefaultClass \DigitalRevolution\SymfonyRequestValidation\Constraint\Type\RequestConstraint
+ * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\RequestConstraint
  */
 class RequestConstraintTest extends TestCase
 {
