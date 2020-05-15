@@ -67,6 +67,6 @@ jobs:
     - name: Validate composer.json and composer.lock
       run: composer validate
     - name: Install dependencies
-      run: composer install --prefer-dist --prefer-lowest --prefer-stable --no-progress --no-suggest --no-interaction --no-ansi
+      run: composer install --prefer-dist --prefer-lowest --prefer-stable --no-progress --no-suggest --no-progress --no-interaction --no-ansi
     - name: Run test suite
       run: composer test
