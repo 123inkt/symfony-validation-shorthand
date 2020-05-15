@@ -3,16 +3,15 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Constraint\Type;
 
-use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValueValidator;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\RequestConstraint;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\RequestConstraintValidator;
+use DigitalRevolution\SymfonyValidationShorthand\Tests\Mock\MockFactory;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Validation;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\RequestConstraintValidator
@@ -29,7 +28,7 @@ class RequestConstraintValidatorTest extends TestCase
     {
         parent::setUp();
         $this->validator = new RequestConstraintValidator();
-        $this->context   = new ExecutionContext(Validation::createValidator(), 'root', $this->createMock(TranslatorInterface::class));
+        $this->context   = new ExecutionContext(Validation::createValidator(), 'root', MockFactory::createTranslator($this));
         $this->validator->initialize($this->context);
     }
 

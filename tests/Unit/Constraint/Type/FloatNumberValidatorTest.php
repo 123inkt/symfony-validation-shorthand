@@ -6,6 +6,7 @@ namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Constraint\Typ
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValueValidator;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\FloatNumber;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\FloatNumberValidator;
+use DigitalRevolution\SymfonyValidationShorthand\Tests\Mock\MockFactory;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContext;
@@ -32,7 +33,7 @@ class FloatNumberValidatorTest extends TestCase
         parent::setUp();
         $this->constraint = new FloatNumber();
         $this->validator  = new FloatNumberValidator();
-        $this->context    = new ExecutionContext(Validation::createValidator(), 'root', $this->createMock(TranslatorInterface::class));
+        $this->context    = new ExecutionContext(Validation::createValidator(), 'root', MockFactory::createTranslator($this));
         $this->context->setConstraint($this->constraint);
         $this->validator->initialize($this->context);
     }
