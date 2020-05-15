@@ -6,7 +6,9 @@
 |[required](#required)|[integer](#integer)|[min](#min)        |[url](#url)    |
 |                     |[string](#string)  |                   |               |
 
-## between:\<digit>,\<digit>
+## between:
+Arguments: `<digit>,<digit>`
+    
 The constraint has different implementations based on the value type.
 - If the value has a numeric constraint (integer or float), it must lie between the two values.
 - Otherwise, the length of the value must be between the supplied values.
@@ -34,7 +36,9 @@ The value must be a float or castable to float.
 The value must be an integer or castable to int.
 - example of allowed values: `1, -1, '1', '-1'`
 
-## max:\<digit\>
+## max:
+Argument: `<digit>`  
+  
 The constraint has different implementations based on the value type.
 - If the value has a numeric constraint (integer or float), it must be smaller than the supplied value.
 - Otherwise, the length of the value must be smaller than the supplied value.
@@ -43,7 +47,9 @@ Example:
  - string with maximum length of 6: `max:6`
  - integer which has to be 6 or less: `integer|max:6`
 
-## min\<digit\>
+## min
+Argument: `<digit>`  
+
 The constraint has different implementations based on the value type.
 - If the value has a numeric constraint (integer or float), it must be bigger than the supplied value.
 - Otherwise, the length of the value must be bigger than the supplied value.
@@ -55,7 +61,9 @@ Example:
 ## nullable
 The value can be `null`.
 
-## regex:\<pattern\>
+## regex
+Argument: `<pattern>`  
+
 The value must match the supplied regex. The full string will be passed to the preg_match function.
 
 Example:
