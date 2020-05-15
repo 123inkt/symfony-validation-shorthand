@@ -50,7 +50,7 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest --no-interaction --no-ansi
       - name: php stan
-        run: composer phpstan
+        run: composer phpstan -- --no-progress
 
   tests:
     name: PHP ${{ matrix.php-versions }} Test
