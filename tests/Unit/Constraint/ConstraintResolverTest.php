@@ -41,7 +41,7 @@ class ConstraintResolverTest extends TestCase
         $ruleSet->addRule(new Rule('unknown'));
 
         $this->expectException(InvalidRuleException::class);
-        $this->expectExceptionMessage('Unable to resolve rule: `unknown`');
+        $this->expectExceptionMessage("Unable to resolve rule: 'unknown'");
         $this->resolver->resolveRuleList($ruleSet);
     }
 

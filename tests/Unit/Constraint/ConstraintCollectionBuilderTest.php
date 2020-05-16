@@ -191,7 +191,7 @@ class ConstraintCollectionBuilderTest extends TestCase
         $constraintMap->set('name.first_name', new ConstraintMapItem([new NotNull()], true));
 
         $this->expectException(InvalidRuleException::class);
-        $this->expectExceptionMessage("`name.first_name` can't be assigned as this path already contains a non-array value.");
+        $this->expectExceptionMessage("'name.first_name' can't be assigned as this path already contains a non-array value.");
         $this->builder->build($constraintMap);
     }
 }

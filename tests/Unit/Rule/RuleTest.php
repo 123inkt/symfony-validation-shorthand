@@ -39,7 +39,7 @@ class RuleTest extends TestCase
     public function testGetParameterInvalidOffset(): void
     {
         $this->expectException(InvalidRuleException::class);
-        $this->expectExceptionMessage('Rule `name` expects at least 1 parameter(s)');
+        $this->expectExceptionMessage("Rule 'name' expects at least 1 parameter(s)");
 
         $rule = new Rule('name', ['5']);
         $rule->getParameter(1);
@@ -54,7 +54,7 @@ class RuleTest extends TestCase
     public function testGetParameterInvalidIntType(): void
     {
         $this->expectException(InvalidRuleException::class);
-        $this->expectExceptionMessage('Rule `name` expects parameter #0 to be an int. Encountered: `test`');
+        $this->expectExceptionMessage("Rule 'name' expects parameter #0 to be an int. Encountered: 'test'");
 
         $rule = new Rule('name', ['test']);
         $rule->getIntParam(0);
