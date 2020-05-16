@@ -52,11 +52,12 @@ Rules:
     'contact.first_name'      => 'required|string|filled',
     'contact.last_name'       => 'required|string|between:10,100',
     'contact.phone_number'    => 'required|regex:/^\d{10}$/',
-    'contact.email'           => 'required|string|email',     
+    'contact.email'           => 'required|string|email', 
+    'contact.birth_day'       => ['required|string', new \Symfony\Component\Validator\Constraints\Date()],    
     'address.street_name'     => 'required|string',
     'address.house_number'    => 'required|int|between:0,999',
     'address.addition'        => 'string|nullable|max:3',
-    'address.city'            => 'required|string|filled',
+    'address.city'            => 'required|string|filled',        
     'address.country_code'    => 'required|string|between:2,2',    
     'interests?.*.interestId' => 'required:int:min:1',
     'interests?.*.label'      => 'required|string|filled',                    
@@ -67,6 +68,7 @@ Rules:
 **Explanation:**
 
 The keys `contact` and `address` are mandatory, while `interests` and `tags` are optional.  
+If there's no suitable shorthand, the rules can be supplemented with Symfony `Constraint`s.
 If `interested` is given, it must be an array of `[interestId, label]` elements  
 If `tags` is given, it must be a non-empty array (required) of strings with minimum length of 1 (filled)
 
