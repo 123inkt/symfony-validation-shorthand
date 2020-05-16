@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Rule;
 
+use DigitalRevolution\SymfonyValidationShorthand\Rule\InvalidRuleException;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\Rule;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\RuleList;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\RuleParser;
-use DigitalRevolution\SymfonyValidationShorthand\RequestValidationException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -27,18 +27,18 @@ class RuleParserTest extends TestCase
     /**
      * @covers ::parseRules
      * @covers ::explodeExplicitRule
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function testFailParseRuleWithBadRuleType(): void
     {
-        $this->expectException(RequestValidationException::class);
+        $this->expectException(InvalidRuleException::class);
         $this->expectExceptionMessage('Invalid rule definition type. Expecting string or Symfony\Component\Validator\Constraint');
         $this->parser->parseRules(200);
     }
 
     /**
      * @covers ::parseRules
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function testParseRuleWithSingleConstraint(): void
     {
@@ -54,7 +54,7 @@ class RuleParserTest extends TestCase
      * @covers ::explodeExplicitRule
      * @covers ::parseStringRule
      * @covers ::normalizeRuleName
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function testParseRuleWithSingleStringRule(): void
     {
@@ -69,7 +69,7 @@ class RuleParserTest extends TestCase
      * @covers ::explodeExplicitRule
      * @covers ::parseStringRule
      * @covers ::parseParameters
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function testParseRuleWithSingleStringRuleWithParameter(): void
     {
@@ -84,7 +84,7 @@ class RuleParserTest extends TestCase
      * @covers ::explodeExplicitRule
      * @covers ::parseStringRule
      * @covers ::parseParameters
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function testParseRuleWithSingleStringRuleWithMultipleParameters(): void
     {
@@ -99,7 +99,7 @@ class RuleParserTest extends TestCase
      * @covers ::explodeExplicitRule
      * @covers ::parseStringRule
      * @covers ::parseParameters
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function testParseRuleWithSingleStringRuleWithRegexParameter(): void
     {
@@ -114,7 +114,7 @@ class RuleParserTest extends TestCase
      * @covers ::explodeExplicitRule
      * @covers ::parseStringRule
      * @covers ::parseParameters
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function testParseRuleWithMultipleStringRules(): void
     {
@@ -130,7 +130,7 @@ class RuleParserTest extends TestCase
      * @covers ::explodeExplicitRule
      * @covers ::parseStringRule
      * @covers ::parseParameters
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function testParseRuleWithMultipleStringRulesAsArray(): void
     {
@@ -146,7 +146,7 @@ class RuleParserTest extends TestCase
      * @covers ::explodeExplicitRule
      * @covers ::parseStringRule
      * @covers ::parseParameters
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function testParseRuleWithStringRuleAndConstraint(): void
     {
@@ -160,7 +160,7 @@ class RuleParserTest extends TestCase
 
     /**
      * @covers ::normalizeRuleName
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function testParseRuleWithRuleNormalization(): void
     {

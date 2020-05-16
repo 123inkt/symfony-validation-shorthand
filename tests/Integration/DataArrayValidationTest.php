@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Integration;
 
+use DigitalRevolution\SymfonyValidationShorthand\Rule\InvalidRuleException;
 use Exception;
 
 /**
@@ -84,6 +85,8 @@ class DataArrayValidationTest extends IntegrationTest
             'name.first_name' => 'string'
         ];
 
+        $this->expectException(InvalidRuleException::class);
+        $this->expectExceptionMessage("`name.first_name` can't be assigned as this path already contains a non-array value.");
         $this->constraintFactory->fromRuleDefinitions($rules);
     }
 }

@@ -26,7 +26,7 @@ class ConstraintCollectionBuilder
                 Arrays::assignToPath($constraintTreeMap, explode('.', $key), $constraints);
             } catch (InvalidArrayPathException $e) {
                 throw new InvalidRuleException(
-                    sprintf("`%s` can't be assigned as path as there is already another value assigned.", $key),
+                    sprintf("`%s` can't be assigned as this path already contains a non-array value.", $key),
                     0,
                     $e
                 );
