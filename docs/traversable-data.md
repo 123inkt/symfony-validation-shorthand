@@ -6,8 +6,10 @@
 
 # Traversable data validation
 
-Symfony's `All` Constraint allows to valid `\Traversable` data. For example data read from a csv or Excel provided via a yield function. Start
-your notation with a `*`.
+Symfony's `All` Constraint allows you to validate `\Traversable` data. For example data read from a csv or Excel provided via a yield function. The `*` 
+notation marks the set as iterable and internally the `All` constraint will be used instead of `Collection`.
+
+# ArrayIterator example
 
 **Rules:**  
 For a csv with 4 columns. 
@@ -30,4 +32,19 @@ $iterator = new ArrayIterator(
         ['3', 'exampleC@example.com', '115.99', 'pineapple'],
     ]   
 );
+```
+
+## Non empty value set
+By default the `*` will allow the set to be empty. If you validate a set of values, you can mark the set as non-empty with the `required` rule.
+
+**Rules:**  
+```
+['*' => 'required|int']
+```
+
+**Validates:**
+```
+success: [1, 2, '3']
+fails:   []
+fails:   [1, 'a']
 ```
