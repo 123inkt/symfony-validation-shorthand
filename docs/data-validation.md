@@ -68,7 +68,7 @@ Rules:
 **Explanation:**
 
 The keys `contact` and `address` are mandatory, while `interests` and `tags` are optional.  
-If there's no suitable shorthand, the rules can be supplemented with Symfony `Constraint`s.
+If there's no suitable shorthand, the rules can be supplemented with Symfony `Constraint`'s.  
 If `interested` is given, it must be an array of `[interestId, label]` elements  
 If `tags` is given, it must be a non-empty array (required) of strings with minimum length of 1 (filled)
 
