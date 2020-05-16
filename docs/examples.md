@@ -80,3 +80,13 @@ success: ['1', 2, null]
 fails:   []
 fails:   null
 ```
+
+### custom constraints
+```
+['createdAt' => ['required|string', new \Symfony\Component\Validator\Constraints\Date()]
+```
+```
+success: ['createdAt' => '2020-01-01']
+fails:   [ 100 ]
+fails:   []
+```
