@@ -15,21 +15,21 @@ composer require "DigitalRevolution/SymfonyValidationShorthand"
 
 **Example**
 ```php
-public function validate(array $data, ValidatorInterface $validator) {
-    $rules = [
-        'name.first_name' => 'required|string|min:5',
-        'name.last_name'  => 'string|min:6',                     // last name is optional
-        'email'           => 'required|email',
-        'password'        => 'required|string|between:7,40',
-        'phone_number'    => 'required|regex:/^020\d+$/',
-        'news_letter'     => 'required|bool',
-        'tags?.*'         => 'required|string'                   // if tags is set, must be array of all strings with count > 0 
-    ];        
+$rules = [
+    'name.first_name' => 'required|string|min:5',
+    'name.last_name'  => 'string|min:6',                     // last name is optional
+    'email'           => 'required|email',
+    'password'        => 'required|string|between:7,40',
+    'phone_number'    => 'required|regex:/^020\d+$/',
+    'news_letter'     => 'required|bool',
+    'tags?.*'         => 'required|string'                   // if tags is set, must be array of all strings with count > 0 
+];        
 
-    // construct a symfony constraint
-    $constraint = (new ConstraintFactory)->fromRuleDefinitions($rules);
-    $violations = $validator->validate($data, $constraint);
-}    
+// construct a constraint from the rules
+$constraint = (new ConstraintFactory)->fromRuleDefinitions($rules);
+
+// validate the data
+$violations = \Symfony\Component\Validator\Validation::createValidator()->validate($data, $constraint);
 ```
 
 Validates:
@@ -47,7 +47,11 @@ Validates:
 ]
 ```
 
-All available shorthands are [documented here](docs/available-shorthands.md)
+## Documentation
+
+Full syntax and example available:
+- [Shorthands](docs/available-shorthands.md)
+- [Data validation](docs/data-validation.md)
 
 ## About us
 At 123inkt (Part of Digital Revolution B.V.), every day more than 30 developers are working on improving our internal ERP and our several shops. Do you want to join us? [We are looking for developers](https://www.123inkt.nl/page/werken_ict.html).
