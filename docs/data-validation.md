@@ -1,6 +1,6 @@
 | Index |
 |:----------------- |
-| [Shorthands](docs/available-shorthands.md) |
+| [Shorthands](available-shorthands.md) |
 | Data Validation |  
 
 # Data Validation
