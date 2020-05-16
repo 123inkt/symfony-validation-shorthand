@@ -6,6 +6,7 @@ namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Constraint;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintCollectionBuilder;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMap;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMapItem;
+use DigitalRevolution\SymfonyValidationShorthand\Rule\InvalidRuleException;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\All;
@@ -128,8 +129,6 @@ class ConstraintCollectionBuilderTest extends TestCase
     }
 
     /**
-     * If the constraint is set to required but the path is marked as optional, then always assume Required
-     *
      * @covers ::build
      * @throws Exception
      */
@@ -148,8 +147,6 @@ class ConstraintCollectionBuilderTest extends TestCase
     }
 
     /**
-     * If the constraint is set to required but the path is marked as optional, then always assume Required
-     *
      * @covers ::build
      * @throws Exception
      */
@@ -162,5 +159,39 @@ class ConstraintCollectionBuilderTest extends TestCase
         $result = $this->builder->build($constraintMap);
         $expect = new All([new NotNull()]);
         static::assertEquals($expect, $result);
+    }
+
+    /**
+     * @covers ::build
+     * @throws Exception
+     */
+    public function testBuildWithAllAndCollectionConstraint(): void
+    {
+        $constraint    = new NotNull();
+        $constraintMap = new ConstraintMap();
+        $constraintMap->set('*.name', new ConstraintMapItem([$constraint], true));
+
+        $result = $this->builder->build($constraintMap);
+        $expect =
+            new All([
+                new Collection(['fields' => ['name' => $constraint]])
+            ]);
+
+        static::assertEquals($expect, $result);
+    }
+
+    /**
+     * @covers ::build
+     * @throws Exception
+     */
+    public function testBuildWithInvalidPath(): void
+    {
+        $constraintMap = new ConstraintMap();
+        $constraintMap->set('name', new ConstraintMapItem([new NotNull()], true));
+        $constraintMap->set('name.first_name', new ConstraintMapItem([new NotNull()], true));
+
+        $this->expectException(InvalidRuleException::class);
+        $this->expectExceptionMessage("`name.first_name` can't be assigned as this path already contains a non-array value.");
+        $this->builder->build($constraintMap);
     }
 }
