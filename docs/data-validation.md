@@ -64,7 +64,7 @@ Rules:
 
 **Explanation:**
 
-The keys `contact` and `address`, while `interests` and `tags` are optional.  
+The keys `contact` and `address` are mandatory, while `interests` and `tags` are optional.  
 If `interested` is given, it must be an array of `[interestId, label]` elements  
 If `tags` is given, it must be a non-empty array (required) of strings with minimum length of 1 (filled)
 
