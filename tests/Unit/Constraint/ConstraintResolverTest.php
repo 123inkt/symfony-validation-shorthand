@@ -7,7 +7,7 @@ use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintResolver;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValue;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\FloatNumber;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\IntegerNumber;
-use DigitalRevolution\SymfonyValidationShorthand\RequestValidationException;
+use DigitalRevolution\SymfonyValidationShorthand\Rule\InvalidRuleException;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\Rule;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\RuleList;
 use Generator;
@@ -33,15 +33,15 @@ class ConstraintResolverTest extends TestCase
     /**
      * @covers ::resolveRuleList
      * @covers ::resolveConstraint
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function testResolveRuleSetUnknownRule(): void
     {
         $ruleSet = new RuleList();
         $ruleSet->addRule(new Rule('unknown'));
 
-        $this->expectException(RequestValidationException::class);
-        $this->expectExceptionMessage('Unable to resolve rule: unknown');
+        $this->expectException(InvalidRuleException::class);
+        $this->expectExceptionMessage('Unable to resolve rule: `unknown`');
         $this->resolver->resolveRuleList($ruleSet);
     }
 
@@ -54,7 +54,7 @@ class ConstraintResolverTest extends TestCase
      * @covers ::resolveBetweenConstraint
      * @param Constraint[]
      * @param array<Rule|Constraint> $rules
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function testResolveRuleSet(array $expected, array $rules): void
     {

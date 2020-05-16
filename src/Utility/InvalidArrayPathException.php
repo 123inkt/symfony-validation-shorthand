@@ -7,4 +7,5 @@ use Exception;
 
 class InvalidArrayPathException extends Exception
 {
+
 }

@@ -8,8 +8,8 @@ use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMap;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMapItem;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintResolver;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\RequestConstraint;
+use DigitalRevolution\SymfonyValidationShorthand\Rule\InvalidRuleException;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\RuleParser;
-use DigitalRevolution\SymfonyValidationShorthand\Utility\InvalidArrayPathException;
 use Symfony\Component\Validator\Constraint;
 
 class ConstraintFactory
@@ -31,8 +31,7 @@ class ConstraintFactory
     }
 
     /**
-     * @throws RequestValidationException
-     * @throws InvalidArrayPathException
+     * @throws InvalidRuleException
      */
     public function createRequestConstraint(RequestValidationRules $validationRules): RequestConstraint
     {
@@ -53,8 +52,7 @@ class ConstraintFactory
     /**
      * @param Constraint|array<string, string|Constraint|array<string|Constraint>> $ruleDefinitions
      * @return Constraint|Constraint[]
-     * @throws RequestValidationException
-     * @throws InvalidArrayPathException
+     * @throws InvalidRuleException
      */
     public function fromRuleDefinitions($ruleDefinitions)
     {

@@ -61,7 +61,7 @@ class DataArrayValidationTest extends IntegrationTest
         // array without last_name + birth_day should pass
         static::assertHasNoViolations(['name' => ['first_name' => 'Peter']], $rules);
 
-        // array with incomplete birthday should fail
+        // array with incomplete birth_day should fail
         $data = [
             'name'      => ['first_name' => 'Peter', 'last_name' => 'Parker'],
             'birth_day' => ['day' => '1', 'month' => '11']
@@ -70,5 +70,20 @@ class DataArrayValidationTest extends IntegrationTest
 
         // array without first name should fail;
         static::assertHasViolations(['name' => ['last_name' => 'Parker']], $rules);
+    }
+
+    /**
+     * Test assigning incorrect paths
+     *
+     * @throws Exception
+     */
+    public function testRuleContainsInvalidPath(): void
+    {
+        $rules = [
+            'name'            => 'string',
+            'name.first_name' => 'string'
+        ];
+
+        $this->constraintFactory->fromRuleDefinitions($rules);
     }
 }

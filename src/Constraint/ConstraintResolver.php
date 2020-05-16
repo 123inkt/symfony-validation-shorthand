@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyValidationShorthand\Constraint;
 
-use DigitalRevolution\SymfonyValidationShorthand\RequestValidationException;
+use DigitalRevolution\SymfonyValidationShorthand\Rule\InvalidRuleException;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\Rule;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\RuleList;
 use Symfony\Component\Validator\Constraint;
@@ -13,7 +13,7 @@ class ConstraintResolver
 {
     /**
      * @return Constraint[]
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function resolveRuleList(RuleList $ruleList): array
     {
@@ -54,7 +54,7 @@ class ConstraintResolver
     }
 
     /**
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     private function resolveConstraint(RuleList $ruleList, Rule $rule): Constraint
@@ -84,13 +84,13 @@ class ConstraintResolver
                 return $this->resolveBetweenConstraint($rule, $ruleList->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT]));
         }
 
-        throw new RequestValidationException(
+        throw new InvalidRuleException(
             'Unable to resolve rule: `' . $rule->getName() . '`. Supported rules: ' . implode(", ", Rule::ALLOWED_RULES)
         );
     }
 
     /**
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     private function resolveMinConstraint(Rule $rule, bool $isNumeric): Constraint
     {
@@ -101,7 +101,7 @@ class ConstraintResolver
     }
 
     /**
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     private function resolveMaxConstraint(Rule $rule, bool $isNumeric): Constraint
     {
@@ -112,7 +112,7 @@ class ConstraintResolver
     }
 
     /**
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     private function resolveBetweenConstraint(Rule $rule, bool $isNumeric): Constraint
     {

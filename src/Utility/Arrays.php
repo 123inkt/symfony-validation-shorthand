@@ -36,7 +36,7 @@ class Arrays
         $key = array_shift($path);
         if (count($path) === 0) {
             if (array_key_exists($key, $array)) {
-                throw new InvalidArrayPathException(sprintf(self::ERROR_ALREADY_ASSIGNED, print_r($array, true), implode('.', $path)));
+                throw new InvalidArrayPathException(sprintf(self::ERROR_ALREADY_ASSIGNED, gettype($array), implode('.', $path)));
             }
             $array[$key] = $value;
             return $array;
@@ -46,7 +46,7 @@ class Arrays
         if (array_key_exists($key, $array) === false) {
             $array[$key] = [];
         } elseif (is_array($array[$key]) === false) {
-            throw new InvalidArrayPathException(sprintf(self::ERROR_NOT_ARRAY, print_r($array, true), implode('.', $path)));
+            throw new InvalidArrayPathException(sprintf(self::ERROR_NOT_ARRAY, gettype($array), implode('.', $path)));
         }
 
         // continue assigned the value

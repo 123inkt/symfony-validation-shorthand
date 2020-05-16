@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyValidationShorthand\Constraint;
 
-use DigitalRevolution\SymfonyValidationShorthand\RequestValidationException;
+use DigitalRevolution\SymfonyValidationShorthand\Rule\InvalidRuleException;
 use DigitalRevolution\SymfonyValidationShorthand\Utility\Arrays;
 use DigitalRevolution\SymfonyValidationShorthand\Utility\InvalidArrayPathException;
 use Symfony\Component\Validator\Constraint;
@@ -16,13 +16,21 @@ class ConstraintCollectionBuilder
 {
     /**
      * @return Constraint|Constraint[]
-     * @throws RequestValidationException|InvalidArrayPathException
+     * @throws InvalidRuleException
      */
     public function build(ConstraintMap $constraintsMap)
     {
         $constraintTreeMap = [];
         foreach ($constraintsMap as $key => $constraints) {
-            Arrays::assignToPath($constraintTreeMap, explode('.', $key), $constraints);
+            try {
+                Arrays::assignToPath($constraintTreeMap, explode('.', $key), $constraints);
+            } catch (InvalidArrayPathException $e) {
+                throw new InvalidRuleException(
+                    sprintf("`%s` can't be assigned as path as there is already another value assigned.", $key),
+                    0,
+                    $e
+                );
+            }
         }
 
         return $this->createConstraintTree($constraintTreeMap);
@@ -31,7 +39,7 @@ class ConstraintCollectionBuilder
     /**
      * @param array<string|int, ConstraintMapItem|array<ConstraintMapItem>> $constraintTreeMap
      * @return Constraint|Constraint[]
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     private function createConstraintTree(array $constraintTreeMap)
     {
@@ -45,7 +53,7 @@ class ConstraintCollectionBuilder
     /**
      * @param ConstraintMapItem|array<ConstraintMapItem> $node
      * @return Constraint|Constraint[]
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     private function createAllConstraint($node)
     {
@@ -66,7 +74,7 @@ class ConstraintCollectionBuilder
 
     /**
      * @param array<string|int, ConstraintMapItem|array<ConstraintMapItem>> $constraintTreeMap
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     private function createCollectionConstraint(array $constraintTreeMap): Assert\Collection
     {
