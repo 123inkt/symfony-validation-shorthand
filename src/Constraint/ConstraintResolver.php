@@ -85,7 +85,7 @@ class ConstraintResolver
         }
 
         throw new InvalidRuleException(
-            'Unable to resolve rule: `' . $rule->getName() . '`. Supported rules: ' . implode(", ", Rule::ALLOWED_RULES)
+            "Unable to resolve rule: '" . $rule->getName() . "'. Supported rules: " . implode(", ", Rule::ALLOWED_RULES)
         );
     }
 

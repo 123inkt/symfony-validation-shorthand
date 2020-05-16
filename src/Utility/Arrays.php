@@ -7,8 +7,8 @@ use InvalidArgumentException;
 
 class Arrays
 {
-    private const ERROR_ALREADY_ASSIGNED = "Can't assign value to `%s` as `%s` is already assigned.";
-    private const ERROR_NOT_ARRAY        = "Can't assign value to `%s` as `%s` is not an array.";
+    private const ERROR_ALREADY_ASSIGNED = "Can't assign value to '%s' as '%s' is already assigned.";
+    private const ERROR_NOT_ARRAY        = "Can't assign value to '%s' as '%s' is not an array.";
 
     /**
      * Recursively assign the value at given path to the array.
