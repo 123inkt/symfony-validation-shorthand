@@ -1,3 +1,8 @@
+| Index |
+|:----------------- |
+| [Shorthands](docs/available-shorthands.md) |
+| Data Validation |  
+
 # Data Validation
 
 ## Basic example

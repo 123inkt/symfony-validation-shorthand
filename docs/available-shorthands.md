@@ -1,3 +1,8 @@
+| Index |
+|:----------------- |
+|  Shorthands |
+| [Data validation](docs/data-validation.md) |
+
 # Available shorthands
 |General              |Type               |Range              |Pattern        |
 |:--------------------|:------------------|:------------------|:--------------|
