@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Constraint\Type;
 
-use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValueValidator;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\RequestConstraint;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\RequestConstraintValidator;
 use PHPUnit\Framework\TestCase;
@@ -99,7 +98,7 @@ class RequestConstraintValidatorTest extends TestCase
     }
 
     /**
-     * Test that `null` request should be ignored
+     * Test that 'null' request should be ignored
      *
      * @covers ::validate
      */
@@ -113,7 +112,7 @@ class RequestConstraintValidatorTest extends TestCase
     }
 
     /**
-     * Test that `null` request should be ignored
+     * Test that 'null' request should be ignored
      *
      * @covers ::validate
      */

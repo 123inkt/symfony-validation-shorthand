@@ -5,8 +5,8 @@ namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit;
 
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\RequestConstraint;
 use DigitalRevolution\SymfonyValidationShorthand\RequestValidationException;
-use DigitalRevolution\SymfonyValidationShorthand\Tests\Mock\MockValidatedRequest;
 use DigitalRevolution\SymfonyValidationShorthand\RequestValidationRules;
+use DigitalRevolution\SymfonyValidationShorthand\Tests\Mock\MockValidatedRequest;
 use DigitalRevolution\SymfonyValidationShorthand\Utility\InvalidArrayPathException;
 use Exception;
 use PHPUnit\Framework\TestCase;

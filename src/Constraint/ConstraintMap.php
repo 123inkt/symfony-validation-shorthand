@@ -5,7 +5,6 @@ namespace DigitalRevolution\SymfonyValidationShorthand\Constraint;
 
 use ArrayIterator;
 use IteratorAggregate;
-use Symfony\Component\Validator\Constraint;
 
 /**
  * @template-implements IteratorAggregate<string, ConstraintMapItem>

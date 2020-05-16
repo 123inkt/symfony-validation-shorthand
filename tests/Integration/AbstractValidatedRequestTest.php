@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Integration;
 
 use DigitalRevolution\SymfonyValidationShorthand\RequestValidationException;
-use DigitalRevolution\SymfonyValidationShorthand\Tests\Mock\MockValidatedRequest;
 use DigitalRevolution\SymfonyValidationShorthand\RequestValidationRules;
+use DigitalRevolution\SymfonyValidationShorthand\Tests\Mock\MockValidatedRequest;
 use DigitalRevolution\SymfonyValidationShorthand\Utility\InvalidArrayPathException;
 use Generator;
 use PHPUnit\Framework\TestCase;
