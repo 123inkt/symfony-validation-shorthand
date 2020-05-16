@@ -1,7 +1,7 @@
 | Index |
 |:----------------- |
 |  Shorthands |
-| [Data validation](docs/data-validation.md) |
+| [Data validation](data-validation.md) |
 
 # Available shorthands
 |General              |Type               |Range              |Pattern        |
