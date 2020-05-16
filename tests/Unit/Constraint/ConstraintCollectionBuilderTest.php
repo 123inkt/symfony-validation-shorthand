@@ -8,8 +8,10 @@ use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMap;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMapItem;
 use Exception;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Blank;
 use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\Constraints\Count;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Optional;
 use Symfony\Component\Validator\Constraints\Required;
@@ -122,6 +124,43 @@ class ConstraintCollectionBuilderTest extends TestCase
                 'b' => new Required(new NotNull())
             ])
         ]);
+        static::assertEquals($expect, $result);
+    }
+
+    /**
+     * If the constraint is set to required but the path is marked as optional, then always assume Required
+     *
+     * @covers ::build
+     * @throws Exception
+     */
+    public function testBuildWithNonEmptyAllConstraint(): void
+    {
+        $constraint    = new NotNull();
+        $constraintMap = new ConstraintMap();
+        $constraintMap->set('*', new ConstraintMapItem([$constraint], true));
+
+        $result = $this->builder->build($constraintMap);
+        $expect = [
+            new Count(['min' => 1]),
+            new All([new NotNull()])
+        ];
+        static::assertEquals($expect, $result);
+    }
+
+    /**
+     * If the constraint is set to required but the path is marked as optional, then always assume Required
+     *
+     * @covers ::build
+     * @throws Exception
+     */
+    public function testBuildWithEmptyAllConstraint(): void
+    {
+        $constraint    = new NotNull();
+        $constraintMap = new ConstraintMap();
+        $constraintMap->set('*', new ConstraintMapItem([$constraint], false));
+
+        $result = $this->builder->build($constraintMap);
+        $expect = new All([new NotNull()]);
         static::assertEquals($expect, $result);
     }
 }
