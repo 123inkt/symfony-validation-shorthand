@@ -82,7 +82,7 @@ class AbstractValidatedRequestTest extends TestCase
         $validator
             ->expects(self::once())
             ->method('validate')
-            ->with($request, new RequestConstraint(['request' => $constraint]))
+            ->with(...[$request, new RequestConstraint(['request' => $constraint])])
             ->willReturn($violations);
 
         $this->expectException(RequestValidationException::class);
