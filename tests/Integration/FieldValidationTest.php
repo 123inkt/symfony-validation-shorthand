@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Integration;
 
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintResolver;
+use DigitalRevolution\SymfonyValidationShorthand\Rule\InvalidRuleException;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\RuleParser;
-use DigitalRevolution\SymfonyValidationShorthand\RequestValidationException;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -38,7 +38,7 @@ class FieldValidationTest extends TestCase
      * @param string|string[] $rules
      * @param mixed $data
      * @dataProvider dataProviderRequiredFields
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function testResolverRequiredFields($rules, $data, bool $success): void
     {
@@ -56,7 +56,7 @@ class FieldValidationTest extends TestCase
      * @param string|string[] $rules
      * @param mixed $data
      * @dataProvider dataProviderOptionalFields
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function testResolverOptionalFields($rules, $data, bool $success): void
     {
