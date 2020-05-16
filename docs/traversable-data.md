@@ -2,7 +2,8 @@
 |:------------------------------------------------- |
 | [Shorthands](available-shorthands.md)             |
 | [Array data Validation](data-validation.md)       |  
-| Traversable data validation                       | 
+| Traversable data validation                       |
+| [Examples](examples.md)                           | 
 
 # Traversable data validation
 

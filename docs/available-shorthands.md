@@ -3,6 +3,7 @@
 |  Shorthands                                        |
 | [Array data validation](data-validation.md)        |
 | [Traversable data validation](traversable-data.md) |
+| [Examples](examples.md)                            |
 
 # Available shorthands
 |General              |Type               |Range              |Pattern        |
