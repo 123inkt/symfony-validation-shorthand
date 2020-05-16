@@ -25,7 +25,7 @@ $rules = [
     'tags?.*'         => 'required|string'                   // if tags is set, must be array of all strings with count > 0 
 ];        
 
-// construct a constraint from the rules
+// transform the rules into a Symfony Constraint tree
 $constraint = (new ConstraintFactory)->fromRuleDefinitions($rules);
 
 // validate the data
@@ -49,9 +49,10 @@ Validates:
 
 ## Documentation
 
-Full syntax and example available:
+Full syntax and examples:
 - [Shorthands](docs/available-shorthands.md)
 - [Data validation](docs/data-validation.md)
+- [Traversable data](docs/traversable-data.md)
 
 ## About us
 At 123inkt (Part of Digital Revolution B.V.), every day more than 30 developers are working on improving our internal ERP and our several shops. Do you want to join us? [We are looking for developers](https://www.123inkt.nl/page/werken_ict.html).

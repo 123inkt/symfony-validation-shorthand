@@ -1,9 +1,10 @@
-| Index |
-|:----------------- |
-| [Shorthands](available-shorthands.md) |
-| Data Validation |  
+| Index                                              |
+|:-------------------------------------------------- |
+| [Shorthands](available-shorthands.md)              |
+| Array data Validation                              |
+| [Traversable data validation](traversable-data.md) |  
 
-# Data Validation
+# Array data validation
 
 ## Basic example
 

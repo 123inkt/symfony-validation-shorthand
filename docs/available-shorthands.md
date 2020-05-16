@@ -1,7 +1,8 @@
-| Index |
-|:----------------- |
-|  Shorthands |
-| [Data validation](data-validation.md) |
+| Index                                              |
+|:-------------------------------------------------- |
+|  Shorthands                                        |
+| [Array data validation](data-validation.md)        |
+| [Traversable data validation](traversable-data.md) |
 
 # Available shorthands
 |General              |Type               |Range              |Pattern        |
