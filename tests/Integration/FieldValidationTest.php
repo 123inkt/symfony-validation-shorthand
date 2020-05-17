@@ -149,6 +149,14 @@ class FieldValidationTest extends TestCase
         yield "required + float 'abc' + nullable: false" => ['required|float|nullable', 'abc', false];
         yield "required + float '1,0' + nullable: true" => ['required|float|nullable', '1,0', false];
 
+        // field should be valid date
+        yield "required + date: true" => ['required|date', '2020-01-01', true];
+        yield "required + date: false" => ['required|date', '01-01-2020', false];
+        yield "required + datetime: true" => ['required|datetime', '2020-01-01 12:15:59', true];
+        yield "required + datetime: false" => ['required|datetime', '12:15:59 2020-01-01', false];
+        yield "required + date_format: true" => ['required|date_format:d/m/Y', '01/01/2020', true];
+        yield "required + date_format: false" => ['required|date_format:Y-m-d', '01-01-2020', false];
+
         // field should be email
         yield "required + email: true" => ['required|email', 'test@example.com', true];
         yield "required + email + not nullable: false" => ['required|email', null, false];
