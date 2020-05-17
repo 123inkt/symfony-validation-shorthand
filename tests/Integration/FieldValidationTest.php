@@ -71,6 +71,9 @@ class FieldValidationTest extends TestCase
         }
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+     */
     public function dataProviderRequiredFields(): Generator
     {
         yield "required: success" => ['required', 'unit test', true];
