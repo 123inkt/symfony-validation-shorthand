@@ -7,6 +7,7 @@ use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValue;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValueValidator;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\IntegerNumber;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\IntegerNumberValidator;
+use DigitalRevolution\SymfonyValidationShorthand\Tests\Mock\MockFactory;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContext;
@@ -33,7 +34,7 @@ class IntegerNumberValidatorTest extends TestCase
         parent::setUp();
         $this->constraint = new IntegerNumber();
         $this->validator  = new IntegerNumberValidator();
-        $this->context    = new ExecutionContext(Validation::createValidator(), 'root', $this->createMock(TranslatorInterface::class));
+        $this->context    = new ExecutionContext(Validation::createValidator(), 'root', MockFactory::createTranslator($this));
         $this->context->setConstraint($this->constraint);
         $this->validator->initialize($this->context);
     }
