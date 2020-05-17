@@ -7,7 +7,6 @@ use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintCollection
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMap;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMapItem;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintResolver;
-use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\RequestConstraint;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\InvalidRuleException;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\RuleParser;
 use Symfony\Component\Validator\Constraint;
@@ -28,25 +27,6 @@ class ConstraintFactory
         $this->parser            = $parser ?? new RuleParser();
         $this->resolver          = $resolver ?? new ConstraintResolver();
         $this->collectionBuilder = $collectionBuilder ?? new ConstraintCollectionBuilder();
-    }
-
-    /**
-     * @throws InvalidRuleException
-     */
-    public function createRequestConstraint(RequestValidationRules $validationRules): RequestConstraint
-    {
-        $options            = [];
-        $queryDefinitions   = $validationRules->getQueryRules();
-        $requestDefinitions = $validationRules->getRequestRules();
-
-        if ($queryDefinitions !== null) {
-            $options['query'] = $this->fromRuleDefinitions($queryDefinitions);
-        }
-        if ($requestDefinitions !== null) {
-            $options['request'] = $this->fromRuleDefinitions($requestDefinitions);
-        }
-
-        return new RequestConstraint($options);
     }
 
     /**

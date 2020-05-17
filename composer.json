@@ -17,7 +17,6 @@
     "require": {
         "php": "7.1.* || 7.2.* || 7.3.*",
         "symfony/validator": "4.*",
-        "symfony/http-foundation": "4.*",
         "symfony/polyfill-php80": "^1.16"
     },
     "require-dev": {
