@@ -1,3 +1,10 @@
+| Index                                              |
+|:-------------------------------------------------- |
+|  Shorthands                                        |
+| [Array data validation](data-validation.md)        |
+| [Traversable data validation](traversable-data.md) |
+| [Examples](examples.md)                            |
+
 # Available shorthands
 |General              |Type               |Range              |Pattern        |Date                       |
 |:--------------------|:------------------|:------------------|:--------------|:--------------------------|
@@ -20,7 +27,9 @@ Example:
 ## boolean
 The value must be bool or castable to bool.
 - allowed `true` values: `1, '1', 'on', true`
-- allowed `false` values: `0, 'off', '0', false`
+- allowed `false` values: `0, 'off', '0', false`  
+
+Note: can also be written as `bool`
 
 ## date
 The value must be a valid date of format `Y-m-d`
@@ -46,6 +55,8 @@ The value must be a float or castable to float.
 ## integer
 The value must be an integer or castable to int.
 - example of allowed values: `1, -1, '1', '-1'`
+
+Note: can also be written as `int`
 
 ## max:
 Argument: `<digit>`  
