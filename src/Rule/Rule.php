@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyValidationShorthand\Rule;
 
-use DigitalRevolution\SymfonyValidationShorthand\RequestValidationException;
-
 class Rule
 {
     public const RULE_REQUIRED    = 'required';
@@ -64,26 +62,26 @@ class Rule
     }
 
     /**
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function getParameter(int $offset): string
     {
         if (isset($this->parameters[$offset]) === false) {
-            throw new RequestValidationException('Rule `' . $this->getName() . '` expects at least ' . $offset . ' parameter(s)');
+            throw new InvalidRuleException("Rule '" . $this->getName() . "' expects at least " . $offset . ' parameter(s)');
         }
 
         return $this->parameters[$offset];
     }
 
     /**
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function getIntParam(int $offset): int
     {
         $argument = $this->getParameter($offset);
         if ((string)(int)$argument !== $argument) {
-            throw new RequestValidationException(
-                'Rule `' . $this->getName() . '` expects parameter #' . $offset . ' to be an int. Encountered: `' . $argument . '`'
+            throw new InvalidRuleException(
+                "Rule '" . $this->getName() . "' expects parameter #" . $offset . " to be an int. Encountered: '" . $argument . "'"
             );
         }
 

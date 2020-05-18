@@ -5,8 +5,8 @@ namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit;
 
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\RequestConstraint;
 use DigitalRevolution\SymfonyValidationShorthand\RequestValidationException;
-use DigitalRevolution\SymfonyValidationShorthand\Tests\Mock\MockValidatedRequest;
 use DigitalRevolution\SymfonyValidationShorthand\RequestValidationRules;
+use DigitalRevolution\SymfonyValidationShorthand\Tests\Mock\MockValidatedRequest;
 use DigitalRevolution\SymfonyValidationShorthand\Utility\InvalidArrayPathException;
 use Exception;
 use PHPUnit\Framework\TestCase;
@@ -82,7 +82,8 @@ class AbstractValidatedRequestTest extends TestCase
         $validator
             ->expects(self::once())
             ->method('validate')
-            ->with($request, new RequestConstraint(['request' => $constraint]))
+            // notation due to incorrect docblock of phpunit. https://github.com/sebastianbergmann/phpunit/pull/3717
+            ->with(...[$request, new RequestConstraint(['request' => $constraint])])
             ->willReturn($violations);
 
         $this->expectException(RequestValidationException::class);

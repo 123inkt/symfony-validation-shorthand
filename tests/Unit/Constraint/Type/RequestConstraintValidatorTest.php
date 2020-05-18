@@ -98,7 +98,7 @@ class RequestConstraintValidatorTest extends TestCase
     }
 
     /**
-     * Test that `null` request should be ignored
+     * Test that 'null' request should be ignored
      *
      * @covers ::validate
      */
@@ -112,7 +112,7 @@ class RequestConstraintValidatorTest extends TestCase
     }
 
     /**
-     * Test that `null` request should be ignored
+     * Test that 'null' request should be ignored
      *
      * @covers ::validate
      */

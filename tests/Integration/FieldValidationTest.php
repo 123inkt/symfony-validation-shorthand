@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Integration;
 
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintResolver;
+use DigitalRevolution\SymfonyValidationShorthand\Rule\InvalidRuleException;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\RuleParser;
-use DigitalRevolution\SymfonyValidationShorthand\RequestValidationException;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -38,7 +38,7 @@ class FieldValidationTest extends TestCase
      * @param string|string[] $rules
      * @param mixed $data
      * @dataProvider dataProviderRequiredFields
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function testResolverRequiredFields($rules, $data, bool $success): void
     {
@@ -56,7 +56,7 @@ class FieldValidationTest extends TestCase
      * @param string|string[] $rules
      * @param mixed $data
      * @dataProvider dataProviderOptionalFields
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function testResolverOptionalFields($rules, $data, bool $success): void
     {
@@ -100,7 +100,7 @@ class FieldValidationTest extends TestCase
         yield "required + string min+max length right: true" => ['required|between:3,5', 'apple', true];
         yield "required + string min+max length short: false" => ['required|between:3,5', 'id', false];
         yield "required + string min+max length long: false" => ['required|between:3,5', 'banana', false];
-        // without `integer` any value will be treated as string
+        // without 'integer' any value will be treated as string
         yield "required + string max with int: false" => ['required|min:10', 12345, false];
         yield "required + string max with int: true" => ['required|max:1', 9, true];
         yield "required + string type with int: true" => ['required|string', 9, false];

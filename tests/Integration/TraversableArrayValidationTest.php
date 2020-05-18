@@ -4,31 +4,13 @@ declare(strict_types=1);
 namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Integration;
 
 use ArrayIterator;
-use DigitalRevolution\SymfonyValidationShorthand\ConstraintFactory;
 use Exception;
-use PHPUnit\Framework\TestCase;
-use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @coversNothing
  */
-class TraversableArrayValidationTest extends TestCase
+class TraversableArrayValidationTest extends IntegrationTest
 {
-    /** @var ConstraintFactory */
-    private $constraintFactory;
-
-    /** @var ValidatorInterface */
-    private $validator;
-
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->constraintFactory = new ConstraintFactory();
-        $this->validator         = Validation::createValidator();
-    }
-
     /**
      * @throws Exception
      */
@@ -37,13 +19,13 @@ class TraversableArrayValidationTest extends TestCase
         $rules = ['*' => 'int'];
 
         $iterator = new ArrayIterator([1, 2]);
-        static::assertCount(0, $this->validator->validate($iterator, $this->constraintFactory->fromRuleDefinitions($rules)));
+        static::assertHasNoViolations($iterator, $rules);
 
         $iterator = new ArrayIterator([]);
-        static::assertCount(0, $this->validator->validate($iterator, $this->constraintFactory->fromRuleDefinitions($rules)));
+        static::assertHasNoViolations($iterator, $rules);
 
         $iterator = new ArrayIterator([1, 'a']);
-        static::assertCount(1, $this->validator->validate($iterator, $this->constraintFactory->fromRuleDefinitions($rules)));
+        static::assertHasViolations($iterator, $rules);
     }
 
     /**
@@ -54,13 +36,36 @@ class TraversableArrayValidationTest extends TestCase
         $rules = ['*' => 'required|int'];
 
         $iterator = new ArrayIterator([]);
-        static::assertCount(1, $this->validator->validate($iterator, $this->constraintFactory->fromRuleDefinitions($rules)));
+        static::assertHasViolations($iterator, $rules);
 
         $iterator = new ArrayIterator([3]);
-        static::assertCount(0, $this->validator->validate($iterator, $this->constraintFactory->fromRuleDefinitions($rules)));
+        static::assertHasNoViolations($iterator, $rules);
 
         $iterator = new ArrayIterator(['a']);
-        static::assertCount(1, $this->validator->validate($iterator, $this->constraintFactory->fromRuleDefinitions($rules)));
+        static::assertHasViolations($iterator, $rules);
+
+        $iterator = new ArrayIterator([null]);
+        static::assertHasViolations($iterator, $rules);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testSingleDimensionArrayWithNullableElement(): void
+    {
+        $rules = ['*' => 'int|nullable'];
+
+        $iterator = new ArrayIterator([]);
+        static::assertHasNoViolations($iterator, $rules);
+
+        $iterator = new ArrayIterator([null]);
+        static::assertHasNoViolations($iterator, $rules);
+
+        $iterator = new ArrayIterator([1]);
+        static::assertHasNoViolations($iterator, $rules);
+
+        $iterator = new ArrayIterator([1, null]);
+        static::assertHasNoViolations($iterator, $rules);
     }
 
     /**
@@ -75,30 +80,62 @@ class TraversableArrayValidationTest extends TestCase
 
         // empty array
         $iterator = new ArrayIterator([]);
-        static::assertCount(0, $this->validator->validate($iterator, $this->constraintFactory->fromRuleDefinitions($rules)));
+        static::assertHasNoViolations($iterator, $rules);
 
         // one entry: integer
         $iterator = new ArrayIterator([[5]]);
-        static::assertCount(0, $this->validator->validate($iterator, $this->constraintFactory->fromRuleDefinitions($rules)));
+        static::assertHasNoViolations($iterator, $rules);
 
         // one entry: integer + string
         $iterator = new ArrayIterator([[5, 'test']]);
-        static::assertCount(0, $this->validator->validate($iterator, $this->constraintFactory->fromRuleDefinitions($rules)));
+        static::assertHasNoViolations($iterator, $rules);
 
         // one entry: missing integer
         $iterator = new ArrayIterator([[1 => 'test']]);
-        static::assertCount(1, $this->validator->validate($iterator, $this->constraintFactory->fromRuleDefinitions($rules)));
+        static::assertHasViolations($iterator, $rules);
 
         // double entries
         $iterator = new ArrayIterator([[1, 'test'], [2, 'unit']]);
-        static::assertCount(0, $this->validator->validate($iterator, $this->constraintFactory->fromRuleDefinitions($rules)));
+        static::assertHasNoViolations($iterator, $rules);
 
         // invalid double entries
         $iterator = new ArrayIterator([[1, 2], [3, 4]]);
-        static::assertCount(2, $this->validator->validate($iterator, $this->constraintFactory->fromRuleDefinitions($rules)));
+        static::assertCountViolations(2, $iterator, $rules);
 
         // invalid nesting
         $iterator = new ArrayIterator(['a', 'b']);
-        static::assertCount(2, $this->validator->validate($iterator, $this->constraintFactory->fromRuleDefinitions($rules)));
+        static::assertCountViolations(2, $iterator, $rules);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function testDoubleTraversableArray(): void
+    {
+        $rules = ['*.*' => 'required|int'];
+
+        // empty array
+        $iterator = new ArrayIterator([]);
+        static::assertHasNoViolations($iterator, $rules);
+
+        // empty nested array is not allowed
+        $iterator = new ArrayIterator([[]]);
+        static::assertHasViolations($iterator, $rules);
+
+        // one entry: integer
+        $iterator = new ArrayIterator([[5]]);
+        static::assertHasNoViolations($iterator, $rules);
+
+        // two entries: 2 integers
+        $iterator = new ArrayIterator([[5, 6], [7, 8]]);
+        static::assertHasNoViolations($iterator, $rules);
+
+        // one entry: integer + string
+        $iterator = new ArrayIterator([[5, 'test']]);
+        static::assertHasViolations($iterator, $rules);
+
+        // one entry: keys should be ignored
+        $iterator = new ArrayIterator(['test' => [1]]);
+        static::assertHasNoViolations($iterator, $rules);
     }
 }

@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Rule;
 
+use DigitalRevolution\SymfonyValidationShorthand\Rule\InvalidRuleException;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\Rule;
-use DigitalRevolution\SymfonyValidationShorthand\RequestValidationException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -17,7 +17,7 @@ class RuleTest extends TestCase
      * @covers ::getParameter
      * @covers ::getParameters
      * @covers ::getIntParam
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function testGetParameter(): void
     {
@@ -34,12 +34,12 @@ class RuleTest extends TestCase
      * @covers ::getParameter
      * @covers ::getParameters
      * @covers ::getIntParam
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function testGetParameterInvalidOffset(): void
     {
-        $this->expectException(RequestValidationException::class);
-        $this->expectExceptionMessage('Rule `name` expects at least 1 parameter(s)');
+        $this->expectException(InvalidRuleException::class);
+        $this->expectExceptionMessage("Rule 'name' expects at least 1 parameter(s)");
 
         $rule = new Rule('name', ['5']);
         $rule->getParameter(1);
@@ -49,12 +49,12 @@ class RuleTest extends TestCase
      * @covers ::getParameter
      * @covers ::getParameters
      * @covers ::getIntParam
-     * @throws RequestValidationException
+     * @throws InvalidRuleException
      */
     public function testGetParameterInvalidIntType(): void
     {
-        $this->expectException(RequestValidationException::class);
-        $this->expectExceptionMessage('Rule `name` expects parameter #0 to be an int. Encountered: `test`');
+        $this->expectException(InvalidRuleException::class);
+        $this->expectExceptionMessage("Rule 'name' expects parameter #0 to be an int. Encountered: 'test'");
 
         $rule = new Rule('name', ['test']);
         $rule->getIntParam(0);
