@@ -5,19 +5,22 @@ namespace DigitalRevolution\SymfonyValidationShorthand\Rule;
 
 class Rule
 {
-    public const RULE_REQUIRED = 'required';
-    public const RULE_BOOLEAN  = 'boolean';
-    public const RULE_INTEGER  = 'integer';
-    public const RULE_FLOAT    = 'float';
-    public const RULE_STRING   = 'string';
-    public const RULE_EMAIL    = 'email';
-    public const RULE_URL      = 'url';
-    public const RULE_NULLABLE = 'nullable';
-    public const RULE_FILLED   = 'filled';
-    public const RULE_REGEX    = 'regex';
-    public const RULE_MIN      = 'min';
-    public const RULE_MAX      = 'max';
-    public const RULE_BETWEEN  = 'between';
+    public const RULE_REQUIRED    = 'required';
+    public const RULE_BOOLEAN     = 'boolean';
+    public const RULE_INTEGER     = 'integer';
+    public const RULE_FLOAT       = 'float';
+    public const RULE_STRING      = 'string';
+    public const RULE_DATE        = 'date';
+    public const RULE_DATETIME    = 'datetime';
+    public const RULE_DATE_FORMAT = 'date_format';
+    public const RULE_EMAIL       = 'email';
+    public const RULE_URL         = 'url';
+    public const RULE_NULLABLE    = 'nullable';
+    public const RULE_FILLED      = 'filled';
+    public const RULE_REGEX       = 'regex';
+    public const RULE_MIN         = 'min';
+    public const RULE_MAX         = 'max';
+    public const RULE_BETWEEN     = 'between';
 
     public const ALLOWED_RULES = [
         self::RULE_REQUIRED,
@@ -25,6 +28,9 @@ class Rule
         self::RULE_INTEGER,
         self::RULE_FLOAT,
         self::RULE_STRING,
+        self::RULE_DATE,
+        self::RULE_DATETIME,
+        self::RULE_DATE_FORMAT,
         self::RULE_EMAIL,
         self::RULE_URL,
         self::RULE_NULLABLE,

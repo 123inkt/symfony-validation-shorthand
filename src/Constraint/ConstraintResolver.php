@@ -68,6 +68,12 @@ class ConstraintResolver
                 return new Type\FloatNumber();
             case Rule::RULE_STRING:
                 return new Assert\Type('string');
+            case Rule::RULE_DATE:
+                return new Assert\Date();
+            case Rule::RULE_DATETIME:
+                return new Assert\DateTime();
+            case Rule::RULE_DATE_FORMAT:
+                return new Assert\DateTime(['format' => $rule->getParameter(0)]);
             case Rule::RULE_EMAIL:
                 return new Assert\Email();
             case Rule::RULE_URL:

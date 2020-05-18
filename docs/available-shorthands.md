@@ -1,10 +1,17 @@
+| Index                                              |
+|:-------------------------------------------------- |
+|  Shorthands                                        |
+| [Array data validation](data-validation.md)        |
+| [Traversable data validation](traversable-data.md) |
+| [Examples](examples.md)                            |
+
 # Available shorthands
-|General              |Type               |Range              |Pattern        |
-|:--------------------|:------------------|:------------------|:--------------|
-|[filled](#filled)    |[boolean](#boolean)|[between](#between)|[email](#email)|
-|[nullable](#nullable)|[float](#float)    |[max](#max)        |[regex](#regex)|
-|[required](#required)|[integer](#integer)|[min](#min)        |[url](#url)    |
-|                     |[string](#string)  |                   |               |
+|General              |Type               |Range              |Pattern        |Date                       |
+|:--------------------|:------------------|:------------------|:--------------|:--------------------------|
+|[filled](#filled)    |[boolean](#boolean)|[between](#between)|[email](#email)|[date](#date)              |
+|[nullable](#nullable)|[float](#float)    |[max](#max)        |[regex](#regex)|[datetime](#datetime)      |
+|[required](#required)|[integer](#integer)|[min](#min)        |[url](#url)    |[date_format](#date_format)|
+|                     |[string](#string)  |                   |               |                           |
 
 ## between:
 Arguments: `<digit>,<digit>`
@@ -20,7 +27,20 @@ Example:
 ## boolean
 The value must be bool or castable to bool.
 - allowed `true` values: `1, '1', 'on', true`
-- allowed `false` values: `0, 'off', '0', false`
+- allowed `false` values: `0, 'off', '0', false`  
+
+Note: can also be written as `bool`
+
+## date
+The value must be a valid date of format `Y-m-d`
+
+## datetime
+The value must be a valid date+time of format `Y-m-d H:i:s`
+
+## date_format
+Argument: `<pattern>`
+
+The value must match the given date pattern. See [DateTime::createFromFormat()](https://www.php.net/manual/en/datetime.createfromformat.php) for formatting options. 
 
 ## email
 The value must be a valid email.
@@ -35,6 +55,8 @@ The value must be a float or castable to float.
 ## integer
 The value must be an integer or castable to int.
 - example of allowed values: `1, -1, '1', '-1'`
+
+Note: can also be written as `int`
 
 ## max:
 Argument: `<digit>`  

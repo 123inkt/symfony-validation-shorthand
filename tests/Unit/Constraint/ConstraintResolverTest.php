@@ -87,6 +87,11 @@ class ConstraintResolverTest extends TestCase
         yield 'required' => [[new Assert\NotNull()], [new Rule('required')]];
         yield 'required email' => [[new Assert\Email(), new Assert\NotNull()], [new Rule('required'), new Rule('email')]];
 
+        // date, datetime, date_format
+        yield 'date' => [[new Assert\Date(), new Assert\NotNull()], [new Rule('date')]];
+        yield 'datetime' => [[new Assert\DateTime(), new Assert\NotNull()], [new Rule('datetime')]];
+        yield 'date_format' => [[new Assert\DateTime(['format' => 'd/m/Y']), new Assert\NotNull()], [new Rule('date_format', ['d/m/Y'])]];
+
         // min/max string or array lengths
         yield 'min length' => [[new Assert\Length(['min' => 10]), new Assert\NotNull()], [new Rule('min', ['10'])]];
         yield 'max length' => [[new Assert\Length(['max' => 10]), new Assert\NotNull()], [new Rule('max', ['10'])]];
