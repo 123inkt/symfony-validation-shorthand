@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit;
 
-use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\RequestConstraint;
 use DigitalRevolution\SymfonyValidationShorthand\ConstraintFactory;
-use DigitalRevolution\SymfonyValidationShorthand\RequestValidationRules;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -16,24 +14,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class ConstraintFactoryTest extends TestCase
 {
-    /**
-     * @covers ::createRequestConstraint
-     * @throws Exception
-     */
-    public function testCreateRequestConstraint(): void
-    {
-        $factory = new ConstraintFactory();
-
-        // without any rules
-        $result = $factory->createRequestConstraint(new RequestValidationRules([]));
-        static::assertEquals(new RequestConstraint(), $result);
-
-        $constraintA = new Assert\NotNull();
-        $constraintB = new Assert\NotBlank();
-        $result      = $factory->createRequestConstraint(new RequestValidationRules(['query' => $constraintA, 'request' => $constraintB]));
-        static::assertEquals(new RequestConstraint(['query' => $constraintA, 'request' => $constraintB]), $result);
-    }
-
     /**
      * @covers ::fromRuleDefinitions
      * @throws Exception
