@@ -82,6 +82,7 @@ class AbstractValidatedRequestTest extends TestCase
         $validator
             ->expects(self::once())
             ->method('validate')
+            // notation due to incorrect docblock of phpunit. https://github.com/sebastianbergmann/phpunit/pull/3717
             ->with(...[$request, new RequestConstraint(['request' => $constraint])])
             ->willReturn($violations);
 
