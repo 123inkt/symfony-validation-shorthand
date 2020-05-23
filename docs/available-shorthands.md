@@ -6,12 +6,27 @@
 | [Examples](examples.md)                            |
 
 # Available shorthands
-|General              |Type               |Range              |Pattern        |Date                       |
-|:--------------------|:------------------|:------------------|:--------------|:--------------------------|
-|[filled](#filled)    |[boolean](#boolean)|[between](#between)|[email](#email)|[date](#date)              |
-|[nullable](#nullable)|[float](#float)    |[max](#max)        |[regex](#regex)|[datetime](#datetime)      |
-|[required](#required)|[integer](#integer)|[min](#min)        |[url](#url)    |[date_format](#date_format)|
-|                     |[string](#string)  |                   |               |                           |
+|General              |Type               |Range              |Pattern                  |Date                       |
+|:--------------------|:------------------|:------------------|:------------------------|:--------------------------|
+|[filled](#filled)    |[array](#array)    |[between](#between)|[alpha](#alpha)          |[date](#date)              |
+|[nullable](#nullable)|[boolean](#boolean)|[max](#max)        |[alpha_dash](#alpha_dash)|[datetime](#datetime)      |
+|[required](#required)|[float](#float)    |[min](#min)        |[alpha_num](#alpha_num)  |[date_format](#date_format)|
+|                     |[integer](#integer)|                   |[email](#email)          |                           |
+|                     |[string](#string)  |                   |[in](#in)                |                           |
+|                     |                   |                   |[regex](#regex)          |                           |
+|                     |                   |                   |[url](#url)              |                           |
+
+## alpha
+The field under validation must be entirely alphabetic characters. Shorthand for pattern: `[a-zA-Z]`
+
+## alpha_dash
+The field under validation may have alpha-numeric characters, as well as dashes and underscores. Shorthand for pattern: `[a-zA-Z0-9_-]`
+
+## alpha_num
+The field under validation must be entirely alpha-numeric characters. Shorthand for pattern: `[a-zA-Z0-9]`
+
+## array
+The field under validation must be a PHP array.
 
 ## between:
 Arguments: `<digit>,<digit>`
@@ -51,6 +66,16 @@ The value must be filled and not be null (except if [nullable](#nullable) is als
 ## float
 The value must be a float or castable to float.
 - example of allowed values: `-1, 1, -1.1, 1.1, '1.1', '-1.1', '.1', '1.', '1', '-1'` 
+
+## in
+Arguments: `string,string,...`
+
+The field under validation must be included in the given list of values. 
+
+**Example:**
+```
+required|in:foo,bar
+```
 
 ## integer
 The value must be an integer or castable to int.
