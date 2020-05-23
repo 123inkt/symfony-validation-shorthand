@@ -68,6 +68,16 @@ class ConstraintResolver
                 return new Type\FloatNumber();
             case Rule::RULE_STRING:
                 return new Assert\Type('string');
+            case Rule::RULE_ARRAY:
+                return new Assert\Type('array');
+            case Rule::RULE_ALPHA:
+                return new Assert\Regex(['pattern' => '/^[a-zA-Z]*$/']);
+            case Rule::RULE_ALPHA_DASH:
+                return new Assert\Regex(['pattern' => '/^[\w-]*$/']);
+            case Rule::RULE_ALPHA_NUM:
+                return new Assert\Regex(['pattern' => '/^[a-zA-Z0-9]*$/']);
+            case Rule::RULE_IN:
+                return new Assert\Choice($rule->getParameters());
             case Rule::RULE_DATE:
                 return new Assert\Date();
             case Rule::RULE_DATETIME:

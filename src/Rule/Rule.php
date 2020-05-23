@@ -10,6 +10,11 @@ class Rule
     public const RULE_INTEGER     = 'integer';
     public const RULE_FLOAT       = 'float';
     public const RULE_STRING      = 'string';
+    public const RULE_ARRAY       = 'array';
+    public const RULE_ALPHA       = 'alpha';
+    public const RULE_ALPHA_DASH  = 'alpha_dash';
+    public const RULE_ALPHA_NUM   = 'alpha_num';
+    public const RULE_IN          = 'in';
     public const RULE_DATE        = 'date';
     public const RULE_DATETIME    = 'datetime';
     public const RULE_DATE_FORMAT = 'date_format';
@@ -28,6 +33,11 @@ class Rule
         self::RULE_INTEGER,
         self::RULE_FLOAT,
         self::RULE_STRING,
+        self::RULE_ARRAY,
+        self::RULE_ALPHA,
+        self::RULE_ALPHA_DASH,
+        self::RULE_ALPHA_NUM,
+        self::RULE_IN,
         self::RULE_DATE,
         self::RULE_DATETIME,
         self::RULE_DATE_FORMAT,

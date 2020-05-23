@@ -75,7 +75,12 @@ class ConstraintResolverTest extends TestCase
         yield 'boolean' => [[new BooleanValue(), new Assert\NotNull()], [new Rule('boolean')]];
         yield 'integer' => [[new IntegerNumber(), new Assert\NotNull()], [new Rule('integer')]];
         yield 'float' => [[new FloatNumber(), new Assert\NotNull()], [new Rule('float')]];
+        yield 'array' => [[new Assert\Type('array'), new Assert\NotNull()], [new Rule('array')]];
         yield 'string' => [[new Assert\Type('string'), new Assert\NotNull()], [new Rule('string')]];
+        yield 'alpha' => [[new Assert\Regex(['pattern' => '/^[a-zA-Z]*$/']), new Assert\NotNull()], [new Rule('alpha')]];
+        yield 'alpha_dash' => [[new Assert\Regex(['pattern' => '/^[\w-]*$/']), new Assert\NotNull()], [new Rule('alpha_dash')]];
+        yield 'alpha_num' => [[new Assert\Regex(['pattern' => '/^[a-zA-Z0-9]*$/']), new Assert\NotNull()], [new Rule('alpha_num')]];
+        yield 'in' => [[new Assert\Choice(['a', 'b']), new Assert\NotNull()], [new Rule('in', ['a', 'b'])]];
         yield 'email' => [[new Assert\Email(), new Assert\NotNull()], [new Rule('email')]];
         yield 'url' => [[new Assert\Url(), new Assert\NotNull()], [new Rule('url')]];
         yield 'filled' => [[new Assert\NotBlank(), new Assert\NotNull()], [new Rule('filled')]];
