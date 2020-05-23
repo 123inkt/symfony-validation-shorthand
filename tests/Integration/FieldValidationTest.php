@@ -36,7 +36,7 @@ class FieldValidationTest extends TestCase
 
     /**
      * @param string|string[] $rules
-     * @param mixed $data
+     * @param mixed           $data
      * @dataProvider dataProviderRequiredFields
      * @throws InvalidRuleException
      */
@@ -54,7 +54,7 @@ class FieldValidationTest extends TestCase
 
     /**
      * @param string|string[] $rules
-     * @param mixed $data
+     * @param mixed           $data
      * @dataProvider dataProviderOptionalFields
      * @throws InvalidRuleException
      */
@@ -86,10 +86,27 @@ class FieldValidationTest extends TestCase
         yield "required + filled: false" => ['required|filled', '', false];
         yield "required + filled: false" => ['required|filled', null, false];
 
+        // field must be a type of alpha
+        yield "required + alpha: true" => ['required|alpha', 'unit', true];
+        yield "required + alpha: true" => ['required|alpha', 'unitTest', true];
+        yield "required + alpha: false" => ['required|alpha', 'unit test', false];
+        yield "required + alpha: false" => ['required|alpha', 'unit-test', false];
+        yield "required + alpha: false" => ['required|alpha', 'unit5', false];
+        yield "required + alpha_dash: true" => ['required|alpha_dash', 'unit-test_9', true];
+        yield "required + alpha_dash: false" => ['required|alpha_dash', 'unit test 9', false];
+        yield "required + alpha_num: true" => ['required|alpha_num', 'unitTest123', true];
+        yield "required + alpha_num: false" => ['required|alpha_num', 'unit-test_123', false];
+
         // field can be null or filled string, but not empty string
         yield "required + filled + nullable: true" => ['required|filled|nullable', 'unit test', true];
         yield "required + filled + nullable: true" => ['required|filled|nullable', null, true];
         yield "required + filled + nullable: false" => ['required|filled|nullable', '', false];
+
+        // field must be within a set
+        yield "required + in:a true" => ['required|in:a', 'a', true];
+        yield "required + in:a false" => ['required|in:a', 'b', false];
+        yield "required + in:a,b true" => ['required|in:a,b', 'b', true];
+        yield "required + in: false" => ['required|in:', 'b', false];
 
         // field should have min/max string length
         yield "required + string min length: true" => ['required|min:3', 'unit', true];
@@ -104,6 +121,12 @@ class FieldValidationTest extends TestCase
         yield "required + string max with int: false" => ['required|min:10', 12345, false];
         yield "required + string max with int: true" => ['required|max:1', 9, true];
         yield "required + string type with int: true" => ['required|string', 9, false];
+
+        // field should be array
+        yield "required + array: true" => ['required|array', [], true];
+        yield "required + array: false" => ['required|array', 5, false];
+        yield "required + array: false" => ['required|array', null, false];
+        yield "required + array nullable: true" => ['required|array|nullable', null, true];
 
         // field should be integer or integer castable
         yield "required + int: true" => ['required|int', 3, true];
