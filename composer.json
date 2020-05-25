@@ -31,10 +31,12 @@
         "phpstan/extension-installer": "1.0.*"
     },
     "scripts": {
-        "phpcs": "phpcs src tests",
-        "phpcbf": "phpcbf src tests",
-        "phpmd": "phpmd src,tests text phpmd.xml.dist --suffixes=php",
-        "phpstan": "phpstan analyse",
+        "check": "composer run check:phpstan && composer run check:phpmd && composer run check:phpcs",
+        "check:phpstan": "phpstan analyse",
+        "check:phpmd": "phpmd src,tests text phpmd.xml.dist --suffixes=php",
+        "check:phpcs": "phpcs src tests",
+        "fix": "@fix:phpcbf",
+        "fix:phpcbf": "phpcbf src tests",
         "test": "phpunit",
         "test:integration": "phpunit --testsuite integration",
         "test:unit": "phpunit --testsuite unit"

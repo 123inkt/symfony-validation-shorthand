@@ -3,12 +3,10 @@
     <description>Coding standard</description>
     <arg name="report" value="summary"/>
     <arg value="sp"/>
-
     <rule ref="PSR2"/>
     <rule ref="PSR12">
         <exclude name="PSR12.Files.FileHeader" />
     </rule>
-
     <rule ref="Generic.PHP.RequireStrictTypes"/>
     <rule ref="Generic.Files.LineLength">
         <properties>

@@ -1,4 +1,4 @@
-name: Run tests
+name: Run checks
 
 on:
   push:
@@ -7,67 +7,35 @@ on:
     branches: [ master ]
 
 jobs:
-  code-sniffer:
-    name: PHP code sniffer
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 7.1
-          coverage: none
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest --no-interaction --no-ansi
-      - name: Code sniffer
-        run: composer phpcs
-
-  mess-detector:
-    name: PHP mess detector
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 7.1
-          coverage: none
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest --no-interaction --no-ansi
-      - name: mess detector
-        run: composer phpmd
-
-  php-stan:
-    name: PHP stan
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 7.1
-          coverage: none
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest --no-interaction --no-ansi
-      - name: php stan
-        run: composer phpstan -- --no-progress
-
-  tests:
-    name: PHP ${{ matrix.php-versions }} Test (${{ matrix.requirements }})
+  test:
+    name: PHP ${{ matrix.php-versions }} Test ${{ matrix.composer-flags }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
         php-versions: ['7.1', '7.2', '7.3']
-        requirements: ['', '--prefer-lowest --prefer-stable']
+        composer-flags: ['', '--prefer-lowest']
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php-versions }}
-    - name: Validate composer.json and composer.lock
-      run: composer validate
-    - name: Install dependencies
-      run: composer update --prefer-dist ${{ matrix.requirements }} --no-progress --no-suggest --no-progress --no-interaction --no-ansi
-    - name: Run test suite
-      run: composer test
+      - uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+      - name: Install dependencies
+        run: composer update --prefer-dist --no-progress --no-suggest --prefer-stable ${{ matrix.composer-flags }}
+      - name: Run test suite
+        run: composer test
+  quality:
+    name: Quality checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.1
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+      - name: run checks
+        run: composer check
