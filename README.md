@@ -8,7 +8,7 @@ A validation shorthand component for Symfony, similar to the syntax in the "illu
 ## Installation
 Include the library as dependency in your own project via: 
 ```
-composer require "DigitalRevolution/SymfonyValidationShorthand"
+composer require "digitalrevolution/symfony-validation-shorthand"
 ```
 
 ## Usage
