@@ -25,7 +25,15 @@ jobs:
       - name: Install dependencies
         run: composer update --prefer-dist --no-progress --no-suggest --prefer-stable ${{ matrix.composer-flags }}
       - name: Run test suite
-        run: composer test
+        run: composer test -- --coverage-clover=coverage.xml
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          file: ./coverage.xml
+          flags: unittests
+          env_vars: PHP${{ matrix.php-versions }}
+          name: codecov-validation-shorthand
+          fail_ci_if_error: true
   quality:
     name: Quality checks
     runs-on: ubuntu-latest
