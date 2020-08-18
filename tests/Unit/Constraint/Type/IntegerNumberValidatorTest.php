@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Validation;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\IntegerNumberValidator
@@ -72,11 +71,13 @@ class IntegerNumberValidatorTest extends TestCase
             '-1'        => ['-1', 0],
             'int 1'     => [1, 0],
             'int 0'     => [0, 0],
+            'float 5.0' => [5.0, 0],
             // failures
             ''          => ['', 1],
             'a'         => ['a', 1],
             '0 prefix'  => ['01', 1],
             'true'      => ['true', 1],
+            'float 5.5' => [5.5, 1],
             'bool true' => [true, 1],
             '-'         => ['-', 1],
             'max int'   => [PHP_INT_MAX . '2', 1]

@@ -22,6 +22,11 @@ class IntegerNumberValidator extends ConstraintValidator
             return;
         }
 
+        // if value is float, force to string. This will cast 5.0 => '5', and 5.5 => '5.5'
+        if (is_float($value)) {
+            $value = (string)$value;
+        }
+
         // value should be either int or string
         if (is_string($value) === false) {
             $this->context->buildViolation($constraint->message)
