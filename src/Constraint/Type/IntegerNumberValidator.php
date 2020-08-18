@@ -22,8 +22,8 @@ class IntegerNumberValidator extends ConstraintValidator
             return;
         }
 
-        // value should be either int or string
-        if (is_string($value) === false) {
+        // value should be either float or string
+        if (is_string($value) === false && is_float($value) === false) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value }}', $this->formatValue($value))
                 ->setCode($constraint::INVALID_VALUE_TYPE)
@@ -32,7 +32,7 @@ class IntegerNumberValidator extends ConstraintValidator
         }
 
         // value can't be cast to int
-        if (((string)(int)$value) !== $value) {
+        if (((string)(int)$value) !== (string)$value) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value }}', $this->formatValue($value))
                 ->setCode($constraint::INVALID_NUMBER_ERROR)
