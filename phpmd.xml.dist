@@ -7,8 +7,11 @@
     <description>
         The Code Size Ruleset contains a collection of rules that find code size related problems.
     </description>
+
     <rule ref="rulesets/codesize.xml"/>
+
     <rule ref="rulesets/controversial.xml"/>
+
     <rule ref="rulesets/design.xml">
         <exclude name="CouplingBetweenObjects" />
     </rule>
@@ -17,6 +20,15 @@
             <property name="maximum" value="21"/>
         </properties>
     </rule>
+
     <rule ref="rulesets/unusedcode.xml"/>
-    <rule ref="rulesets/naming.xml"/>
+
+    <rule ref="rulesets/naming.xml">
+        <exclude name="ShortVariable"/>
+    </rule>
+    <rule ref="rulesets/naming.xml/ShortVariable">
+        <properties>
+            <property name="exceptions" value="e"/>
+        </properties>
+    </rule>
 </ruleset>
