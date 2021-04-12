@@ -14,8 +14,8 @@ class InValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
-        if ($constraint instanceof In === false) {
-            throw new UnexpectedTypeException($constraint, In::class);
+        if ($constraint instanceof InConstraint === false) {
+            throw new UnexpectedTypeException($constraint, InConstraint::class);
         }
 
         if ($value === null) {

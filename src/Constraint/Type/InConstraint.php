@@ -5,7 +5,7 @@ namespace DigitalRevolution\SymfonyValidationShorthand\Constraint\Type;
 
 use Symfony\Component\Validator\Constraint;
 
-class In extends Constraint
+class InConstraint extends Constraint
 {
     public const NOT_IN_ERROR = '790265f3-05de-47d1-ae0a-1332f5299daf';
 

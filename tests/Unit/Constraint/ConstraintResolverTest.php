@@ -6,6 +6,7 @@ namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Constraint;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintResolver;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValue;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\FloatNumber;
+use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\InConstraint;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\IntegerNumber;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\InvalidRuleException;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\Rule;
@@ -80,7 +81,7 @@ class ConstraintResolverTest extends TestCase
         yield 'alpha' => [[new Assert\Regex(['pattern' => '/^[a-zA-Z]*$/']), new Assert\NotNull()], [new Rule('alpha')]];
         yield 'alpha_dash' => [[new Assert\Regex(['pattern' => '/^[\w-]*$/']), new Assert\NotNull()], [new Rule('alpha_dash')]];
         yield 'alpha_num' => [[new Assert\Regex(['pattern' => '/^[a-zA-Z0-9]*$/']), new Assert\NotNull()], [new Rule('alpha_num')]];
-        yield 'in' => [[new Assert\Choice(['a', 'b']), new Assert\NotNull()], [new Rule('in', ['a', 'b'])]];
+        yield 'in' => [[new InConstraint(['values' => ['a', 'b']]), new Assert\NotNull()], [new Rule('in', ['a', 'b'])]];
         yield 'email' => [[new Assert\Email(), new Assert\NotNull()], [new Rule('email')]];
         yield 'url' => [[new Assert\Url(), new Assert\NotNull()], [new Rule('url')]];
         yield 'filled' => [[new Assert\NotBlank(), new Assert\NotNull()], [new Rule('filled')]];
