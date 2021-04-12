@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Constraint\Type;
 
-use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValue;
-use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValueValidator;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\IntegerNumber;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\IntegerNumberValidator;
 use DigitalRevolution\SymfonyValidationShorthand\Tests\Mock\MockFactory;
@@ -22,10 +20,10 @@ class IntegerNumberValidatorTest extends TestCase
     /** @var ExecutionContext */
     private $context;
 
-    /** @var BooleanValueValidator */
+    /** @var IntegerNumberValidator */
     private $validator;
 
-    /** @var BooleanValue */
+    /** @var IntegerNumber */
     private $constraint;
 
     protected function setUp(): void

@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Constraint\Type;
 
-use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValueValidator;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\FloatNumber;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\FloatNumberValidator;
 use DigitalRevolution\SymfonyValidationShorthand\Tests\Mock\MockFactory;
@@ -12,7 +11,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Validation;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\FloatNumberValidator
@@ -22,10 +20,10 @@ class FloatNumberValidatorTest extends TestCase
     /** @var ExecutionContext */
     private $context;
 
-    /** @var BooleanValueValidator */
+    /** @var FloatNumberValidator */
     private $validator;
 
-    /** @var Boolean */
+    /** @var FloatNumber */
     private $constraint;
 
     protected function setUp(): void
