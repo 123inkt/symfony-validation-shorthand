@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
-class InValidator extends ConstraintValidator
+class InConstraintValidator extends ConstraintValidator
 {
     /**
      * @inheritDoc
