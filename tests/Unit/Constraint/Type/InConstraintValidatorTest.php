@@ -57,6 +57,25 @@ class InConstraintValidatorTest extends TestCase
     /**
      * @covers ::validate
      */
+    public function testValidateShouldPassOnAllowedValue(): void
+    {
+        $this->validator->validate('foobar', $this->constraint);
+        static::assertCount(0, $this->context->getViolations());
+    }
+
+    /**
+     * @covers ::validate
+     */
+    public function testValidateShouldPassOnNumericValue(): void
+    {
+        $constraint = new InConstraint(['values' => ['2', '3', '4', '5']]);
+        $this->validator->validate(5, $constraint);
+        static::assertCount(0, $this->context->getViolations());
+    }
+
+    /**
+     * @covers ::validate
+     */
     public function testValidateShouldFailOnDisallowedValue(): void
     {
         $this->validator->validate('invalid', $this->constraint);
