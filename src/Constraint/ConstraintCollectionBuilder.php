@@ -18,7 +18,7 @@ class ConstraintCollectionBuilder
      * @return Constraint|Constraint[]
      * @throws InvalidRuleException
      */
-    public function build(ConstraintMap $constraintsMap)
+    public function build(ConstraintMap $constraintsMap, bool $allowExtraFields = false)
     {
         $constraintTreeMap = [];
         foreach ($constraintsMap as $key => $constraints) {
@@ -33,36 +33,38 @@ class ConstraintCollectionBuilder
             }
         }
 
-        return $this->createConstraintTree($constraintTreeMap);
+        return $this->createConstraintTree($constraintTreeMap, $allowExtraFields);
     }
 
     /**
      * @param array<string|int, ConstraintMapItem|array<ConstraintMapItem>> $constraintTreeMap
+     *
      * @return Constraint|Constraint[]
      * @throws InvalidRuleException
      */
-    private function createConstraintTree(array $constraintTreeMap)
+    private function createConstraintTree(array $constraintTreeMap, bool $allowExtraFields)
     {
         if (count($constraintTreeMap) === 1 && isset($constraintTreeMap['*'])) {
-            return $this->createAllConstraint($constraintTreeMap['*']);
+            return $this->createAllConstraint($constraintTreeMap['*'], $allowExtraFields);
         }
 
-        return $this->createCollectionConstraint($constraintTreeMap);
+        return $this->createCollectionConstraint($constraintTreeMap, $allowExtraFields);
     }
 
     /**
      * @param ConstraintMapItem|array<ConstraintMapItem> $node
+     *
      * @return Constraint|Constraint[]
      * @throws InvalidRuleException
      */
-    private function createAllConstraint($node)
+    private function createAllConstraint($node, bool $allowExtraFields)
     {
         $required = false;
         if ($node instanceof ConstraintMapItem) {
             $constraints = $node->getConstraints();
             $required    = $node->isRequired();
         } else {
-            $constraints = $this->createConstraintTree($node);
+            $constraints = $this->createConstraintTree($node, $allowExtraFields);
         }
 
         if ($required) {
@@ -74,9 +76,10 @@ class ConstraintCollectionBuilder
 
     /**
      * @param array<string|int, ConstraintMapItem|array<ConstraintMapItem>> $constraintTreeMap
+     *
      * @throws InvalidRuleException
      */
-    private function createCollectionConstraint(array $constraintTreeMap): Assert\Collection
+    private function createCollectionConstraint(array $constraintTreeMap, bool $allowExtraFields): Assert\Collection
     {
         $constraintMap = [];
 
@@ -91,9 +94,9 @@ class ConstraintCollectionBuilder
 
             if ($node instanceof ConstraintMapItem === false) {
                 // recursively resolve
-                $constraint = $this->createConstraintTree($node);
+                $constraint = $this->createConstraintTree($node, $allowExtraFields);
             } else {
-                // leaf node, check for required. It should over rule any optional indicators in the key
+                // leaf node, check for required. It should overrule any optional indicators in the key
                 $constraint = $node->getConstraints();
                 $optional   = $node->isRequired() === false;
             }
@@ -106,6 +109,11 @@ class ConstraintCollectionBuilder
             $constraintMap[$key] = $constraint;
         }
 
-        return new Assert\Collection($constraintMap);
+        return new Assert\Collection(
+            [
+                'fields'           => $constraintMap,
+                'allowExtraFields' => $allowExtraFields
+            ]
+        );
     }
 }

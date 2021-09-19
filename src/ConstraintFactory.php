@@ -34,7 +34,7 @@ class ConstraintFactory
      * @return Constraint|Constraint[]
      * @throws InvalidRuleException
      */
-    public function fromRuleDefinitions($ruleDefinitions)
+    public function fromRuleDefinitions($ruleDefinitions, bool $allowExtraFields = false)
     {
         if ($ruleDefinitions instanceof Constraint) {
             return $ruleDefinitions;
@@ -54,6 +54,6 @@ class ConstraintFactory
         }
 
         // transform ConstraintMap to ConstraintCollection
-        return $this->collectionBuilder->build($constraintMap);
+        return $this->collectionBuilder->build($constraintMap, $allowExtraFields);
     }
 }

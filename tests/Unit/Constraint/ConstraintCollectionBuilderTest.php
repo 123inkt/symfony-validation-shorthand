@@ -53,6 +53,21 @@ class ConstraintCollectionBuilderTest extends TestCase
      * @covers ::build
      * @throws Exception
      */
+    public function testBuildSingleCollectionAllowExtraFieldsConstraint(): void
+    {
+        $constraint    = new NotNull();
+        $constraintMap = new ConstraintMap();
+        $constraintMap->set('a', new ConstraintMapItem([$constraint], true));
+
+        $result = $this->builder->build($constraintMap, true);
+        $expect = new Collection(['fields' => ['a' => new NotNull()], 'allowExtraFields' => true]);
+        static::assertEquals($expect, $result);
+    }
+
+    /**
+     * @covers ::build
+     * @throws Exception
+     */
     public function testBuildSingleNestedConstraint(): void
     {
         $constraint    = new NotNull();
@@ -77,12 +92,7 @@ class ConstraintCollectionBuilderTest extends TestCase
         $constraintMap->set('a.b', new ConstraintMapItem([$constraintB], true));
 
         $result = $this->builder->build($constraintMap);
-        $expect = new Collection([
-            'a' => new Collection([
-                'a' => new NotNull(),
-                'b' => new Blank()
-            ])
-        ]);
+        $expect = new Collection(['a' => new Collection(['a' => new NotNull(), 'b' => new Blank()])]);
         static::assertEquals($expect, $result);
     }
 
@@ -97,20 +107,14 @@ class ConstraintCollectionBuilderTest extends TestCase
         $constraintMap->set('a?.b', new ConstraintMapItem([$constraint], true));
 
         $result = $this->builder->build($constraintMap);
-        $expect = new Collection([
-            'a' => new Optional([
-                new Collection([
-                    'b' => new NotNull()
-                ])
-            ])
-        ]);
+        $expect = new Collection(['a' => new Optional([new Collection(['b' => new NotNull()])])]);
         static::assertEquals($expect, $result);
     }
 
     /**
      * If the constraint is set to required but the path is marked as optional, then always assume Required
-     *
      * @covers ::build
+     *
      * @throws Exception
      */
     public function testBuildOptionalConstraintShouldNotOverwriteRequired(): void
@@ -120,11 +124,7 @@ class ConstraintCollectionBuilderTest extends TestCase
         $constraintMap->set('a.b?', new ConstraintMapItem([$constraint], true));
 
         $result = $this->builder->build($constraintMap);
-        $expect = new Collection([
-            'a' => new Collection([
-                'b' => new Required(new NotNull())
-            ])
-        ]);
+        $expect = new Collection(['a' => new Collection(['b' => new Required(new NotNull())])]);
         static::assertEquals($expect, $result);
     }
 
@@ -173,9 +173,7 @@ class ConstraintCollectionBuilderTest extends TestCase
 
         $result = $this->builder->build($constraintMap);
         $expect =
-            new All([
-                new Collection(['fields' => ['name' => $constraint]])
-            ]);
+            new All([new Collection(['fields' => ['name' => $constraint]])]);
 
         static::assertEquals($expect, $result);
     }
