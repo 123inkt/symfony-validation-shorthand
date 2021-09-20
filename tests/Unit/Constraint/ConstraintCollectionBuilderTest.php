@@ -22,6 +22,7 @@ use Symfony\Component\Validator\Constraints\Required;
  * @covers ::createConstraintTree
  * @covers ::createAllConstraint
  * @covers ::createCollectionConstraint
+ * @covers ::getNodeConstraint
  */
 class ConstraintCollectionBuilderTest extends TestCase
 {
