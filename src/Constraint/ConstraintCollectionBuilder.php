@@ -14,6 +14,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class ConstraintCollectionBuilder
 {
+    /** @var bool */
+    private $allowExtraFields = false;
+
+    public function setAllowExtraFields(bool $allowExtraFields): self
+    {
+        $this->allowExtraFields = $allowExtraFields;
+
+        return $this;
+    }
+
     /**
      * @return Constraint|Constraint[]
      * @throws InvalidRuleException
@@ -38,6 +48,7 @@ class ConstraintCollectionBuilder
 
     /**
      * @param array<string|int, ConstraintMapItem|array<ConstraintMapItem>> $constraintTreeMap
+     *
      * @return Constraint|Constraint[]
      * @throws InvalidRuleException
      */
@@ -52,6 +63,7 @@ class ConstraintCollectionBuilder
 
     /**
      * @param ConstraintMapItem|array<ConstraintMapItem> $node
+     *
      * @return Constraint|Constraint[]
      * @throws InvalidRuleException
      */
@@ -74,6 +86,7 @@ class ConstraintCollectionBuilder
 
     /**
      * @param array<string|int, ConstraintMapItem|array<ConstraintMapItem>> $constraintTreeMap
+     *
      * @throws InvalidRuleException
      */
     private function createCollectionConstraint(array $constraintTreeMap): Assert\Collection
@@ -89,23 +102,34 @@ class ConstraintCollectionBuilder
                 $optional = true;
             }
 
-            if ($node instanceof ConstraintMapItem === false) {
-                // recursively resolve
-                $constraint = $this->createConstraintTree($node);
-            } else {
-                // leaf node, check for required. It should over rule any optional indicators in the key
-                $constraint = $node->getConstraints();
-                $optional   = $node->isRequired() === false;
-            }
-
-            // optional key
-            if ($optional && $constraint instanceof Assert\Required === false && $constraint instanceof Assert\Optional === false) {
-                $constraint = new Assert\Optional($constraint);
-            }
-
-            $constraintMap[$key] = $constraint;
+            $constraintMap[$key] = $this->getNodeConstraint($node, $optional);
         }
 
-        return new Assert\Collection($constraintMap);
+        return new Assert\Collection(['fields' => $constraintMap, 'allowExtraFields' => $this->allowExtraFields]);
+    }
+
+    /**
+     * @param ConstraintMapItem|array<ConstraintMapItem> $node
+     *
+     * @return Constraint|Constraint[]
+     * @throws InvalidRuleException
+     */
+    private function getNodeConstraint($node, bool $optional)
+    {
+        if ($node instanceof ConstraintMapItem === false) {
+            // recursively resolve
+            $constraint = $this->createConstraintTree($node);
+        } else {
+            // leaf node, check for required. It should overrule any optional indicators in the key
+            $constraint = $node->getConstraints();
+            $optional   = $node->isRequired() === false;
+        }
+
+        // optional key
+        if ($optional && $constraint instanceof Assert\Required === false && $constraint instanceof Assert\Optional === false) {
+            return new Assert\Optional($constraint);
+        }
+
+        return $constraint;
     }
 }

@@ -20,7 +20,7 @@ class ConstraintFactoryTest extends TestCase
      */
     public function testFromRuleDefinitionsConstraintOnly(): void
     {
-        $factory    = new ConstraintFactory();
+        $factory = new ConstraintFactory();
         $constraint = new Assert\NotBlank();
         static::assertSame($constraint, $factory->fromRuleDefinitions($constraint));
     }
@@ -32,12 +32,20 @@ class ConstraintFactoryTest extends TestCase
     public function testFromRuleDefinitionsWithRule(): void
     {
         $factory = new ConstraintFactory();
-        $expect  = new Assert\Collection([
-            'email' => new Assert\Required([
-                new Assert\Email(),
-                new Assert\NotNull()
-            ])
-        ]);
-        static::assertEquals($expect, $factory->fromRuleDefinitions(['email' => 'required|email']));
+        $expect  = new Assert\Collection(['email' => new Assert\Required([new Assert\Email(), new Assert\NotNull()])]);
+        static::assertEquals($expect, $factory->fromRuleDefinitions(['email' => 'required|email'], false));
+    }
+
+    /**
+     * @covers ::fromRuleDefinitions
+     * @throws Exception
+     */
+    public function testFromRuleDefinitionsWithRuleAllowExtraFields(): void
+    {
+        $factory = new ConstraintFactory();
+        $expect  = new Assert\Collection(
+            ['fields' => ['email' => new Assert\Required([new Assert\Email(), new Assert\NotNull()])], 'allowExtraFields' => true]
+        );
+        static::assertEquals($expect, $factory->fromRuleDefinitions(['email' => 'required|email'], true));
     }
 }

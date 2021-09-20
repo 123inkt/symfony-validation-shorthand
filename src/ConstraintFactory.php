@@ -31,10 +31,13 @@ class ConstraintFactory
 
     /**
      * @param Constraint|array<string, string|Constraint|array<string|Constraint>> $ruleDefinitions
+     * @param bool                                                                 $allowExtraFields Allow for extra, unvalidated, fields to be sent
+     *                                                                                               to the constraint collection
+     *
      * @return Constraint|Constraint[]
      * @throws InvalidRuleException
      */
-    public function fromRuleDefinitions($ruleDefinitions)
+    public function fromRuleDefinitions($ruleDefinitions, bool $allowExtraFields = false)
     {
         if ($ruleDefinitions instanceof Constraint) {
             return $ruleDefinitions;
@@ -54,6 +57,6 @@ class ConstraintFactory
         }
 
         // transform ConstraintMap to ConstraintCollection
-        return $this->collectionBuilder->build($constraintMap);
+        return $this->collectionBuilder->setAllowExtraFields($allowExtraFields)->build($constraintMap);
     }
 }
