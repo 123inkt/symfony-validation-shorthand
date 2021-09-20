@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class ConstraintCollectionBuilder
 {
+    /** @var bool */
     private $allowExtraFields = false;
 
     public function setAllowExtraFields(bool $allowExtraFields): self

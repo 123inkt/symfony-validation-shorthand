@@ -31,6 +31,9 @@ class ConstraintFactory
 
     /**
      * @param Constraint|array<string, string|Constraint|array<string|Constraint>> $ruleDefinitions
+     * @param bool                                                                 $allowExtraFields Allow for extra, unvalidated, fields to be sent
+     *                                                                                               to the constraint collection
+     *
      * @return Constraint|Constraint[]
      * @throws InvalidRuleException
      */
