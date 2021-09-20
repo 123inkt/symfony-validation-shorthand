@@ -59,7 +59,7 @@ class ConstraintCollectionBuilderTest extends TestCase
         $constraintMap = new ConstraintMap();
         $constraintMap->set('a', new ConstraintMapItem([$constraint], true));
 
-        $result = $this->builder->build($constraintMap, true);
+        $result = $this->builder->setAllowExtraFields(true)->build($constraintMap);
         $expect = new Collection(['fields' => ['a' => new NotNull()], 'allowExtraFields' => true]);
         static::assertEquals($expect, $result);
     }

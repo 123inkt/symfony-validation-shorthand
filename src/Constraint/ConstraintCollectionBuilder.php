@@ -14,11 +14,20 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class ConstraintCollectionBuilder
 {
+    private $allowExtraFields = false;
+
+    public function setAllowExtraFields(bool $allowExtraFields): self
+    {
+        $this->allowExtraFields = $allowExtraFields;
+
+        return $this;
+    }
+
     /**
      * @return Constraint|Constraint[]
      * @throws InvalidRuleException
      */
-    public function build(ConstraintMap $constraintsMap, bool $allowExtraFields = false)
+    public function build(ConstraintMap $constraintsMap)
     {
         $constraintTreeMap = [];
         foreach ($constraintsMap as $key => $constraints) {
@@ -33,7 +42,7 @@ class ConstraintCollectionBuilder
             }
         }
 
-        return $this->createConstraintTree($constraintTreeMap, $allowExtraFields);
+        return $this->createConstraintTree($constraintTreeMap);
     }
 
     /**
@@ -42,13 +51,13 @@ class ConstraintCollectionBuilder
      * @return Constraint|Constraint[]
      * @throws InvalidRuleException
      */
-    private function createConstraintTree(array $constraintTreeMap, bool $allowExtraFields)
+    private function createConstraintTree(array $constraintTreeMap)
     {
         if (count($constraintTreeMap) === 1 && isset($constraintTreeMap['*'])) {
-            return $this->createAllConstraint($constraintTreeMap['*'], $allowExtraFields);
+            return $this->createAllConstraint($constraintTreeMap['*']);
         }
 
-        return $this->createCollectionConstraint($constraintTreeMap, $allowExtraFields);
+        return $this->createCollectionConstraint($constraintTreeMap);
     }
 
     /**
@@ -57,14 +66,14 @@ class ConstraintCollectionBuilder
      * @return Constraint|Constraint[]
      * @throws InvalidRuleException
      */
-    private function createAllConstraint($node, bool $allowExtraFields)
+    private function createAllConstraint($node)
     {
         $required = false;
         if ($node instanceof ConstraintMapItem) {
             $constraints = $node->getConstraints();
             $required    = $node->isRequired();
         } else {
-            $constraints = $this->createConstraintTree($node, $allowExtraFields);
+            $constraints = $this->createConstraintTree($node);
         }
 
         if ($required) {
@@ -79,7 +88,7 @@ class ConstraintCollectionBuilder
      *
      * @throws InvalidRuleException
      */
-    private function createCollectionConstraint(array $constraintTreeMap, bool $allowExtraFields): Assert\Collection
+    private function createCollectionConstraint(array $constraintTreeMap): Assert\Collection
     {
         $constraintMap = [];
 
@@ -94,7 +103,7 @@ class ConstraintCollectionBuilder
 
             if ($node instanceof ConstraintMapItem === false) {
                 // recursively resolve
-                $constraint = $this->createConstraintTree($node, $allowExtraFields);
+                $constraint = $this->createConstraintTree($node);
             } else {
                 // leaf node, check for required. It should overrule any optional indicators in the key
                 $constraint = $node->getConstraints();
@@ -112,7 +121,7 @@ class ConstraintCollectionBuilder
         return new Assert\Collection(
             [
                 'fields'           => $constraintMap,
-                'allowExtraFields' => $allowExtraFields
+                'allowExtraFields' => $this->allowExtraFields
             ]
         );
     }

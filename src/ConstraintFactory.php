@@ -54,6 +54,6 @@ class ConstraintFactory
         }
 
         // transform ConstraintMap to ConstraintCollection
-        return $this->collectionBuilder->build($constraintMap, $allowExtraFields);
+        return $this->collectionBuilder->setAllowExtraFields($allowExtraFields)->build($constraintMap);
     }
 }
