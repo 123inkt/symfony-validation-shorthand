@@ -15,15 +15,15 @@
         }
     },
     "require": {
-        "php": ">=7.1",
-        "symfony/validator": "^4.3 || 5.*",
+        "php": ">=7.4",
+        "symfony/validator": "5.*",
         "symfony/polyfill-php80": "^1.16"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
         "squizlabs/php_codesniffer": "^3.6",
         "phpmd/phpmd": "@stable",
-        "phpunit/phpunit": "7.5.* || 8.5.* || 9.5.*",
+        "phpunit/phpunit": "9.5.*",
         "phpstan/phpstan": "0.12.*",
         "phpstan/phpstan-phpunit": "0.12.*",
         "phpstan/phpstan-symfony": "0.12.*",
