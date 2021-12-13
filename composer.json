@@ -16,7 +16,7 @@
     },
     "require": {
         "php": ">=7.4",
-        "symfony/validator": "5.*",
+        "symfony/validator": "^5.0 || ^6.0",
         "symfony/polyfill-php80": "^1.16"
     },
     "require-dev": {
