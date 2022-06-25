@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class InConstraintValidator extends ConstraintValidator
 {
     /**
+     * @param mixed $value
      * @inheritDoc
      */
     public function validate($value, Constraint $constraint): void
@@ -18,7 +19,7 @@ class InConstraintValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, InConstraint::class);
         }
 
-        if ($value === null) {
+        if ($value === null || is_scalar($value) === false) {
             return;
         }
 

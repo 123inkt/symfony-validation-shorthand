@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class IntegerNumberValidator extends ConstraintValidator
 {
     /**
+     * @param mixed $value
      * @inheritDoc
      */
     public function validate($value, Constraint $constraint): void
