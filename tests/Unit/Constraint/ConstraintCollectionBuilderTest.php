@@ -52,6 +52,7 @@ class ConstraintCollectionBuilderTest extends TestCase
 
     /**
      * @covers ::build
+     * @covers ::setAllowExtraFields
      * @throws Exception
      */
     public function testBuildSingleCollectionAllowExtraFieldsConstraint(): void
