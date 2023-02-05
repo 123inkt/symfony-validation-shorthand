@@ -1,7 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Method DigitalRevolution\\\\SymfonyValidationShorthand\\\\Constraint\\\\Type\\\\InConstraint\\:\\:getRequiredOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: "#^Method DigitalRevolution\\\\SymfonyValidationShorthand\\\\Rule\\\\RuleParser\\:\\:parseParameters\\(\\) should return array\\<string\\> but returns array\\<int, string\\|null\\>\\.$#"
 			count: 1
-			path: src/Constraint/Type/InConstraint.php
-
+			path: src/Rule/RuleParser.php
