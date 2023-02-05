@@ -1,0 +1,7 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method DigitalRevolution\\\\SymfonyValidationShorthand\\\\Constraint\\\\Type\\\\InConstraint\\:\\:getRequiredOptions\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Constraint/Type/InConstraint.php
+
