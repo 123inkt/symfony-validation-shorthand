@@ -1,0 +1,6 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method DigitalRevolution\\\\SymfonyValidationShorthand\\\\Rule\\\\RuleParser\\:\\:parseParameters\\(\\) should return array\\<string\\> but returns array\\<int, string\\|null\\>\\.$#"
+			count: 1
+			path: src/Rule/RuleParser.php
