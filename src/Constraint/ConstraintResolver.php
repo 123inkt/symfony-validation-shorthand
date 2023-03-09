@@ -93,11 +93,11 @@ class ConstraintResolver
             case Rule::RULE_FILLED:
                 return new Assert\NotBlank(['allowNull' => $ruleList->hasRule(Rule::RULE_NULLABLE)]);
             case Rule::RULE_MIN:
-                return $this->resolveMinConstraint($rule, $ruleList->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT]));
+                return $this->resolveMinConstraint($rule, $ruleList);
             case Rule::RULE_MAX:
-                return $this->resolveMaxConstraint($rule, $ruleList->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT]));
+                return $this->resolveMaxConstraint($rule, $ruleList);
             case Rule::RULE_BETWEEN:
-                return $this->resolveBetweenConstraint($rule, $ruleList->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT]));
+                return $this->resolveBetweenConstraint($rule, $ruleList);
         }
 
         throw new InvalidRuleException(
@@ -108,33 +108,48 @@ class ConstraintResolver
     /**
      * @throws InvalidRuleException
      */
-    private function resolveMinConstraint(Rule $rule, bool $isNumeric): Constraint
+    private function resolveMinConstraint(Rule $rule, RuleList $ruleList): Constraint
     {
-        if ($isNumeric) {
+        if ($ruleList->hasRule([Rule::RULE_DATE, Rule::RULE_DATETIME, Rule::RULE_DATE_FORMAT])) {
+            return new Assert\GreaterThanOrEqual($rule->getParameter(0));
+        }
+
+        if ($ruleList->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT])) {
             return new Assert\GreaterThanOrEqual($rule->getIntParam(0));
         }
+
         return new Assert\Length(['min' => $rule->getIntParam(0)]);
     }
 
     /**
      * @throws InvalidRuleException
      */
-    private function resolveMaxConstraint(Rule $rule, bool $isNumeric): Constraint
+    private function resolveMaxConstraint(Rule $rule, RuleList $ruleList): Constraint
     {
-        if ($isNumeric) {
+        if ($ruleList->hasRule([Rule::RULE_DATE, Rule::RULE_DATETIME, Rule::RULE_DATE_FORMAT])) {
+            return new Assert\LessThanOrEqual($rule->getParameter(0));
+        }
+
+        if ($ruleList->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT])) {
             return new Assert\LessThanOrEqual($rule->getIntParam(0));
         }
+
         return new Assert\Length(['max' => $rule->getIntParam(0)]);
     }
 
     /**
      * @throws InvalidRuleException
      */
-    private function resolveBetweenConstraint(Rule $rule, bool $isNumeric): Constraint
+    private function resolveBetweenConstraint(Rule $rule, RuleList $ruleList): Constraint
     {
-        if ($isNumeric) {
+        if ($ruleList->hasRule([Rule::RULE_DATE, Rule::RULE_DATETIME, Rule::RULE_DATE_FORMAT])) {
+            return new Assert\Range(['min' => $rule->getParameter(0), 'max' => $rule->getParameter(1)]);
+        }
+
+        if ($ruleList->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT])) {
             return new Assert\Range(['min' => $rule->getIntParam(0), 'max' => $rule->getIntParam(1)]);
         }
+
         return new Assert\Length(['min' => $rule->getIntParam(0), 'max' => $rule->getIntParam(1)]);
     }
 }
