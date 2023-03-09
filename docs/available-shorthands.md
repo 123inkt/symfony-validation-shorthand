@@ -45,7 +45,7 @@ Example:
 
 ## boolean
 The value must be bool or castable to bool.
-~~- allowed `true` values: `1, '1', 'on', true`~~
+- allowed `true` values: `1, '1', 'on', true`
 - allowed `false` values: `0, '0', 'off', false`  
 
 Note: can also be written as `bool`
