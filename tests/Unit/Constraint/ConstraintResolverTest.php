@@ -105,6 +105,10 @@ class ConstraintResolverTest extends TestCase
             [new Assert\Date(), new Assert\LessThanOrEqual('now'), new Assert\NotNull()],
             [new Rule('date'), new Rule('max', ['now'])]
         ];
+        yield 'date between' => [
+            [new Assert\Date(), new Assert\Range(['min' => '-10 days', 'max' => '+10 days']), new Assert\NotNull()],
+            [new Rule('date'), new Rule('between', ['-10 days', '+10 days'])]
+        ];
 
         // min/max string or array lengths
         yield 'min length' => [[new Assert\Length(['min' => 10]), new Assert\NotNull()], [new Rule('min', ['10'])]];
