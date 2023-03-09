@@ -97,6 +97,18 @@ class ConstraintResolverTest extends TestCase
         yield 'date' => [[new Assert\Date(), new Assert\NotNull()], [new Rule('date')]];
         yield 'datetime' => [[new Assert\DateTime(), new Assert\NotNull()], [new Rule('datetime')]];
         yield 'date_format' => [[new Assert\DateTime(['format' => 'd/m/Y']), new Assert\NotNull()], [new Rule('date_format', ['d/m/Y'])]];
+        yield 'date min' => [
+            [new Assert\Date(), new Assert\GreaterThanOrEqual('now'), new Assert\NotNull()],
+            [new Rule('date'), new Rule('min', ['now'])]
+        ];
+        yield 'date max' => [
+            [new Assert\Date(), new Assert\LessThanOrEqual('now'), new Assert\NotNull()],
+            [new Rule('date'), new Rule('max', ['now'])]
+        ];
+        yield 'date between' => [
+            [new Assert\Date(), new Assert\Range(['min' => '-10 days', 'max' => '+10 days']), new Assert\NotNull()],
+            [new Rule('date'), new Rule('between', ['-10 days', '+10 days'])]
+        ];
 
         // min/max string or array lengths
         yield 'min length' => [[new Assert\Length(['min' => 10]), new Assert\NotNull()], [new Rule('min', ['10'])]];
