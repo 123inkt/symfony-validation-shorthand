@@ -32,16 +32,20 @@ The field under validation must be a PHP array.
 Arguments: `<digit>,<digit>`
     
 The constraint has different implementations based on the value type.
+- If the value has a date constraint (date, datetime or datetime_format), the `<digit>` arguments accepts now `DateTime`
+  allowed formats. The value must be between than the supplied `<digit>` arguments.
+  More information in the [Symfony Validation documentation](https://symfony.com/doc/current/reference/constraints/Range.html#date-ranges).
 - If the value has a numeric constraint (integer or float), it must lie between the two values.
 - Otherwise, the length of the value must be between the supplied values.
 
 Example:
 - string must have minimum length of 2 and maximum length of 6: `between:2,6`
 - integer must have a value between 2 and 6 or less: `integer|between:2,6`
+- date must be between `2010-01-01` and `2011-01-01`: `date|between:2010-01-01,2011-01-01`
 
 ## boolean
 The value must be bool or castable to bool.
-- allowed `true` values: `1, '1', 'on', true`
+~~- allowed `true` values: `1, '1', 'on', true`~~
 - allowed `false` values: `0, '0', 'off', false`  
 
 Note: can also be written as `bool`
@@ -87,23 +91,32 @@ Note: can also be written as `int`
 Argument: `<digit>`  
   
 The constraint has different implementations based on the value type.
+- If the value has a date constraint (date, datetime or datetime_format), the `<digit>` argument accepts now `DateTime` 
+  allowed formats and the value must be less or equal than the supplied argument. 
+  More information in the [Symfony Validation documentation](https://symfony.com/doc/current/reference/constraints/LessThanOrEqual.html#comparing-dates).  
 - If the value has a numeric constraint (integer or float), it must be smaller than the supplied value.
 - Otherwise, the length of the value must be smaller than the supplied value.
+
 
 Example:
  - string with maximum length of 6: `max:6`
  - integer which has to be 6 or less: `integer|max:6`
+ - limit the given date by: `date|max:+10 days`
 
 ## min
-Argument: `<digit>`  
+Argument: `<value>`  
 
 The constraint has different implementations based on the value type.
+- If the value has a date constraint (date, datetime or datetime_format), the `<digit>` argument accepts now `DateTime`
+  allowed formats and the value must be greater or equal than the supplied `<digit>` argument.
+  More information in the [Symfony Validation documentation](https://symfony.com/doc/current/reference/constraints/GreaterThan.html#comparing-dates).
 - If the value has a numeric constraint (integer or float), it must be bigger than the supplied value.
 - Otherwise, the length of the value must be bigger than the supplied value.
 
 Example:
 - string with minimum length of 6: `min:6`
 - integer which has to be 6 or higher: `integer|min:6`
+- limit the given date by: `date|min:now`
 
 ## nullable
 The value can be `null`.
