@@ -30,16 +30,15 @@ class ConstraintFactory
     }
 
     /**
-     * @param Constraint|array<string, string|Constraint|array<string|Constraint>> $ruleDefinitions
-     * @param bool                                                                 $allowExtraFields Allow for extra, unvalidated, fields to be sent
-     *                                                                                               to the constraint collection
+     * @param Constraint|array<string|Constraint|array<string|Constraint>> $ruleDefinitions
+     * @param bool                                                         $allowExtraFields Allow for extra, unvalidated, fields to be
      *
      * @return Constraint|Constraint[]
      * @throws InvalidRuleException
      */
     public function fromRuleDefinitions($ruleDefinitions, bool $allowExtraFields = false)
     {
-        if ($ruleDefinitions instanceof Constraint) {
+        if ($ruleDefinitions instanceof Constraint || self::isConstraintList($ruleDefinitions)) {
             return $ruleDefinitions;
         }
 
@@ -58,5 +57,23 @@ class ConstraintFactory
 
         // transform ConstraintMap to ConstraintCollection
         return $this->collectionBuilder->setAllowExtraFields($allowExtraFields)->build($constraintMap);
+    }
+
+    /**
+     * Check if `definition` is of type `array<int, Constraint>`
+     *
+     * @param array<string|Constraint|array<string|Constraint>> $ruleDefinitions
+     *
+     * @phpstan-assert-if-true Constraint[]                     $ruleDefinitions
+     */
+    private static function isConstraintList(array $ruleDefinitions): bool
+    {
+        foreach ($ruleDefinitions as $key => $definition) {
+            if (is_int($key) === false || $definition instanceof Constraint === false) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

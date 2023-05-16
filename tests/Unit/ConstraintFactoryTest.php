@@ -29,6 +29,18 @@ class ConstraintFactoryTest extends TestCase
      * @covers ::fromRuleDefinitions
      * @throws Exception
      */
+    public function testFromRuleDefinitionsConstraintListOnly(): void
+    {
+        $factory = new ConstraintFactory();
+        $constraintA = new Assert\NotBlank();
+        $constraintB = new Assert\NotNull();
+        static::assertSame([$constraintA, $constraintB], $factory->fromRuleDefinitions([$constraintA, $constraintB]));
+    }
+
+    /**
+     * @covers ::fromRuleDefinitions
+     * @throws Exception
+     */
     public function testFromRuleDefinitionsWithRule(): void
     {
         $factory = new ConstraintFactory();
