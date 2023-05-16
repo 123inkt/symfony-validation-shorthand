@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\ConstraintFactory
  * @covers ::__construct
+ * @covers ::isConstraintList
  */
 class ConstraintFactoryTest extends TestCase
 {
