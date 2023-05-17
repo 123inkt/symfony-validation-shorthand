@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\ConstraintFactory
  * @covers ::__construct
+ * @covers ::isConstraintList
  */
 class ConstraintFactoryTest extends TestCase
 {
@@ -23,6 +24,18 @@ class ConstraintFactoryTest extends TestCase
         $factory = new ConstraintFactory();
         $constraint = new Assert\NotBlank();
         static::assertSame($constraint, $factory->fromRuleDefinitions($constraint));
+    }
+
+    /**
+     * @covers ::fromRuleDefinitions
+     * @throws Exception
+     */
+    public function testFromRuleDefinitionsConstraintListOnly(): void
+    {
+        $factory = new ConstraintFactory();
+        $constraintA = new Assert\NotBlank();
+        $constraintB = new Assert\NotNull();
+        static::assertSame([$constraintA, $constraintB], $factory->fromRuleDefinitions([$constraintA, $constraintB]));
     }
 
     /**
