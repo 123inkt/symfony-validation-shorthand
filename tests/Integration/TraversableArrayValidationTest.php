@@ -9,7 +9,7 @@ use Exception;
 /**
  * @coversNothing
  */
-class TraversableArrayValidationTest extends IntegrationTest
+class TraversableArrayValidationTest extends AbstractIntegrationTestCase
 {
     /**
      * @throws Exception

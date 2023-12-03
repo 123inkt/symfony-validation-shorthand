@@ -21,12 +21,11 @@
         }
     },
     "require": {
-        "php": ">=7.4",
-        "symfony/validator": "^5.0 || ^6.0",
-        "symfony/polyfill-php80": "^1.16"
+        "php": ">=8.1",
+        "symfony/validator": "^6.2||^7.0"
     },
     "require-dev": {
-        "digitalrevolution/phpunit-file-coverage-inspection": "^v1.0",
+        "digitalrevolution/phpunit-file-coverage-inspection": "^v2.0",
         "roave/security-advisories": "dev-latest",
         "squizlabs/php_codesniffer": "^3.6",
         "phpmd/phpmd": "@stable",

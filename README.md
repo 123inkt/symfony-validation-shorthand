@@ -1,6 +1,6 @@
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF)](https://php.net/)
-[![Minimum Symfony Version](https://img.shields.io/badge/symfony-%3E%3D%205.0-brightgreen)](https://symfony.com/doc/current/validation.html)
-![Run tests](https://github.com/123inkt/symfony-validation-shorthand/workflows/Run%20tests/badge.svg)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.1-8892BF)](https://php.net/)
+[![Minimum Symfony Version](https://img.shields.io/badge/symfony-%3E%3D%206.2-brightgreen)](https://symfony.com/doc/current/validation.html)
+![Run tests](https://github.com/123inkt/symfony-validation-shorthand/actions/workflows/test.yml/badge.svg)
 
 # Symfony Validation Shorthand
 A validation shorthand component for Symfony, similar to the syntax in the "illuminate/validator" package for Laravel.
