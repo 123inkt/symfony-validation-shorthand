@@ -29,6 +29,12 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           coverage: none
 
+      - name: Allow symfony flex
+        run: composer global config --no-interaction allow-plugins.symfony/flex true
+
+      - name: Require symfony flex
+        run: composer global require symfony/flex
+
       - name: Validate composer.json and composer.lock
         run: composer validate
 
@@ -47,7 +53,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: 8.3
           coverage: pcov
 
       - name: Install dependencies
