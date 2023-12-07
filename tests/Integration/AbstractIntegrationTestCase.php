@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-abstract class IntegrationTest extends TestCase
+abstract class AbstractIntegrationTestCase extends TestCase
 {
     /** @var ConstraintFactory */
     protected $constraintFactory;

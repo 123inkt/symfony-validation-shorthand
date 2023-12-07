@@ -9,7 +9,7 @@ use Exception;
 /**
  * @coversNothing
  */
-class DataArrayValidationTest extends IntegrationTest
+class DataArrayValidationTest extends AbstractIntegrationTestCase
 {
     /**
      * @throws Exception

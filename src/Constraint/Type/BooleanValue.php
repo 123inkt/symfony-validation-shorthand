@@ -9,11 +9,9 @@ class BooleanValue extends Constraint
 {
     public const INVALID_BOOLEAN_ERROR = '83f4a7ef-a109-469e-941a-7fa757c73e22';
 
-    /** @var mixed */
-    protected static $errorNames = [
+    protected const ERROR_NAMES = [
         self::INVALID_BOOLEAN_ERROR => 'INVALID_BOOLEAN_ERROR',
     ];
 
-    /** @var string */
-    public $message = '{{ value }} is not a valid boolean.';
+    public string $message = '{{ value }} is not a valid boolean.';
 }
