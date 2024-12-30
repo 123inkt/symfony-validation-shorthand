@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraint;
 
 class BooleanValue extends Constraint
 {
+    /** @var string */
     public const INVALID_BOOLEAN_ERROR = '83f4a7ef-a109-469e-941a-7fa757c73e22';
 
     protected const ERROR_NAMES = [
