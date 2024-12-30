@@ -55,7 +55,6 @@ class ConstraintResolver
 
     /**
      * @throws InvalidRuleException
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     private function resolveConstraint(RuleList $ruleList, Rule $rule): Constraint
     {

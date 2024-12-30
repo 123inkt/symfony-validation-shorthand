@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraint;
 
 class InConstraint extends Constraint
 {
+    /** @var string */
     public const NOT_IN_ERROR = '790265f3-05de-47d1-ae0a-1332f5299daf';
 
     protected const ERROR_NAMES = [
