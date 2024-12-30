@@ -7,12 +7,6 @@ parameters:
 			path: src/Constraint/ConstraintCollectionBuilder.php
 
 		-
-			message: '#^Parameter \#1 \$constraints of class Symfony\\Component\\Validator\\Constraints\\All constructor expects array\<mixed\>\|null, array\<Symfony\\Component\\Validator\\Constraint\>\|Symfony\\Component\\Validator\\Constraint given\.$#'
-			identifier: argument.type
-			count: 2
-			path: src/Constraint/ConstraintCollectionBuilder.php
-
-		-
 			message: '#^Method DigitalRevolution\\SymfonyValidationShorthand\\Rule\\RuleParser\:\:parseParameters\(\) should return array\<string\> but returns list\<string\|null\>\.$#'
 			identifier: return.type
 			count: 1
