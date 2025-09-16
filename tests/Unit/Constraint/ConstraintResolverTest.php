@@ -72,22 +72,22 @@ class ConstraintResolverTest extends TestCase
     public function dataProvider(): Generator
     {
         yield 'constraint' => [[new Assert\NotBlank()], [new Assert\NotBlank()]];
-        yield 'rule + constraint' => [[new Assert\NotBlank(), new Assert\NotNull()],[new Rule('required'), new Assert\NotBlank()]];
+        yield 'rule + constraint' => [[new Assert\NotBlank(), new Assert\NotNull()], [new Rule('required'), new Assert\NotBlank()]];
         yield 'boolean' => [[new BooleanValue(), new Assert\NotNull()], [new Rule('boolean')]];
         yield 'integer' => [[new IntegerNumber(), new Assert\NotNull()], [new Rule('integer')]];
         yield 'float' => [[new FloatNumber(), new Assert\NotNull()], [new Rule('float')]];
         yield 'array' => [[new Assert\Type('array'), new Assert\NotNull()], [new Rule('array')]];
         yield 'string' => [[new Assert\Type('string'), new Assert\NotNull()], [new Rule('string')]];
-        yield 'alpha' => [[new Assert\Regex(['pattern' => '/^[a-zA-Z]*$/']), new Assert\NotNull()], [new Rule('alpha')]];
-        yield 'alpha_dash' => [[new Assert\Regex(['pattern' => '/^[\w-]*$/']), new Assert\NotNull()], [new Rule('alpha_dash')]];
-        yield 'alpha_num' => [[new Assert\Regex(['pattern' => '/^[a-zA-Z0-9]*$/']), new Assert\NotNull()], [new Rule('alpha_num')]];
+        yield 'alpha' => [[new Assert\Regex('/^[a-zA-Z]*$/'), new Assert\NotNull()], [new Rule('alpha')]];
+        yield 'alpha_dash' => [[new Assert\Regex('/^[\w-]*$/'), new Assert\NotNull()], [new Rule('alpha_dash')]];
+        yield 'alpha_num' => [[new Assert\Regex('/^[a-zA-Z0-9]*$/'), new Assert\NotNull()], [new Rule('alpha_num')]];
         yield 'in' => [[new InConstraint(['values' => ['a', 'b']]), new Assert\NotNull()], [new Rule('in', ['a', 'b'])]];
         yield 'email' => [[new Assert\Email(), new Assert\NotNull()], [new Rule('email')]];
         yield 'url' => [[new Assert\Url(), new Assert\NotNull()], [new Rule('url')]];
         yield 'filled' => [[new Assert\NotBlank(), new Assert\NotNull()], [new Rule('filled')]];
-        yield 'filled nullable' => [[new Assert\NotBlank(['allowNull' => true])], [new Rule('filled'), new Rule('nullable')]];
+        yield 'filled nullable' => [[new Assert\NotBlank(allowNull: true)], [new Rule('filled'), new Rule('nullable')]];
         yield 'regex' => [
-            [new Assert\Regex(['pattern' => '/^unittest$/']), new Assert\NotNull()],
+            [new Assert\Regex('/^unittest$/'), new Assert\NotNull()],
             [new Rule('regex', ['/^unittest$/'])]
         ];
         yield 'required' => [[new Assert\NotNull()], [new Rule('required')]];
@@ -96,7 +96,7 @@ class ConstraintResolverTest extends TestCase
         // date, datetime, date_format
         yield 'date' => [[new Assert\Date(), new Assert\NotNull()], [new Rule('date')]];
         yield 'datetime' => [[new Assert\DateTime(), new Assert\NotNull()], [new Rule('datetime')]];
-        yield 'date_format' => [[new Assert\DateTime(['format' => 'd/m/Y']), new Assert\NotNull()], [new Rule('date_format', ['d/m/Y'])]];
+        yield 'date_format' => [[new Assert\DateTime('d/m/Y'), new Assert\NotNull()], [new Rule('date_format', ['d/m/Y'])]];
         yield 'date min' => [
             [new Assert\Date(), new Assert\GreaterThanOrEqual('now'), new Assert\NotNull()],
             [new Rule('date'), new Rule('min', ['now'])]
@@ -106,15 +106,15 @@ class ConstraintResolverTest extends TestCase
             [new Rule('date'), new Rule('max', ['now'])]
         ];
         yield 'date between' => [
-            [new Assert\Date(), new Assert\Range(['min' => '-10 days', 'max' => '+10 days']), new Assert\NotNull()],
+            [new Assert\Date(), new Assert\Range(min: '-10 days', max: '+10 days'), new Assert\NotNull()],
             [new Rule('date'), new Rule('between', ['-10 days', '+10 days'])]
         ];
 
         // min/max string or array lengths
-        yield 'min length' => [[new Assert\Length(['min' => 10]), new Assert\NotNull()], [new Rule('min', ['10'])]];
-        yield 'max length' => [[new Assert\Length(['max' => 10]), new Assert\NotNull()], [new Rule('max', ['10'])]];
+        yield 'min length' => [[new Assert\Length(min: 10), new Assert\NotNull()], [new Rule('min', ['10'])]];
+        yield 'max length' => [[new Assert\Length(max: 10), new Assert\NotNull()], [new Rule('max', ['10'])]];
         yield 'min/max length' => [
-            [new Assert\Length(['min' => 10, 'max' => 20]), new Assert\NotNull()],
+            [new Assert\Length(min: 10, max: 20), new Assert\NotNull()],
             [new Rule('between', ['10', '20'])]
         ];
 
@@ -128,7 +128,7 @@ class ConstraintResolverTest extends TestCase
             [new Rule('integer'), new Rule('max', ['20'])]
         ];
         yield 'min/max integer' => [
-            [new IntegerNumber(), new Assert\Range(['min' => 10, 'max' => 20]), new Assert\NotNull()],
+            [new IntegerNumber(), new Assert\Range(min: 10, max: 20), new Assert\NotNull()],
             [new Rule('integer'), new Rule('between', ['10', '20'])]
         ];
     }

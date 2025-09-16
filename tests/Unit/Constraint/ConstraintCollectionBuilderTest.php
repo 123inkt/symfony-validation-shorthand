@@ -26,8 +26,7 @@ use Symfony\Component\Validator\Constraints\Required;
  */
 class ConstraintCollectionBuilderTest extends TestCase
 {
-    /** @var ConstraintCollectionBuilder */
-    private $builder;
+    private ConstraintCollectionBuilder $builder;
 
     protected function setUp(): void
     {
@@ -41,7 +40,7 @@ class ConstraintCollectionBuilderTest extends TestCase
      */
     public function testBuildSingleNonNestedConstraint(): void
     {
-        $constraint    = new NotNull();
+        $constraint = new NotNull();
         $constraintMap = new ConstraintMap();
         $constraintMap->set('a', new ConstraintMapItem([$constraint], true));
 
@@ -57,12 +56,12 @@ class ConstraintCollectionBuilderTest extends TestCase
      */
     public function testBuildSingleCollectionAllowExtraFieldsConstraint(): void
     {
-        $constraint    = new NotNull();
+        $constraint = new NotNull();
         $constraintMap = new ConstraintMap();
         $constraintMap->set('a', new ConstraintMapItem([$constraint], true));
 
         $result = $this->builder->setAllowExtraFields(true)->build($constraintMap);
-        $expect = new Collection(['fields' => ['a' => new NotNull()], 'allowExtraFields' => true]);
+        $expect = new Collection(['a' => new NotNull()], allowExtraFields: true);
         static::assertEquals($expect, $result);
     }
 
@@ -72,7 +71,7 @@ class ConstraintCollectionBuilderTest extends TestCase
      */
     public function testBuildSingleNestedConstraint(): void
     {
-        $constraint    = new NotNull();
+        $constraint = new NotNull();
         $constraintMap = new ConstraintMap();
         $constraintMap->set('a.b', new ConstraintMapItem([$constraint], true));
 
@@ -87,8 +86,8 @@ class ConstraintCollectionBuilderTest extends TestCase
      */
     public function testBuildMultipleNestedConstraints(): void
     {
-        $constraintA   = new NotNull();
-        $constraintB   = new Blank();
+        $constraintA = new NotNull();
+        $constraintB = new Blank();
         $constraintMap = new ConstraintMap();
         $constraintMap->set('a.a', new ConstraintMapItem([$constraintA], true));
         $constraintMap->set('a.b', new ConstraintMapItem([$constraintB], true));
@@ -104,7 +103,7 @@ class ConstraintCollectionBuilderTest extends TestCase
      */
     public function testBuildOptionalConstraints(): void
     {
-        $constraint    = new NotNull();
+        $constraint = new NotNull();
         $constraintMap = new ConstraintMap();
         $constraintMap->set('a?.b', new ConstraintMapItem([$constraint], true));
 
@@ -121,7 +120,7 @@ class ConstraintCollectionBuilderTest extends TestCase
      */
     public function testBuildOptionalConstraintShouldNotOverwriteRequired(): void
     {
-        $constraint    = new NotNull();
+        $constraint = new NotNull();
         $constraintMap = new ConstraintMap();
         $constraintMap->set('a.b?', new ConstraintMapItem([$constraint], true));
 
@@ -136,13 +135,13 @@ class ConstraintCollectionBuilderTest extends TestCase
      */
     public function testBuildWithNonEmptyAllConstraint(): void
     {
-        $constraint    = new NotNull();
+        $constraint = new NotNull();
         $constraintMap = new ConstraintMap();
         $constraintMap->set('*', new ConstraintMapItem([$constraint], true));
 
         $result = $this->builder->build($constraintMap);
         $expect = [
-            new Count(['min' => 1]),
+            new Count(min: 1),
             new All([new NotNull()])
         ];
         static::assertEquals($expect, $result);
@@ -154,7 +153,7 @@ class ConstraintCollectionBuilderTest extends TestCase
      */
     public function testBuildWithEmptyAllConstraint(): void
     {
-        $constraint    = new NotNull();
+        $constraint = new NotNull();
         $constraintMap = new ConstraintMap();
         $constraintMap->set('*', new ConstraintMapItem([$constraint], false));
 
@@ -169,13 +168,13 @@ class ConstraintCollectionBuilderTest extends TestCase
      */
     public function testBuildWithAllAndCollectionConstraint(): void
     {
-        $constraint    = new NotNull();
+        $constraint = new NotNull();
         $constraintMap = new ConstraintMap();
         $constraintMap->set('*.name', new ConstraintMapItem([$constraint], true));
 
         $result = $this->builder->build($constraintMap);
         $expect =
-            new All([new Collection(['fields' => ['name' => $constraint]])]);
+            new All([new Collection(['name' => $constraint])]);
 
         static::assertEquals($expect, $result);
     }
