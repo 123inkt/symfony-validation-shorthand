@@ -25,7 +25,7 @@ class ConstraintResolver
             return $constraints;
         }
 
-        $nullable    = false;
+        $nullable = false;
         $constraints = [];
         foreach ($ruleList->getRules() as $rule) {
             if ($rule instanceof Constraint) {
@@ -70,11 +70,11 @@ class ConstraintResolver
             case Rule::RULE_ARRAY:
                 return new Assert\Type('array');
             case Rule::RULE_ALPHA:
-                return new Assert\Regex(['pattern' => '/^[a-zA-Z]*$/']);
+                return new Assert\Regex('/^[a-zA-Z]*$/');
             case Rule::RULE_ALPHA_DASH:
-                return new Assert\Regex(['pattern' => '/^[\w-]*$/']);
+                return new Assert\Regex('/^[\w-]*$/');
             case Rule::RULE_ALPHA_NUM:
-                return new Assert\Regex(['pattern' => '/^[a-zA-Z0-9]*$/']);
+                return new Assert\Regex('/^[a-zA-Z0-9]*$/');
             case Rule::RULE_IN:
                 return new Type\InConstraint(['values' => $rule->getParameters()]);
             case Rule::RULE_DATE:
@@ -82,15 +82,15 @@ class ConstraintResolver
             case Rule::RULE_DATETIME:
                 return new Assert\DateTime();
             case Rule::RULE_DATE_FORMAT:
-                return new Assert\DateTime(['format' => $rule->getParameter(0)]);
+                return new Assert\DateTime($rule->getParameter(0));
             case Rule::RULE_EMAIL:
                 return new Assert\Email();
             case Rule::RULE_URL:
                 return new Assert\Url();
             case Rule::RULE_REGEX:
-                return new Assert\Regex(['pattern' => $rule->getParameter(0)]);
+                return new Assert\Regex($rule->getParameter(0));
             case Rule::RULE_FILLED:
-                return new Assert\NotBlank(['allowNull' => $ruleList->hasRule(Rule::RULE_NULLABLE)]);
+                return new Assert\NotBlank(allowNull: $ruleList->hasRule(Rule::RULE_NULLABLE));
             case Rule::RULE_MIN:
                 return $this->resolveMinConstraint($rule, $ruleList);
             case Rule::RULE_MAX:
@@ -117,7 +117,7 @@ class ConstraintResolver
             return new Assert\GreaterThanOrEqual($rule->getIntParam(0));
         }
 
-        return new Assert\Length(['min' => $rule->getIntParam(0)]);
+        return new Assert\Length(min: $rule->getIntParam(0));
     }
 
     /**
@@ -133,7 +133,7 @@ class ConstraintResolver
             return new Assert\LessThanOrEqual($rule->getIntParam(0));
         }
 
-        return new Assert\Length(['max' => $rule->getIntParam(0)]);
+        return new Assert\Length(max: $rule->getIntParam(0));
     }
 
     /**
@@ -142,13 +142,13 @@ class ConstraintResolver
     private function resolveBetweenConstraint(Rule $rule, RuleList $ruleList): Constraint
     {
         if ($ruleList->hasRule([Rule::RULE_DATE, Rule::RULE_DATETIME, Rule::RULE_DATE_FORMAT])) {
-            return new Assert\Range(['min' => $rule->getParameter(0), 'max' => $rule->getParameter(1)]);
+            return new Assert\Range(min: $rule->getParameter(0), max: $rule->getParameter(1));
         }
 
         if ($ruleList->hasRule([Rule::RULE_INTEGER, Rule::RULE_FLOAT])) {
-            return new Assert\Range(['min' => $rule->getIntParam(0), 'max' => $rule->getIntParam(1)]);
+            return new Assert\Range(min: $rule->getIntParam(0), max: $rule->getIntParam(1));
         }
 
-        return new Assert\Length(['min' => $rule->getIntParam(0), 'max' => $rule->getIntParam(1)]);
+        return new Assert\Length(min: $rule->getIntParam(0), max: $rule->getIntParam(1));
     }
 }

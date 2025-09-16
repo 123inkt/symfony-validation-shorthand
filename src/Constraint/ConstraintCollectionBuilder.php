@@ -78,7 +78,7 @@ class ConstraintCollectionBuilder
         }
 
         if ($required) {
-            return [new Assert\Count(['min' => 1]), new Assert\All($constraints)];
+            return [new Assert\Count(min: 1), new Assert\All($constraints)];
         }
 
         return new Assert\All($constraints);
@@ -105,7 +105,7 @@ class ConstraintCollectionBuilder
             $constraintMap[$key] = $this->getNodeConstraint($node, $optional);
         }
 
-        return new Assert\Collection(['fields' => $constraintMap, 'allowExtraFields' => $this->allowExtraFields]);
+        return new Assert\Collection($constraintMap, allowExtraFields: $this->allowExtraFields);
     }
 
     /**
