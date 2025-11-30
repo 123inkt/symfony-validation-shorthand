@@ -1,7 +1,7 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Parameter \#1 \$constraintTreeMap of method DigitalRevolution\\SymfonyValidationShorthand\\Constraint\\ConstraintCollectionBuilder\:\:createConstraintTree\(\) expects array\<int\|string, array\<DigitalRevolution\\SymfonyValidationShorthand\\Constraint\\ConstraintMapItem\>\|DigitalRevolution\\SymfonyValidationShorthand\\Constraint\\ConstraintMapItem\>, array\<mixed\> given\.$#'
+			message: '#^Parameter \#1 \$constraintTreeMap of method DigitalRevolution\\SymfonyValidationShorthand\\Constraint\\ConstraintCollectionBuilder\:\:createConstraintTree\(\) expects array\<int\|string, array\<DigitalRevolution\\SymfonyValidationShorthand\\Constraint\\ConstraintMapItem\>\|DigitalRevolution\\SymfonyValidationShorthand\\Constraint\\ConstraintMapItem\>, array\<int\|string, mixed\> given\.$#'
 			identifier: argument.type
 			count: 1
 			path: src/Constraint/ConstraintCollectionBuilder.php

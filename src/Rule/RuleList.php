@@ -9,18 +9,18 @@ use Symfony\Component\Validator\Constraint;
 class RuleList implements Countable
 {
     /** @var array<Rule|Constraint> */
-    private $rules = [];
+    private array $rules = [];
 
     /**
      * Rule type lookup index
      * @var array<string, true>
      */
-    private $ruleTypes = [];
+    private array $ruleTypes = [];
 
     /**
      * @param string|string[] $names
      */
-    public function hasRule($names): bool
+    public function hasRule(array|string $names): bool
     {
         $names = is_array($names) ? $names : [$names];
         foreach ($names as $name) {
@@ -48,10 +48,7 @@ class RuleList implements Countable
         return $this->rules;
     }
 
-    /**
-     * @param Rule|Constraint $rule
-     */
-    public function addRule($rule): self
+    public function addRule(Rule|Constraint $rule): self
     {
         $this->rules[] = $rule;
         if ($rule instanceof Rule) {

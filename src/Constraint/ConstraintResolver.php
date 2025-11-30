@@ -76,7 +76,7 @@ class ConstraintResolver
             case Rule::RULE_ALPHA_NUM:
                 return new Assert\Regex('/^[a-zA-Z0-9]*$/');
             case Rule::RULE_IN:
-                return new Type\InConstraint(['values' => $rule->getParameters()]);
+                return new Type\InConstraint($rule->getParameters());
             case Rule::RULE_DATE:
                 return new Assert\Date();
             case Rule::RULE_DATETIME:

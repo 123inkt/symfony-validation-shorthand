@@ -7,19 +7,11 @@ use Symfony\Component\Validator\Constraint;
 
 class ConstraintMapItem
 {
-    /** @var Constraint[] */
-    private $constraints;
-
-    /** @var bool */
-    private $required;
-
     /**
      * @param Constraint[] $constraints
      */
-    public function __construct(array $constraints, bool $required = false)
+    public function __construct(private array $constraints, private bool $required = false)
     {
-        $this->constraints = $constraints;
-        $this->required    = $required;
     }
 
     /**
