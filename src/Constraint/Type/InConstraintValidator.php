@@ -10,10 +10,9 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class InConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param mixed $value
      * @inheritDoc
      */
-    public function validate($value, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if ($constraint instanceof InConstraint === false) {
             throw new UnexpectedTypeException($constraint, InConstraint::class);

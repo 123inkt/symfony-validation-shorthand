@@ -51,19 +51,11 @@ class Rule
         self::RULE_BETWEEN,
     ];
 
-    /** @var string */
-    private $name;
-
-    /** @var string[] */
-    private $parameters;
-
     /**
      * @param string[] $parameters
      */
-    public function __construct(string $name, array $parameters = [])
+    public function __construct(private string $name, private array $parameters = [])
     {
-        $this->name       = $name;
-        $this->parameters = $parameters;
     }
 
     public function getName(): string

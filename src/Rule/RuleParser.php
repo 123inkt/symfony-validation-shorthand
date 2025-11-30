@@ -11,9 +11,10 @@ class RuleParser
      * Parse a set of string rules and constraints
      *
      * @param string|Constraint|array<string|Constraint> $rules
+     *
      * @throws InvalidRuleException
      */
-    public function parseRules($rules): RuleList
+    public function parseRules(array|string|Constraint $rules): RuleList
     {
         if (is_array($rules) === false) {
             $rules = [$rules];
@@ -34,11 +35,10 @@ class RuleParser
     /**
      * Explode a string rule
      *
-     * @param mixed $rule
      * @return Rule[]
      * @throws InvalidRuleException
      */
-    protected function explodeExplicitRule($rule): array
+    protected function explodeExplicitRule(mixed $rule): array
     {
         if (is_string($rule)) {
             return array_map([$this, 'parseStringRule'], explode('|', $rule));
@@ -52,7 +52,7 @@ class RuleParser
     protected function parseStringRule(string $rule): Rule
     {
         $parameters = [];
-        if (strpos($rule, ':') !== false) {
+        if (str_contains($rule, ':')) {
             [$rule, $parameter] = explode(':', $rule, 2);
 
             $parameters = static::parseParameters($rule, $parameter);
@@ -81,13 +81,10 @@ class RuleParser
      */
     private static function normalizeRuleName(string $name): string
     {
-        switch ($name) {
-            case 'int':
-                return Rule::RULE_INTEGER;
-            case 'bool':
-                return Rule::RULE_BOOLEAN;
-            default:
-                return $name;
-        }
+        return match ($name) {
+            'int'   => Rule::RULE_INTEGER,
+            'bool'  => Rule::RULE_BOOLEAN,
+            default => $name,
+        };
     }
 }
