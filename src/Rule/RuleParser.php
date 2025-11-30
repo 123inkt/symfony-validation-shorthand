@@ -11,8 +11,6 @@ class RuleParser
      * Parse a set of string rules and constraints
      *
      * @param string|Constraint|array<string|Constraint> $rules
-     *
-     * @throws InvalidRuleException
      */
     public function parseRules(array|string|Constraint $rules): RuleList
     {
@@ -34,18 +32,11 @@ class RuleParser
 
     /**
      * Explode a string rule
-     *
      * @return Rule[]
-     * @throws InvalidRuleException
      */
-    protected function explodeExplicitRule(mixed $rule): array
+    protected function explodeExplicitRule(string $rule): array
     {
-        if (is_string($rule)) {
-            return array_map([$this, 'parseStringRule'], explode('|', $rule));
-        }
-        // @codeCoverageIgnoreStart
-        throw new InvalidRuleException('Invalid rule definition type. Expecting string or Symfony\Component\Validator\Constraint');
-        // @codeCoverageIgnoreEnd
+        return array_map([$this, 'parseStringRule'], explode('|', $rule));
     }
 
     /**
@@ -60,12 +51,12 @@ class RuleParser
             $parameters = static::parseParameters($rule, $parameter);
         }
         $rule = self::normalizeRuleName(strtolower($rule));
+
         return new Rule($rule, $parameters);
     }
 
     /**
      * Parse a parameter list.
-     *
      * @return string[]
      */
     protected static function parseParameters(string $rule, string $parameter): array
