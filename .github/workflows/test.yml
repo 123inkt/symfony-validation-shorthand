@@ -23,6 +23,12 @@ jobs:
         exclude:
           - php-versions: 8.1
             symfony: '^7.0'
+          - php-versions: 8.1
+            symfony: '^8.0'
+          - php-versions: 8.2
+            symfony: '^8.0'
+          - php-versions: 8.3
+            symfony: '^8.0'
     steps:
       - uses: actions/checkout@v6
 
