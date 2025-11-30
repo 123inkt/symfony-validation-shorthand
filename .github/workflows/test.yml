@@ -17,8 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: [ '8.1', '8.2', '8.3' ]
-        symfony: [ '^6.2', '^7.0' ]
+        php-versions: [ '8.1', '8.2', '8.3', '8.4', '8.5' ]
+        symfony: [ '^6.2', '^7.0', '^8.0' ]
         composer-flags: [ '', '--prefer-lowest' ]
         exclude:
           - php-versions: 8.1
@@ -53,7 +53,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.3
+          php-version: 8.5
           coverage: pcov
 
       - name: Install dependencies
