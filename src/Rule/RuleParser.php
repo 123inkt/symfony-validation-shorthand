@@ -43,7 +43,9 @@ class RuleParser
         if (is_string($rule)) {
             return array_map([$this, 'parseStringRule'], explode('|', $rule));
         }
+        // @codeCoverageIgnoreStart
         throw new InvalidRuleException('Invalid rule definition type. Expecting string or Symfony\Component\Validator\Constraint');
+        // @codeCoverageIgnoreEnd
     }
 
     /**

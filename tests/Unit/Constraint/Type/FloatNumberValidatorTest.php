@@ -17,14 +17,9 @@ use Symfony\Component\Validator\Validation;
  */
 class FloatNumberValidatorTest extends TestCase
 {
-    /** @var ExecutionContext */
-    private $context;
-
-    /** @var FloatNumberValidator */
-    private $validator;
-
-    /** @var FloatNumber */
-    private $constraint;
+    private ExecutionContext $context;
+    private FloatNumberValidator $validator;
+    private FloatNumber $constraint;
 
     protected function setUp(): void
     {
@@ -48,9 +43,8 @@ class FloatNumberValidatorTest extends TestCase
     /**
      * @dataProvider dataProvider
      * @covers ::validate
-     * @param null|bool|int|string $value
      */
-    public function testValidateViolations($value, int $violationCount): void
+    public function testValidateViolations(bool|int|string|null $value, int $violationCount): void
     {
         $this->validator->validate($value, $this->constraint);
         static::assertCount($violationCount, $this->context->getViolations());

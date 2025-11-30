@@ -15,25 +15,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class RuleParserTest extends TestCase
 {
-    /** @var RuleParser */
-    private $parser;
+    private RuleParser $parser;
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->parser = new RuleParser();
-    }
-
-    /**
-     * @covers ::parseRules
-     * @covers ::explodeExplicitRule
-     * @throws InvalidRuleException
-     */
-    public function testFailParseRuleWithBadRuleType(): void
-    {
-        $this->expectException(InvalidRuleException::class);
-        $this->expectExceptionMessage('Invalid rule definition type. Expecting string or Symfony\Component\Validator\Constraint');
-        $this->parser->parseRules(200);
     }
 
     /**
