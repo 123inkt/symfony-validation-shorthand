@@ -44,7 +44,7 @@ class IntegerNumberValidatorTest extends TestCase
      * @dataProvider dataProvider
      * @covers ::validate
      */
-    public function testValidateViolations(bool|int|string|null $value, int $violationCount): void
+    public function testValidateViolations(bool|int|float|string|null $value, int $violationCount): void
     {
         $this->validator->validate($value, $this->constraint);
         static::assertCount($violationCount, $this->context->getViolations());
