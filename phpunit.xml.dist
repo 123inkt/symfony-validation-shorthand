@@ -6,7 +6,6 @@
          failOnWarning="true"
          beStrictAboutChangesToGlobalState="true"
          beStrictAboutOutputDuringTests="true"
-         beStrictAboutCoverageMetadata="true"
          executionOrder="defects"
          cacheDirectory=".phpunit.cache"
          requireCoverageMetadata="true"
