@@ -5,13 +5,13 @@ namespace Constraint\Type;
 
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\InConstraint;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\InConstraintValidator;
-use DigitalRevolution\SymfonyValidationShorthand\Tests\Mock\MockFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Validation;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[CoversClass(InConstraintValidator::class)]
 class InConstraintValidatorTest extends TestCase
@@ -23,9 +23,12 @@ class InConstraintValidatorTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $translatorStub = $this->createStub(TranslatorInterface::class);
+        $translatorStub->method('trans')->willReturn('unit test');
+
         $this->constraint = new InConstraint(['values' => ['foobar']]);
         $this->validator  = new InConstraintValidator();
-        $this->context    = new ExecutionContext(Validation::createValidator(), 'root', MockFactory::createTranslator($this));
+        $this->context  = new ExecutionContext(Validation::createValidator(), 'root', $translatorStub);
         $this->context->setConstraint($this->constraint);
         $this->validator->initialize($this->context);
     }

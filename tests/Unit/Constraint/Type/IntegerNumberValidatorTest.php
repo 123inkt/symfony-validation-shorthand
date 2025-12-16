@@ -5,7 +5,6 @@ namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Constraint\Typ
 
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\IntegerNumber;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\IntegerNumberValidator;
-use DigitalRevolution\SymfonyValidationShorthand\Tests\Mock\MockFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -13,6 +12,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Validation;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[CoversClass(IntegerNumberValidator::class)]
 class IntegerNumberValidatorTest extends TestCase
@@ -24,9 +24,12 @@ class IntegerNumberValidatorTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $translatorStub = $this->createStub(TranslatorInterface::class);
+        $translatorStub->method('trans')->willReturn('unit test');
+
         $this->constraint = new IntegerNumber();
         $this->validator  = new IntegerNumberValidator();
-        $this->context    = new ExecutionContext(Validation::createValidator(), 'root', MockFactory::createTranslator($this));
+        $this->context  = new ExecutionContext(Validation::createValidator(), 'root', $translatorStub);
         $this->context->setConstraint($this->constraint);
         $this->validator->initialize($this->context);
     }
