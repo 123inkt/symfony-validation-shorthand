@@ -37,9 +37,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           coverage: none
-
-      - name: Add symfony flex
-        run: composer global config --no-interaction allow-plugins.symfony/flex true && composer global require symfony/flex
+          tools: flex
 
       - name: Validate composer.json and composer.lock
         run: composer validate
@@ -82,6 +80,7 @@ jobs:
         with:
           php-version: 8.1
           coverage: none
+          tools: phpmd
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
