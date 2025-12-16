@@ -17,14 +17,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[CoversNothing]
 class FieldValidationTest extends TestCase
 {
-    /** @var RuleParser */
-    private $parser;
-
-    /** @var ConstraintResolver */
-    private $resolver;
-
-    /** @var ValidatorInterface */
-    private $validator;
+    private RuleParser $parser;
+    private ConstraintResolver $resolver;
+    private ValidatorInterface $validator;
 
     protected function setUp(): void
     {
@@ -69,7 +64,7 @@ class FieldValidationTest extends TestCase
         }
     }
 
-    public function dataProviderRequiredFields(): Generator
+    public static function dataProviderRequiredFields(): Generator
     {
         yield "required: success" => ['required', 'unit test', true];
         yield "required + empty: success" => ['required', '', true];
@@ -204,7 +199,7 @@ class FieldValidationTest extends TestCase
         yield "required + rule + constraint: false B" => [['required', 'string', new Assert\NotBlank()], 5, false];
     }
 
-    public function dataProviderOptionalFields(): Generator
+    public static function dataProviderOptionalFields(): Generator
     {
         yield "optional: null: success A" => ['string', false, false];
         yield "optional: null: success B" => ['string|nullable', null, true];
