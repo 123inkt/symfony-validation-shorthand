@@ -32,7 +32,7 @@ class IntegerNumberValidator extends ConstraintValidator
         }
 
         // value can't be cast to int
-        if (((string)(int)$value) !== (string)$value) {
+        if (@((string)(int)$value) !== (string)$value) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value }}', $this->formatValue($value))
                 ->setCode($constraint::INVALID_NUMBER_ERROR)
