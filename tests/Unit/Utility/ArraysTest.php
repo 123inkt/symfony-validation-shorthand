@@ -3,24 +3,23 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Utility;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use DigitalRevolution\SymfonyValidationShorthand\Utility\Arrays;
 use DigitalRevolution\SymfonyValidationShorthand\Utility\InvalidArrayPathException;
 use Generator;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Utility\Arrays
- */
+#[CoversClass(Arrays::class)]
 class ArraysTest extends TestCase
 {
     /**
      * @param array<mixed> $data
      * @param array<mixed> $expected
-     * @dataProvider dataProvider
-     * @covers ::assignToPath
      * @throws InvalidArrayPathException
      */
+    #[DataProvider('dataProvider')]
     public function testAssignToPath(array $data, string $path, string $value, array $expected): void
     {
         static::assertSame($expected, Arrays::assignToPath($data, explode('.', $path), $value));
@@ -29,7 +28,7 @@ class ArraysTest extends TestCase
     /**
      * @return Generator<string, array<array<mixed>, string, string, array<mixed>>>
      */
-    public function dataProvider(): Generator
+    public static function dataProvider(): Generator
     {
         yield 'assign empty array: key => value' => [[], 'a', 'b', ['a' => 'b']];
         yield 'assign empty array: key, key + value' => [[], 'a.b', 'c', ['a' => ['b' => 'c']]];
@@ -41,7 +40,6 @@ class ArraysTest extends TestCase
     /**
      * Assign a value with an empty path is not possible.
      *
-     * @covers ::assignToPath
      * @throws InvalidArrayPathException
      */
     public function testAssignToPathEmptyPathIsInvalidArgumentException(): void
@@ -56,7 +54,6 @@ class ArraysTest extends TestCase
     /**
      * Assigning a new value to an already assigned value will result in an exception.
      *
-     * @covers ::assignToPath
      * @throws InvalidArrayPathException
      */
     public function testAssignToPathAlreadyAssignKeyException(): void
@@ -71,7 +68,6 @@ class ArraysTest extends TestCase
     /**
      * Assigning a value to a path where the somewhere in the path the value is not an array anymore, will result in exception.
      *
-     * @covers ::assignToPath
      * @throws InvalidArrayPathException
      */
     public function testAssignToPathNotArrayValueException(): void

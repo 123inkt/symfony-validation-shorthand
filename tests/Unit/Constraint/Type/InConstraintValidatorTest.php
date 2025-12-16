@@ -6,25 +6,19 @@ namespace Constraint\Type;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\InConstraint;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\InConstraintValidator;
 use DigitalRevolution\SymfonyValidationShorthand\Tests\Mock\MockFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Validation;
 
-/**
- * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\InConstraintValidator
- */
+#[CoversClass(InConstraintValidator::class)]
 class InConstraintValidatorTest extends TestCase
 {
-    /** @var ExecutionContext */
-    private $context;
-
-    /** @var InConstraintValidator */
-    private $validator;
-
-    /** @var InConstraint */
-    private $constraint;
+    private ExecutionContext $context;
+    private InConstraintValidator $validator;
+    private InConstraint $constraint;
 
     protected function setUp(): void
     {
@@ -36,36 +30,24 @@ class InConstraintValidatorTest extends TestCase
         $this->validator->initialize($this->context);
     }
 
-    /**
-     * @covers ::validate
-     */
     public function testValidateUnexpectedTypeException(): void
     {
         $this->expectException(UnexpectedTypeException::class);
         $this->validator->validate(null, new NotBlank());
     }
 
-    /**
-     * @covers ::validate
-     */
     public function testValidateShouldSkipNullValue(): void
     {
         $this->validator->validate(null, $this->constraint);
         static::assertCount(0, $this->context->getViolations());
     }
 
-    /**
-     * @covers ::validate
-     */
     public function testValidateShouldPassOnAllowedValue(): void
     {
         $this->validator->validate('foobar', $this->constraint);
         static::assertCount(0, $this->context->getViolations());
     }
 
-    /**
-     * @covers ::validate
-     */
     public function testValidateShouldPassOnNumericValue(): void
     {
         $constraint = new InConstraint(['values' => ['2', '3', '4', '5']]);
@@ -73,9 +55,6 @@ class InConstraintValidatorTest extends TestCase
         static::assertCount(0, $this->context->getViolations());
     }
 
-    /**
-     * @covers ::validate
-     */
     public function testValidateShouldFailOnDisallowedValue(): void
     {
         $this->validator->validate('invalid', $this->constraint);

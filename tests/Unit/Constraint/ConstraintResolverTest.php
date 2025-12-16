@@ -12,18 +12,16 @@ use DigitalRevolution\SymfonyValidationShorthand\Rule\InvalidRuleException;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\Rule;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\RuleList;
 use Generator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintResolver
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
+#[CoversClass(ConstraintResolver::class)]
 class ConstraintResolverTest extends TestCase
 {
-    /** @var ConstraintResolver */
-    private $resolver;
+    private ConstraintResolver $resolver;
 
     protected function setUp(): void
     {
@@ -32,8 +30,6 @@ class ConstraintResolverTest extends TestCase
     }
 
     /**
-     * @covers ::resolveRuleList
-     * @covers ::resolveConstraint
      * @throws InvalidRuleException
      */
     public function testResolveRuleSetUnknownRule(): void
@@ -47,16 +43,11 @@ class ConstraintResolverTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProvider
-     * @covers ::resolveRuleList
-     * @covers ::resolveConstraint
-     * @covers ::resolveMinConstraint
-     * @covers ::resolveMaxConstraint
-     * @covers ::resolveBetweenConstraint
      * @param Constraint[]
      * @param array<Rule|Constraint> $rules
      * @throws InvalidRuleException
      */
+    #[DataProvider('dataProvider')]
     public function testResolveRuleSet(array $expected, array $rules): void
     {
         $ruleSet = new RuleList();
@@ -69,7 +60,7 @@ class ConstraintResolverTest extends TestCase
     /**
      * @phpstan-return Generator<string, array<int, Constraint|Rule[]|Constraint[]>>
      */
-    public function dataProvider(): Generator
+    public static function dataProvider(): Generator
     {
         yield 'constraint' => [[new Assert\NotBlank()], [new Assert\NotBlank()]];
         yield 'rule + constraint' => [[new Assert\NotBlank(), new Assert\NotNull()], [new Rule('required'), new Assert\NotBlank()]];

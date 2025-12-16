@@ -6,25 +6,20 @@ namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Constraint\Typ
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\FloatNumber;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\FloatNumberValidator;
 use DigitalRevolution\SymfonyValidationShorthand\Tests\Mock\MockFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Validation;
 
-/**
- * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\FloatNumberValidator
- */
+#[CoversClass(FloatNumberValidator::class)]
 class FloatNumberValidatorTest extends TestCase
 {
-    /** @var ExecutionContext */
-    private $context;
-
-    /** @var FloatNumberValidator */
-    private $validator;
-
-    /** @var FloatNumber */
-    private $constraint;
+    private ExecutionContext $context;
+    private FloatNumberValidator $validator;
+    private FloatNumber $constraint;
 
     protected function setUp(): void
     {
@@ -36,9 +31,6 @@ class FloatNumberValidatorTest extends TestCase
         $this->validator->initialize($this->context);
     }
 
-    /**
-     * @covers ::validate
-     */
     public function testValidateUnexpectedTypeException(): void
     {
         $this->expectException(UnexpectedTypeException::class);
@@ -46,10 +38,9 @@ class FloatNumberValidatorTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProvider
-     * @covers ::validate
      * @param null|bool|int|string $value
      */
+    #[DataProvider('dataProvider')]
     public function testValidateViolations($value, int $violationCount): void
     {
         $this->validator->validate($value, $this->constraint);
@@ -59,7 +50,7 @@ class FloatNumberValidatorTest extends TestCase
     /**
      * @return array<string, array<mixed, int>>
      */
-    public function dataProvider(): array
+    public static function dataProvider(): array
     {
         return [
             // success
@@ -88,9 +79,6 @@ class FloatNumberValidatorTest extends TestCase
         ];
     }
 
-    /**
-     * @covers ::validate
-     */
     public function testValidateViolation(): void
     {
         $this->validator->validate('a', $this->constraint);

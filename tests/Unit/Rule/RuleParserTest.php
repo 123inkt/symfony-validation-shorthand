@@ -7,16 +7,14 @@ use DigitalRevolution\SymfonyValidationShorthand\Rule\InvalidRuleException;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\Rule;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\RuleList;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\RuleParser;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Rule\RuleParser
- */
+#[CoversClass(RuleParser::class)]
 class RuleParserTest extends TestCase
 {
-    /** @var RuleParser */
-    private $parser;
+    private RuleParser $parser;
 
     protected function setUp(): void
     {
@@ -25,8 +23,6 @@ class RuleParserTest extends TestCase
     }
 
     /**
-     * @covers ::parseRules
-     * @covers ::explodeExplicitRule
      * @throws InvalidRuleException
      */
     public function testFailParseRuleWithBadRuleType(): void
@@ -37,7 +33,6 @@ class RuleParserTest extends TestCase
     }
 
     /**
-     * @covers ::parseRules
      * @throws InvalidRuleException
      */
     public function testParseRuleWithSingleConstraint(): void
@@ -50,10 +45,6 @@ class RuleParserTest extends TestCase
     }
 
     /**
-     * @covers ::parseRules
-     * @covers ::explodeExplicitRule
-     * @covers ::parseStringRule
-     * @covers ::normalizeRuleName
      * @throws InvalidRuleException
      */
     public function testParseRuleWithSingleStringRule(): void
@@ -65,10 +56,6 @@ class RuleParserTest extends TestCase
     }
 
     /**
-     * @covers ::parseRules
-     * @covers ::explodeExplicitRule
-     * @covers ::parseStringRule
-     * @covers ::parseParameters
      * @throws InvalidRuleException
      */
     public function testParseRuleWithSingleStringRuleWithParameter(): void
@@ -80,10 +67,6 @@ class RuleParserTest extends TestCase
     }
 
     /**
-     * @covers ::parseRules
-     * @covers ::explodeExplicitRule
-     * @covers ::parseStringRule
-     * @covers ::parseParameters
      * @throws InvalidRuleException
      */
     public function testParseRuleWithSingleStringRuleWithMultipleParameters(): void
@@ -95,10 +78,6 @@ class RuleParserTest extends TestCase
     }
 
     /**
-     * @covers ::parseRules
-     * @covers ::explodeExplicitRule
-     * @covers ::parseStringRule
-     * @covers ::parseParameters
      * @throws InvalidRuleException
      */
     public function testParseRuleWithSingleStringRuleWithRegexParameter(): void
@@ -110,10 +89,6 @@ class RuleParserTest extends TestCase
     }
 
     /**
-     * @covers ::parseRules
-     * @covers ::explodeExplicitRule
-     * @covers ::parseStringRule
-     * @covers ::parseParameters
      * @throws InvalidRuleException
      */
     public function testParseRuleWithMultipleStringRules(): void
@@ -126,10 +101,6 @@ class RuleParserTest extends TestCase
     }
 
     /**
-     * @covers ::parseRules
-     * @covers ::explodeExplicitRule
-     * @covers ::parseStringRule
-     * @covers ::parseParameters
      * @throws InvalidRuleException
      */
     public function testParseRuleWithMultipleStringRulesAsArray(): void
@@ -142,10 +113,6 @@ class RuleParserTest extends TestCase
     }
 
     /**
-     * @covers ::parseRules
-     * @covers ::explodeExplicitRule
-     * @covers ::parseStringRule
-     * @covers ::parseParameters
      * @throws InvalidRuleException
      */
     public function testParseRuleWithStringRuleAndConstraint(): void
@@ -159,7 +126,6 @@ class RuleParserTest extends TestCase
     }
 
     /**
-     * @covers ::normalizeRuleName
      * @throws InvalidRuleException
      */
     public function testParseRuleWithRuleNormalization(): void

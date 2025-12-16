@@ -7,14 +7,14 @@ use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintResolver;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\InvalidRuleException;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\RuleParser;
 use Generator;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-/**
- * @coversNothing
- */
+#[CoversNothing]
 class FieldValidationTest extends TestCase
 {
     /** @var RuleParser */
@@ -36,11 +36,10 @@ class FieldValidationTest extends TestCase
 
     /**
      * @param string|string[] $rules
-     * @param mixed           $data
-     * @dataProvider dataProviderRequiredFields
      * @throws InvalidRuleException
      */
-    public function testResolverRequiredFields($rules, $data, bool $success): void
+    #[DataProvider('dataProviderRequiredFields')]
+    public function testResolverRequiredFields(string|array $rules, mixed $data, bool $success): void
     {
         $constraint = $this->resolver->resolveRuleList($this->parser->parseRules($rules));
         $violations = $this->validator->validate(['value' => $data], new Assert\Collection(['value' => $constraint]));
@@ -54,11 +53,10 @@ class FieldValidationTest extends TestCase
 
     /**
      * @param string|string[] $rules
-     * @param mixed           $data
-     * @dataProvider dataProviderOptionalFields
      * @throws InvalidRuleException
      */
-    public function testResolverOptionalFields($rules, $data, bool $success): void
+    #[DataProvider('dataProviderOptionalFields')]
+    public function testResolverOptionalFields(string|array $rules, mixed $data, bool $success): void
     {
         $constraint = $this->resolver->resolveRuleList($this->parser->parseRules($rules));
         $dataSet    = $data === false ? [] : ['value' => $data];
@@ -71,9 +69,6 @@ class FieldValidationTest extends TestCase
         }
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
-     */
     public function dataProviderRequiredFields(): Generator
     {
         yield "required: success" => ['required', 'unit test', true];

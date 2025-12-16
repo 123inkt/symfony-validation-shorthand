@@ -5,18 +5,13 @@ namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Rule;
 
 use DigitalRevolution\SymfonyValidationShorthand\Rule\InvalidRuleException;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\Rule;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Rule\Rule
- * @covers ::__construct
- */
+#[CoversClass(Rule::class)]
 class RuleTest extends TestCase
 {
     /**
-     * @covers ::getParameter
-     * @covers ::getParameters
-     * @covers ::getIntParam
      * @throws InvalidRuleException
      */
     public function testGetParameter(): void
@@ -31,9 +26,6 @@ class RuleTest extends TestCase
     }
 
     /**
-     * @covers ::getParameter
-     * @covers ::getParameters
-     * @covers ::getIntParam
      * @throws InvalidRuleException
      */
     public function testGetParameterInvalidOffset(): void
@@ -46,9 +38,6 @@ class RuleTest extends TestCase
     }
 
     /**
-     * @covers ::getParameter
-     * @covers ::getParameters
-     * @covers ::getIntParam
      * @throws InvalidRuleException
      */
     public function testGetParameterInvalidIntType(): void
@@ -60,9 +49,6 @@ class RuleTest extends TestCase
         $rule->getIntParam(0);
     }
 
-    /**
-     * @covers ::getName
-     */
     public function testGetName(): void
     {
         $rule = new Rule('name');

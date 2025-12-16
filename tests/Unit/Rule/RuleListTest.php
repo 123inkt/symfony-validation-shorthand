@@ -3,21 +3,16 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Rule;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\Rule;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\RuleList;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-/**
- * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Rule\RuleList
- */
+#[CoversClass(RuleList::class)]
 class RuleListTest extends TestCase
 {
-    /**
-     * @covers ::addAll
-     * @covers ::getRules
-     * @covers ::count
-     */
     public function testAddAll(): void
     {
         $ruleA = new Rule('a');
@@ -38,9 +33,6 @@ class RuleListTest extends TestCase
         static::assertSame([$ruleA, $ruleB, $ruleC], $ruleList->getRules());
     }
 
-    /**
-     * @covers ::hasRule
-     */
     public function testHasRule(): void
     {
         $ruleList = new RuleList();
@@ -52,9 +44,6 @@ class RuleListTest extends TestCase
         static::assertFalse($ruleList->hasRule('NotBlank'));
     }
 
-    /**
-     * @covers ::hasRules
-     */
     public function testHasRules(): void
     {
         // empty set doesn't have any rules
@@ -70,9 +59,6 @@ class RuleListTest extends TestCase
         static::assertTrue($ruleList->hasRules());
     }
 
-    /**
-     * @covers ::addRule
-     */
     public function testAddRule(): void
     {
         $ruleA = new Rule('a');

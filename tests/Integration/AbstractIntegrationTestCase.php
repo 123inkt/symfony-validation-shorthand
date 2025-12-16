@@ -12,11 +12,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class AbstractIntegrationTestCase extends TestCase
 {
-    /** @var ConstraintFactory */
-    protected $constraintFactory;
-
-    /** @var ValidatorInterface */
-    protected $validator;
+    protected ConstraintFactory $constraintFactory;
+    protected ValidatorInterface $validator;
 
     protected function setUp(): void
     {

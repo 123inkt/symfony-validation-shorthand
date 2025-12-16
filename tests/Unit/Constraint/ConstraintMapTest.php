@@ -6,17 +6,14 @@ namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Constraint;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMap;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMapItem;
 use Exception;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-/**
- * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMap
- */
+#[CoversClass(ConstraintMap::class)]
 class ConstraintMapTest extends TestCase
 {
     /**
-     * @covers ::set
-     * @covers ::getIterator
      * @throws Exception
      */
     public function testSetAndIterator(): void

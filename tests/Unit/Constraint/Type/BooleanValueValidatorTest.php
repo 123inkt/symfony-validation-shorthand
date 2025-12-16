@@ -6,26 +6,20 @@ namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Constraint\Typ
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValue;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValueValidator;
 use DigitalRevolution\SymfonyValidationShorthand\Tests\Mock\MockFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Validation;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValueValidator
- */
+#[CoversClass(BooleanValueValidator::class)]
 class BooleanValueValidatorTest extends TestCase
 {
-    /** @var ExecutionContext */
-    private $context;
-
-    /** @var BooleanValueValidator */
-    private $validator;
-
-    /** @var BooleanValue */
-    private $constraint;
+    private ExecutionContext $context;
+    private BooleanValueValidator $validator;
+    private BooleanValue $constraint;
 
     protected function setUp(): void
     {
@@ -37,9 +31,6 @@ class BooleanValueValidatorTest extends TestCase
         $this->validator->initialize($this->context);
     }
 
-    /**
-     * @covers ::validate
-     */
     public function testValidateUnexpectedTypeException(): void
     {
         $this->expectException(UnexpectedTypeException::class);
@@ -48,10 +39,9 @@ class BooleanValueValidatorTest extends TestCase
     }
 
     /**
-     * @dataProvider dataProvider
-     * @covers ::validate
      * @param null|bool|int|string $value
      */
+    #[DataProvider('dataProvider')]
     public function testValidateViolations($value): void
     {
         $this->validator->validate($value, $this->constraint);
@@ -61,7 +51,7 @@ class BooleanValueValidatorTest extends TestCase
     /**
      * @return array<string, array<null|bool|int|string>>
      */
-    public function dataProvider(): array
+    public static function dataProvider(): array
     {
         return [
             'null'       => [null],
@@ -78,9 +68,6 @@ class BooleanValueValidatorTest extends TestCase
         ];
     }
 
-    /**
-     * @covers ::validate
-     */
     public function testValidateViolation(): void
     {
         $this->validator->validate('a', $this->constraint);

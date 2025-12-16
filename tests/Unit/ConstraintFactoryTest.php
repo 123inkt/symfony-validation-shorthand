@@ -5,18 +5,14 @@ namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit;
 
 use DigitalRevolution\SymfonyValidationShorthand\ConstraintFactory;
 use Exception;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\ConstraintFactory
- * @covers ::__construct
- * @covers ::isConstraintList
- */
+#[CoversClass(ConstraintFactory::class)]
 class ConstraintFactoryTest extends TestCase
 {
     /**
-     * @covers ::fromRuleDefinitions
      * @throws Exception
      */
     public function testFromRuleDefinitionsConstraintOnly(): void
@@ -27,7 +23,6 @@ class ConstraintFactoryTest extends TestCase
     }
 
     /**
-     * @covers ::fromRuleDefinitions
      * @throws Exception
      */
     public function testFromRuleDefinitionsConstraintListOnly(): void
@@ -39,7 +34,6 @@ class ConstraintFactoryTest extends TestCase
     }
 
     /**
-     * @covers ::fromRuleDefinitions
      * @throws Exception
      */
     public function testFromRuleDefinitionsWithRule(): void
@@ -50,7 +44,6 @@ class ConstraintFactoryTest extends TestCase
     }
 
     /**
-     * @covers ::fromRuleDefinitions
      * @throws Exception
      */
     public function testFromRuleDefinitionsWithRuleAllowExtraFields(): void
