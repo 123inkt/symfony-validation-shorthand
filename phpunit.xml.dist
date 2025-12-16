@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
          bootstrap="vendor/autoload.php"
-         forceCoversAnnotation="true"
          failOnRisky="true"
          failOnWarning="true"
          beStrictAboutChangesToGlobalState="true"
          beStrictAboutOutputDuringTests="true"
-         beStrictAboutResourceUsageDuringSmallTests="true"
-         beStrictAboutTodoAnnotatedTests="true"
-         executionOrder="defects">
+         beStrictAboutCoverageMetadata="true"
+         executionOrder="defects"
+         cacheDirectory=".phpunit.cache"
+         requireCoverageMetadata="true"
+>
     <testsuites>
         <testsuite name="integration">
             <directory>tests/Integration</directory>
@@ -18,9 +19,9 @@
             <directory>tests/Unit</directory>
         </testsuite>
     </testsuites>
-    <coverage processUncoveredFiles="true">
+    <source>
         <include>
-            <directory suffix=".php">src</directory>
+            <directory>src</directory>
         </include>
-    </coverage>
+    </source>
 </phpunit>
