@@ -11,6 +11,9 @@ use PHPUnit\Framework\TestCase;
  */
 class InConstraintTest extends TestCase
 {
+    /**
+     * @covers ::__construct
+     */
     public function testGetRequiredOptions(): void
     {
         $constraint = new InConstraint(['foobar']);
