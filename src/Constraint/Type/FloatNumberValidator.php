@@ -10,10 +10,9 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class FloatNumberValidator extends ConstraintValidator
 {
     /**
-     * @param mixed $value
      * @inheritDoc
      */
-    public function validate($value, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if ($constraint instanceof FloatNumber === false) {
             throw new UnexpectedTypeException($constraint, FloatNumber::class);

@@ -17,19 +17,14 @@ use Symfony\Component\Validator\Validation;
  */
 class InConstraintValidatorTest extends TestCase
 {
-    /** @var ExecutionContext */
-    private $context;
-
-    /** @var InConstraintValidator */
-    private $validator;
-
-    /** @var InConstraint */
-    private $constraint;
+    private ExecutionContext $context;
+    private InConstraintValidator $validator;
+    private InConstraint $constraint;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->constraint = new InConstraint(['values' => ['foobar']]);
+        $this->constraint = new InConstraint(['foobar']);
         $this->validator  = new InConstraintValidator();
         $this->context    = new ExecutionContext(Validation::createValidator(), 'root', MockFactory::createTranslator($this));
         $this->context->setConstraint($this->constraint);
@@ -68,7 +63,7 @@ class InConstraintValidatorTest extends TestCase
      */
     public function testValidateShouldPassOnNumericValue(): void
     {
-        $constraint = new InConstraint(['values' => ['2', '3', '4', '5']]);
+        $constraint = new InConstraint(['2', '3', '4', '5']);
         $this->validator->validate(5, $constraint);
         static::assertCount(0, $this->context->getViolations());
     }

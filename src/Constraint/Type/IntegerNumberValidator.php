@@ -10,10 +10,9 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class IntegerNumberValidator extends ConstraintValidator
 {
     /**
-     * @param mixed $value
      * @inheritDoc
      */
-    public function validate($value, Constraint $constraint): void
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if ($constraint instanceof IntegerNumber === false) {
             throw new UnexpectedTypeException($constraint, IntegerNumber::class);
@@ -33,7 +32,7 @@ class IntegerNumberValidator extends ConstraintValidator
         }
 
         // value can't be cast to int
-        if (((string)(int)$value) !== (string)$value) {
+        if (@((string)(int)$value) !== (string)$value) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ value }}', $this->formatValue($value))
                 ->setCode($constraint::INVALID_NUMBER_ERROR)

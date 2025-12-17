@@ -11,21 +11,15 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Validation;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValueValidator
  */
 class BooleanValueValidatorTest extends TestCase
 {
-    /** @var ExecutionContext */
-    private $context;
-
-    /** @var BooleanValueValidator */
-    private $validator;
-
-    /** @var BooleanValue */
-    private $constraint;
+    private ExecutionContext $context;
+    private BooleanValueValidator $validator;
+    private BooleanValue $constraint;
 
     protected function setUp(): void
     {
@@ -50,9 +44,10 @@ class BooleanValueValidatorTest extends TestCase
     /**
      * @dataProvider dataProvider
      * @covers ::validate
-     * @param null|bool|int|string $value
+     *
+     * @param bool|int|string|null $value
      */
-    public function testValidateViolations($value): void
+    public function testValidateViolations(bool|int|string|null $value): void
     {
         $this->validator->validate($value, $this->constraint);
         static::assertCount(0, $this->context->getViolations());
@@ -65,8 +60,8 @@ class BooleanValueValidatorTest extends TestCase
     {
         return [
             'null'       => [null],
-            'string 1'          => ['1'],
-            'string 0'          => ['0'],
+            'string 1'   => ['1'],
+            'string 0'   => ['0'],
             'on'         => ['on'],
             'off'        => ['off'],
             'true'       => ['true'],
