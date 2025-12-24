@@ -45,6 +45,7 @@ class ConstraintResolverTest extends TestCase
     /**
      * @param Constraint[]
      * @param array<Rule|Constraint> $rules
+     *
      * @throws InvalidRuleException
      */
     #[DataProvider('dataProvider')]
@@ -72,7 +73,7 @@ class ConstraintResolverTest extends TestCase
         yield 'alpha' => [[new Assert\Regex('/^[a-zA-Z]*$/'), new Assert\NotNull()], [new Rule('alpha')]];
         yield 'alpha_dash' => [[new Assert\Regex('/^[\w-]*$/'), new Assert\NotNull()], [new Rule('alpha_dash')]];
         yield 'alpha_num' => [[new Assert\Regex('/^[a-zA-Z0-9]*$/'), new Assert\NotNull()], [new Rule('alpha_num')]];
-        yield 'in' => [[new InConstraint(['values' => ['a', 'b']]), new Assert\NotNull()], [new Rule('in', ['a', 'b'])]];
+        yield 'in' => [[new InConstraint(['a', 'b']), new Assert\NotNull()], [new Rule('in', ['a', 'b'])]];
         yield 'email' => [[new Assert\Email(), new Assert\NotNull()], [new Rule('email')]];
         yield 'url' => [[new Assert\Url(), new Assert\NotNull()], [new Rule('url')]];
         yield 'filled' => [[new Assert\NotBlank(), new Assert\NotNull()], [new Rule('filled')]];

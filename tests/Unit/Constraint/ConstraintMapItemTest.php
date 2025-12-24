@@ -14,7 +14,6 @@ class ConstraintMapItemTest extends TestCase
     public function testConstructorAndGetters(): void
     {
         $constraints = [new NotBlank()];
-        $required    = true;
 
         // without required
         $item = new ConstraintMapItem($constraints);
@@ -22,7 +21,7 @@ class ConstraintMapItemTest extends TestCase
         static::assertFalse($item->isRequired());
 
         // with required
-        $item = new ConstraintMapItem($constraints, $required);
+        $item = new ConstraintMapItem($constraints, true);
         static::assertSame($constraints, $item->getConstraints());
         static::assertTrue($item->isRequired());
     }

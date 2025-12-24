@@ -12,7 +12,7 @@ use IteratorAggregate;
 class ConstraintMap implements IteratorAggregate
 {
     /** @var array<string, ConstraintMapItem> */
-    private $map = [];
+    private array $map = [];
 
     public function set(string $key, ConstraintMapItem $item): self
     {

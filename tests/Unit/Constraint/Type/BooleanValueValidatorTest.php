@@ -12,7 +12,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Validation;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[CoversClass(BooleanValueValidator::class)]
 class BooleanValueValidatorTest extends TestCase
@@ -45,7 +44,7 @@ class BooleanValueValidatorTest extends TestCase
      * @param null|bool|int|string $value
      */
     #[DataProvider('dataProvider')]
-    public function testValidateViolations($value): void
+    public function testValidateViolations(bool|int|string|null $value): void
     {
         $this->validator->validate($value, $this->constraint);
         static::assertCount(0, $this->context->getViolations());
@@ -58,8 +57,8 @@ class BooleanValueValidatorTest extends TestCase
     {
         return [
             'null'       => [null],
-            'string 1'          => ['1'],
-            'string 0'          => ['0'],
+            'string 1'   => ['1'],
+            'string 0'   => ['0'],
             'on'         => ['on'],
             'off'        => ['off'],
             'true'       => ['true'],

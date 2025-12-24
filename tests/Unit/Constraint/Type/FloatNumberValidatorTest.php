@@ -40,11 +40,8 @@ class FloatNumberValidatorTest extends TestCase
         $this->validator->validate(null, new NotBlank());
     }
 
-    /**
-     * @param null|bool|int|string $value
-     */
     #[DataProvider('dataProvider')]
-    public function testValidateViolations($value, int $violationCount): void
+    public function testValidateViolations(bool|int|float|string|null $value, int $violationCount): void
     {
         $this->validator->validate($value, $this->constraint);
         static::assertCount($violationCount, $this->context->getViolations());

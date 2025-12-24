@@ -40,7 +40,7 @@ class ConstraintFactoryTest extends TestCase
     {
         $factory = new ConstraintFactory();
         $expect = new Assert\Collection(['email' => new Assert\Required([new Assert\Email(), new Assert\NotNull()])]);
-        static::assertEquals($expect, $factory->fromRuleDefinitions(['email' => 'required|email'], false));
+        static::assertEquals($expect, $factory->fromRuleDefinitions(['email' => 'required|email']));
     }
 
     /**

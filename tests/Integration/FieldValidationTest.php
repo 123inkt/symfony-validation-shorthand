@@ -34,7 +34,7 @@ class FieldValidationTest extends TestCase
      * @throws InvalidRuleException
      */
     #[DataProvider('dataProviderRequiredFields')]
-    public function testResolverRequiredFields(string|array $rules, mixed $data, bool $success): void
+    public function testResolverRequiredFields(array|string $rules, mixed $data, bool $success): void
     {
         $constraint = $this->resolver->resolveRuleList($this->parser->parseRules($rules));
         $violations = $this->validator->validate(['value' => $data], new Assert\Collection(['value' => $constraint]));
@@ -50,8 +50,7 @@ class FieldValidationTest extends TestCase
      * @param string|string[] $rules
      * @throws InvalidRuleException
      */
-    #[DataProvider('dataProviderOptionalFields')]
-    public function testResolverOptionalFields(string|array $rules, mixed $data, bool $success): void
+    public function testResolverOptionalFields(array|string $rules, mixed $data, bool $success): void
     {
         $constraint = $this->resolver->resolveRuleList($this->parser->parseRules($rules));
         $dataSet    = $data === false ? [] : ['value' => $data];
@@ -111,7 +110,6 @@ class FieldValidationTest extends TestCase
         yield "required + string max with int: false" => ['required|min:10', 12345, false];
         yield "required + string max with int: true" => ['required|max:1', 9, true];
         yield "required + string type with int: true" => ['required|string', 9, false];
-
 
         // field should be array
         yield "required + array: true" => ['required|array', [], true];

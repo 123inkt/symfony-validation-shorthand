@@ -14,8 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class ConstraintCollectionBuilder
 {
-    /** @var bool */
-    private $allowExtraFields = false;
+    private bool $allowExtraFields = false;
 
     public function setAllowExtraFields(bool $allowExtraFields): self
     {
@@ -28,7 +27,7 @@ class ConstraintCollectionBuilder
      * @return Constraint|Constraint[]
      * @throws InvalidRuleException
      */
-    public function build(ConstraintMap $constraintsMap)
+    public function build(ConstraintMap $constraintsMap): array|Constraint
     {
         $constraintTreeMap = [];
         foreach ($constraintsMap as $key => $constraints) {
@@ -52,7 +51,7 @@ class ConstraintCollectionBuilder
      * @return Constraint|Constraint[]
      * @throws InvalidRuleException
      */
-    private function createConstraintTree(array $constraintTreeMap)
+    private function createConstraintTree(array $constraintTreeMap): array|Constraint
     {
         if (count($constraintTreeMap) === 1 && isset($constraintTreeMap['*'])) {
             return $this->createAllConstraint($constraintTreeMap['*']);
@@ -67,7 +66,7 @@ class ConstraintCollectionBuilder
      * @return Constraint|Constraint[]
      * @throws InvalidRuleException
      */
-    private function createAllConstraint($node)
+    private function createAllConstraint(ConstraintMapItem|array $node): Constraint|array
     {
         $required = false;
         if ($node instanceof ConstraintMapItem) {
@@ -114,7 +113,7 @@ class ConstraintCollectionBuilder
      * @return Constraint|Constraint[]
      * @throws InvalidRuleException
      */
-    private function getNodeConstraint($node, bool $optional)
+    private function getNodeConstraint(ConstraintMapItem|array $node, bool $optional): Constraint|array
     {
         if ($node instanceof ConstraintMapItem === false) {
             // recursively resolve

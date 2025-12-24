@@ -26,9 +26,9 @@ class InConstraintValidatorTest extends TestCase
         $translatorStub = $this->createStub(TranslatorInterface::class);
         $translatorStub->method('trans')->willReturn('unit test');
 
-        $this->constraint = new InConstraint(['values' => ['foobar']]);
+        $this->constraint = new InConstraint(['foobar']);
         $this->validator  = new InConstraintValidator();
-        $this->context  = new ExecutionContext(Validation::createValidator(), 'root', $translatorStub);
+        $this->context    = new ExecutionContext(Validation::createValidator(), 'root', $translatorStub);
         $this->context->setConstraint($this->constraint);
         $this->validator->initialize($this->context);
     }
@@ -53,7 +53,7 @@ class InConstraintValidatorTest extends TestCase
 
     public function testValidateShouldPassOnNumericValue(): void
     {
-        $constraint = new InConstraint(['values' => ['2', '3', '4', '5']]);
+        $constraint = new InConstraint(['2', '3', '4', '5']);
         $this->validator->validate(5, $constraint);
         static::assertCount(0, $this->context->getViolations());
     }

@@ -16,14 +16,12 @@ class InConstraint extends Constraint
 
     public string $message = '{{ value }} is not contained in `{{ values }}`.';
 
-    /** @var string[] */
-    public array $values = [];
-
     /**
      * @inheritDoc
+     * @param string[] $values
      */
-    public function getRequiredOptions(): array
+    public function __construct(public array $values = [], ?array $groups = null, mixed $payload = null)
     {
-        return ['values'];
+        parent::__construct([], $groups, $payload);
     }
 }

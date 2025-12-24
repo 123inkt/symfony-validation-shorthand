@@ -23,31 +23,31 @@ abstract class AbstractIntegrationTestCase extends TestCase
     }
 
     /**
-     * @param mixed                                                                $data
      * @param Constraint|array<string, string|Constraint|array<string|Constraint>> $ruleDefinitions
+     *
      * @throws Exception
      */
-    protected static function assertHasViolations($data, $ruleDefinitions): void
+    protected static function assertHasViolations(mixed $data, array|Constraint $ruleDefinitions): void
     {
         static::assertCountViolations(1, $data, $ruleDefinitions);
     }
 
     /**
-     * @param mixed                                                                $data
      * @param Constraint|array<string, string|Constraint|array<string|Constraint>> $ruleDefinitions
+     *
      * @throws Exception
      */
-    protected static function assertHasNoViolations($data, $ruleDefinitions): void
+    protected static function assertHasNoViolations(mixed $data, array|Constraint $ruleDefinitions): void
     {
         static::assertCountViolations(0, $data, $ruleDefinitions);
     }
 
     /**
-     * @param mixed                                                                $data
      * @param Constraint|array<string, string|Constraint|array<string|Constraint>> $ruleDefinitions
+     *
      * @throws Exception
      */
-    protected static function assertCountViolations(int $expectedCount, $data, $ruleDefinitions): void
+    protected static function assertCountViolations(int $expectedCount, mixed $data, array|Constraint $ruleDefinitions): void
     {
         $constraint = (new ConstraintFactory())->fromRuleDefinitions($ruleDefinitions);
         $validator  = Validation::createValidator();

@@ -15,8 +15,8 @@ use PHPUnit\Framework\TestCase;
 class ArraysTest extends TestCase
 {
     /**
-     * @param array<mixed> $data
-     * @param array<mixed> $expected
+     * @param array<int|string, mixed> $data
+     * @param array<int|string, mixed> $expected
      * @throws InvalidArrayPathException
      */
     #[DataProvider('dataProvider')]
@@ -26,7 +26,7 @@ class ArraysTest extends TestCase
     }
 
     /**
-     * @return Generator<string, array<array<mixed>, string, string, array<mixed>>>
+     * @return Generator<string, array<array<int|string, mixed>, string, string, array<int|string, mixed>>>
      */
     public static function dataProvider(): Generator
     {
@@ -66,7 +66,7 @@ class ArraysTest extends TestCase
     }
 
     /**
-     * Assigning a value to a path where the somewhere in the path the value is not an array anymore, will result in exception.
+     * Assigning a value to a path where somewhere in the path the value is not an array anymore, will result in exception.
      *
      * @throws InvalidArrayPathException
      */

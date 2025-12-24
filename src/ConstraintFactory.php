@@ -13,20 +13,11 @@ use Symfony\Component\Validator\Constraint;
 
 class ConstraintFactory
 {
-    /** @var RuleParser */
-    private $parser;
-
-    /** @var ConstraintResolver */
-    private $resolver;
-
-    /** @var ConstraintCollectionBuilder */
-    private $collectionBuilder;
-
-    public function __construct(RuleParser $parser = null, ConstraintResolver $resolver = null, ConstraintCollectionBuilder $collectionBuilder = null)
-    {
-        $this->parser            = $parser ?? new RuleParser();
-        $this->resolver          = $resolver ?? new ConstraintResolver();
-        $this->collectionBuilder = $collectionBuilder ?? new ConstraintCollectionBuilder();
+    public function __construct(
+        private readonly RuleParser $parser = new RuleParser(),
+        private readonly ConstraintResolver $resolver = new ConstraintResolver(),
+        private readonly ConstraintCollectionBuilder $collectionBuilder = new ConstraintCollectionBuilder()
+    ) {
     }
 
     /**
@@ -36,7 +27,7 @@ class ConstraintFactory
      * @return Constraint|Constraint[]
      * @throws InvalidRuleException
      */
-    public function fromRuleDefinitions($ruleDefinitions, bool $allowExtraFields = false)
+    public function fromRuleDefinitions(Constraint|array $ruleDefinitions, bool $allowExtraFields = false): Constraint|array
     {
         if ($ruleDefinitions instanceof Constraint || self::isConstraintList($ruleDefinitions)) {
             return $ruleDefinitions;

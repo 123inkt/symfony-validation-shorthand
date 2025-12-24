@@ -12,7 +12,7 @@ class InConstraintTest extends TestCase
 {
     public function testGetRequiredOptions(): void
     {
-        $constraint = new InConstraint(['values' => ['foobar']]);
-        static::assertSame(['values'], $constraint->getRequiredOptions());
+        $constraint = new InConstraint(['foobar']);
+        static::assertSame(['foobar'], $constraint->values);
     }
 }
