@@ -50,6 +50,7 @@ class FieldValidationTest extends TestCase
      * @param string|string[] $rules
      * @throws InvalidRuleException
      */
+    #[DataProvider('dataProviderOptionalFields')]
     public function testResolverOptionalFields(array|string $rules, mixed $data, bool $success): void
     {
         $constraint = $this->resolver->resolveRuleList($this->parser->parseRules($rules));
