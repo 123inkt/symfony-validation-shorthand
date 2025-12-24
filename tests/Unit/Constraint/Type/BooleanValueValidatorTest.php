@@ -41,9 +41,6 @@ class BooleanValueValidatorTest extends TestCase
         $validator->validate(null, new NotBlank());
     }
 
-    /**
-     * @param null|bool|int|string $value
-     */
     #[DataProvider('dataProvider')]
     public function testValidateViolations(bool|int|string|null $value): void
     {
