@@ -66,7 +66,7 @@ class RuleParser
             return [$parameter];
         }
 
-        return str_getcsv($parameter);
+        return str_getcsv($parameter, escape: "\\");
     }
 
     /**
