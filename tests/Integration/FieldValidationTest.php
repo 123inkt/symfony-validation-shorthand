@@ -7,14 +7,14 @@ use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintResolver;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\InvalidRuleException;
 use DigitalRevolution\SymfonyValidationShorthand\Rule\RuleParser;
 use Generator;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-/**
- * @coversNothing
- */
+#[CoversNothing]
 class FieldValidationTest extends TestCase
 {
     private RuleParser $parser;
@@ -31,10 +31,9 @@ class FieldValidationTest extends TestCase
 
     /**
      * @param string|string[] $rules
-     *
-     * @dataProvider dataProviderRequiredFields
      * @throws InvalidRuleException
      */
+    #[DataProvider('dataProviderRequiredFields')]
     public function testResolverRequiredFields(array|string $rules, mixed $data, bool $success): void
     {
         $constraint = $this->resolver->resolveRuleList($this->parser->parseRules($rules));
@@ -49,10 +48,9 @@ class FieldValidationTest extends TestCase
 
     /**
      * @param string|string[] $rules
-     *
-     * @dataProvider dataProviderOptionalFields
      * @throws InvalidRuleException
      */
+    #[DataProvider('dataProviderOptionalFields')]
     public function testResolverOptionalFields(array|string $rules, mixed $data, bool $success): void
     {
         $constraint = $this->resolver->resolveRuleList($this->parser->parseRules($rules));
@@ -66,10 +64,7 @@ class FieldValidationTest extends TestCase
         }
     }
 
-    /**
-     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
-     */
-    public function dataProviderRequiredFields(): Generator
+    public static function dataProviderRequiredFields(): Generator
     {
         yield "required: success" => ['required', 'unit test', true];
         yield "required + empty: success" => ['required', '', true];
@@ -203,7 +198,7 @@ class FieldValidationTest extends TestCase
         yield "required + rule + constraint: false B" => [['required', 'string', new Assert\NotBlank()], 5, false];
     }
 
-    public function dataProviderOptionalFields(): Generator
+    public static function dataProviderOptionalFields(): Generator
     {
         yield "optional: null: success A" => ['string', false, false];
         yield "optional: null: success B" => ['string|nullable', null, true];

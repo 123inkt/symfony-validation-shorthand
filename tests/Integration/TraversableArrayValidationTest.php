@@ -5,10 +5,9 @@ namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Integration;
 
 use ArrayIterator;
 use Exception;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
-/**
- * @coversNothing
- */
+#[CoversNothing]
 class TraversableArrayValidationTest extends AbstractIntegrationTestCase
 {
     /**

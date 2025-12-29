@@ -4,19 +4,13 @@ declare(strict_types=1);
 namespace Constraint;
 
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMapItem;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-/**
- * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMapItem
- */
+#[CoversClass(ConstraintMapItem::class)]
 class ConstraintMapItemTest extends TestCase
 {
-    /**
-     * @covers ::__construct
-     * @covers ::isRequired
-     * @covers ::getConstraints
-     */
     public function testConstructorAndGetters(): void
     {
         $constraints = [new NotBlank()];

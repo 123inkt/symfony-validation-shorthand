@@ -5,16 +5,16 @@ namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Constraint\Typ
 
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValue;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValueValidator;
-use DigitalRevolution\SymfonyValidationShorthand\Tests\Mock\MockFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Symfony\Component\Validator\Validation;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Constraint\Type\BooleanValueValidator
- */
+#[CoversClass(BooleanValueValidator::class)]
 class BooleanValueValidatorTest extends TestCase
 {
     private ExecutionContext $context;
@@ -24,16 +24,16 @@ class BooleanValueValidatorTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $translatorStub = $this->createStub(TranslatorInterface::class);
+        $translatorStub->method('trans')->willReturn('unit test');
+
         $this->constraint = new BooleanValue();
         $this->validator  = new BooleanValueValidator();
-        $this->context    = new ExecutionContext(Validation::createValidator(), 'root', MockFactory::createTranslator($this));
+        $this->context  = new ExecutionContext(Validation::createValidator(), 'root', $translatorStub);
         $this->context->setConstraint($this->constraint);
         $this->validator->initialize($this->context);
     }
 
-    /**
-     * @covers ::validate
-     */
     public function testValidateUnexpectedTypeException(): void
     {
         $this->expectException(UnexpectedTypeException::class);
@@ -41,12 +41,7 @@ class BooleanValueValidatorTest extends TestCase
         $validator->validate(null, new NotBlank());
     }
 
-    /**
-     * @dataProvider dataProvider
-     * @covers ::validate
-     *
-     * @param bool|int|string|null $value
-     */
+    #[DataProvider('dataProvider')]
     public function testValidateViolations(bool|int|string|null $value): void
     {
         $this->validator->validate($value, $this->constraint);
@@ -56,7 +51,7 @@ class BooleanValueValidatorTest extends TestCase
     /**
      * @return array<string, array<null|bool|int|string>>
      */
-    public function dataProvider(): array
+    public static function dataProvider(): array
     {
         return [
             'null'       => [null],
@@ -73,9 +68,6 @@ class BooleanValueValidatorTest extends TestCase
         ];
     }
 
-    /**
-     * @covers ::validate
-     */
     public function testValidateViolation(): void
     {
         $this->validator->validate('a', $this->constraint);

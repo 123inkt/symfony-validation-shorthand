@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Unit\Constraint;
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\CoversMethod;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintCollectionBuilder;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMap;
 use DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintMapItem;
@@ -17,13 +19,7 @@ use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Optional;
 use Symfony\Component\Validator\Constraints\Required;
 
-/**
- * @coversDefaultClass \DigitalRevolution\SymfonyValidationShorthand\Constraint\ConstraintCollectionBuilder
- * @covers ::createConstraintTree
- * @covers ::createAllConstraint
- * @covers ::createCollectionConstraint
- * @covers ::getNodeConstraint
- */
+#[CoversClass(ConstraintCollectionBuilder::class)]
 class ConstraintCollectionBuilderTest extends TestCase
 {
     private ConstraintCollectionBuilder $builder;
@@ -35,7 +31,6 @@ class ConstraintCollectionBuilderTest extends TestCase
     }
 
     /**
-     * @covers ::build
      * @throws Exception
      */
     public function testBuildSingleNonNestedConstraint(): void
@@ -50,8 +45,6 @@ class ConstraintCollectionBuilderTest extends TestCase
     }
 
     /**
-     * @covers ::build
-     * @covers ::setAllowExtraFields
      * @throws Exception
      */
     public function testBuildSingleCollectionAllowExtraFieldsConstraint(): void
@@ -66,7 +59,6 @@ class ConstraintCollectionBuilderTest extends TestCase
     }
 
     /**
-     * @covers ::build
      * @throws Exception
      */
     public function testBuildSingleNestedConstraint(): void
@@ -81,7 +73,6 @@ class ConstraintCollectionBuilderTest extends TestCase
     }
 
     /**
-     * @covers ::build
      * @throws Exception
      */
     public function testBuildMultipleNestedConstraints(): void
@@ -98,7 +89,6 @@ class ConstraintCollectionBuilderTest extends TestCase
     }
 
     /**
-     * @covers ::build
      * @throws Exception
      */
     public function testBuildOptionalConstraints(): void
@@ -114,7 +104,6 @@ class ConstraintCollectionBuilderTest extends TestCase
 
     /**
      * If the constraint is set to required but the path is marked as optional, then always assume Required
-     * @covers ::build
      *
      * @throws Exception
      */
@@ -130,7 +119,6 @@ class ConstraintCollectionBuilderTest extends TestCase
     }
 
     /**
-     * @covers ::build
      * @throws Exception
      */
     public function testBuildWithNonEmptyAllConstraint(): void
@@ -148,7 +136,6 @@ class ConstraintCollectionBuilderTest extends TestCase
     }
 
     /**
-     * @covers ::build
      * @throws Exception
      */
     public function testBuildWithEmptyAllConstraint(): void
@@ -163,7 +150,6 @@ class ConstraintCollectionBuilderTest extends TestCase
     }
 
     /**
-     * @covers ::build
      * @throws Exception
      */
     public function testBuildWithAllAndCollectionConstraint(): void
@@ -180,7 +166,6 @@ class ConstraintCollectionBuilderTest extends TestCase
     }
 
     /**
-     * @covers ::build
      * @throws Exception
      */
     public function testBuildWithInvalidPath(): void

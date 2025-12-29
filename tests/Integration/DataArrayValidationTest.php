@@ -5,10 +5,9 @@ namespace DigitalRevolution\SymfonyValidationShorthand\Tests\Integration;
 
 use DigitalRevolution\SymfonyValidationShorthand\Rule\InvalidRuleException;
 use Exception;
+use PHPUnit\Framework\Attributes\CoversNothing;
 
-/**
- * @coversNothing
- */
+#[CoversNothing]
 class DataArrayValidationTest extends AbstractIntegrationTestCase
 {
     /**
