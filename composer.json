@@ -27,8 +27,6 @@
     },
     "require-dev": {
         "digitalrevolution/phpunit-file-coverage-inspection": "^3.0.3",
-        "roave/security-advisories": "dev-latest",
-        "squizlabs/php_codesniffer": "^4.0",
         "phpstan/phpstan": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
         "phpstan/phpstan-strict-rules": "^2.0",
