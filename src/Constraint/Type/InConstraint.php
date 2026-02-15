@@ -22,6 +22,6 @@ class InConstraint extends Constraint
      */
     public function __construct(public array $values = [], ?array $groups = null, mixed $payload = null)
     {
-        parent::__construct([], $groups, $payload);
+        parent::__construct(null, $groups, $payload);
     }
 }
